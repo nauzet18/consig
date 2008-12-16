@@ -78,7 +78,8 @@ class Ficheros extends Controller {
 				if ($fichero['error'] == UPLOAD_ERR_INI_SIZE) {
 					$data_form['error'] = '<p>El fichero excede el tamaño permitido</p>';
 				} else {
-					$data_form['error'] = '<p>Hubo un error en el envío (<tt>'.$fichero['error'].'</tt>). 
+					$data_form['error'] = '<p>Hay problemas para enviar
+						(código <tt>'.$fichero['error'].'</tt>). 
 						Póngase en contacto con el administrador</p>';
 				}
 			} else {
@@ -148,8 +149,8 @@ class Ficheros extends Controller {
 
 					// Borrado de la BD
 					$this->trabajoficheros->elimina_bd($fid);
-					$data_form['error'] = '<p>Hubo un problema en la copia
-						del fichero. Por favor, comuníquelo al administrador
+					$data_form['error'] = '<p>Hay problemas con la copia
+						de ficheros. Por favor, comuníquelo al administrador
 						de la página.</p>';
 				}
 			}

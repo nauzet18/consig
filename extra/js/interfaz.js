@@ -136,9 +136,14 @@ function fin_envio(tipo) {
 		$("#progreso").html("100%");
 		$("#progreso").width("100%");
 		// Accedemos al resultado mediante
-		var fid = $("#iframe_upload").contents().text();
-		top.location.href = url_base + 'ficheros/' + fid;
-  }
+		var mensaje = $("#iframe_upload").contents().text();
+		if (mensaje.match(/^\d+$/)) {
+			top.location.href = url_base + 'ficheros/' + mensaje;
+		} else {
+			$("#form_subida").before('<div class="cuadro error">' 
+				+ mensaje + '</div>');
+		}
+  } 
 	$.unblockUI();
 }
 

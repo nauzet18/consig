@@ -120,5 +120,23 @@ class TrabajoFicheros extends Model {
 	function elimina_bd($fid) {
 		$this->db->delete('ficheros', array('fid' => $fid));
 	}
+
+    /*
+     * Extrae de la base de datos un fichero dado su identificador,
+     * devolviendo FALSE si no encuentra ninguno.
+     */
+
+    function extrae_bd($fid) {
+        $query = $this->db->get_where('ficheros', array('fid' => $fid));
+
+        $res = $query->result();
+
+        if (!$res || count($res) == 0) {
+            return FALSE;
+        } else {
+            return $res[0];
+        }
+
+    }
 }
 ?>

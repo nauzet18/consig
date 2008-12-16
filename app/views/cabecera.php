@@ -47,7 +47,7 @@ if ($autenticado !== FALSE) {
 <div id="cabecera">
  <div id="logo">
   <h1><a href="<?php echo site_url()?>">Consigna</a></h1>
-  <h2>Env&iacute;o y recogida de ficheros</h2>
+  <h2 id="subtitulo">Env&iacute;o y recogida de ficheros</h2>
  </div> <!-- logo -->
 
  <div id="menu">

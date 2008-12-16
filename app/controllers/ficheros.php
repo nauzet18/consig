@@ -233,8 +233,17 @@ class Ficheros extends Controller {
 	 */
 
 	function ver_fichero($fid) {
+        $fichero = $this->trabajoficheros->extrae_bd($fid);
+
+        if ($fichero === FALSE) {
+            show_error('El fichero indicado no existe. Puede que haya
+                    caducado, por tanto el enlace ya no es válido.');
+            return;
+        }
+
 		$data = array(
-				'subtitulo' => 'enviar nuevo fichero',
+				'subtitulo' => 'ojeando un fichero',
+                'fichero' => $fichero,
 		);
 		$this->load->view('cabecera', $data);
 

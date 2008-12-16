@@ -1,0 +1,271 @@
+@import url(tabla.css);
+@import url(elementos-js.css);
+
+body {
+margin: 0px;
+padding: 0;
+background: #FFFFFF;
+background: url(../img/logos/FondoSevius.gif) #ffffff no-repeat top left ;
+font: normal small "Trebuchet MS", Arial, Helvetica, sans-serif;
+color: #777777;
+}
+
+h1, h2, h3 {
+	text-transform: uppercase;
+	color: #666666;
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+h3 {
+	margin: 0;
+	font-size: .875em;
+}
+
+p, blockquote, ul, ol {
+	margin-top: 0;
+	line-height: 180%;
+	text-align: justify;
+}
+
+a {
+	color: #A32638;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #FF6000;
+}
+
+img {
+  border: 0;
+}
+
+/* Cabecera */
+
+#cabecera {
+	width: 90%;
+	height: 100px;
+	margin: 30px auto 0 auto;
+}
+
+/* Logo */
+
+#logo {
+	float: left;
+	padding: 40px 0 0 107px;
+	background: url(../img/logos/Logo.gif) no-repeat left center;
+}
+
+#logo h1 {
+	margin: 0;
+	padding: 0;
+	text-transform: none;
+	font-size: 36px;
+}
+
+#logo h2 {
+	margin: -5px 0 0 3px;
+	padding: 0;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+#logo a {
+	text-decoration: none;
+	color: #A32638;
+}
+
+/* Menu */
+
+#menu {
+	float: right;
+	padding: 20px 0 0 0;
+}
+
+#menu ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	line-height: normal;
+}
+
+#menu li {
+	display: inline;
+  text-align: center;
+  text-transform: lowercase;
+}
+
+#menu a {
+	display: block;
+	float: left;
+	height: 17px;
+	padding: 0 17px 0 19px;
+	text-decoration: none;
+	color: #A32638;
+}
+
+#menu a:hover {
+	color: #FF6000;
+}
+
+#menu .first a {
+	background: none;
+}
+
+#contenido {
+	width: 90%;
+  padding: 1em 2em 0 5em;
+	margin: 0 auto;
+}
+
+#pie {
+  border-top: 1px solid #e0e0e0;
+	width: 60%;
+	margin: 4em auto 0 auto;
+	padding: 10px 0 50px 65px;
+  text-align: center;
+}
+
+
+/* Formularios */
+
+label {
+  font-weight: bold;
+  display: block;
+  margin: 5px 0 5px 0;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+  font-family: Monaco, DejaVu Sans Mono, Consolas, monospace;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 1em;
+  background-color: #ffffff;
+  background-position: top left;
+  background-repeat: no-repeat;
+}
+
+textarea {
+  font-size: 90%;
+}
+
+input[type="submit"] {
+  margin-left: 1em;
+}
+
+input.passwd {
+  padding: 2px 2px 2px 22px;
+  background-image: url(../img/interfaz/form-passwd.png);
+}
+
+input.usuario {
+  padding: 2px 2px 2px 22px;
+  background-image: url(../img/interfaz/form-usuario.png);
+}
+
+fieldset {
+  border: 1px solid #d0d0d0;
+  padding: 1em;
+  margin: 1em;
+  width: 80%;
+  background: url(../img/fondos/fieldset.png) #fefefe top left repeat-x;
+}
+
+legend {
+  font-weight: bold;
+  font-size: 110%;
+	color: #A32638;
+}
+
+div.opciones_radio {
+  margin: 1em;
+}
+
+div.form_descripcion {
+  font-style: italic;
+  padding-left: 0.5em;
+  margin-bottom: 1em;
+}
+
+
+fieldset.enrollable {
+  border-width: 2px 0 0 0;
+  margin-bottom: 2em;
+}
+
+fieldset.enrollable legend {
+  padding-left: 15px;
+  background: url(../img/interfaz/enrollado.png) 5px 50% no-repeat;
+  _cursor: hand;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+fieldset.desplegado legend {
+  background: url(../img/interfaz/desplegado.png) 5px 50% no-repeat;
+}
+
+fieldset.desplegado {
+  border-width: 2px !important;
+}
+
+fieldset.enrollado .contenido_enrollado {
+  display: none;
+}
+
+
+
+#aviso {
+  margin: 1em;
+  padding: 0.5em;
+  border: 1px solid #f3f3f3;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+
+#listado-ficheros {
+  width: 90%;
+  margin: 0 auto 0 auto;
+}
+
+#listado-ficheros tbody td img {
+  vertical-align: middle;
+  margin-right: 0.2em;
+}
+
+#listado-ficheros tr.prohibido td {
+  background-color: #f0f0f0;
+}
+
+div#datos_autenticado {
+  font-size: 90%;
+  background-color: #f0f0f0;
+  color: #000000;
+  padding: 0.3em 1em;
+  text-align: right;
+}
+
+span.usuario {
+  padding-left: 21px;
+  background: url(../img/interfaz/form-usuario.png) transparent left center no-repeat;
+  font-family: "Lucida Grande", "Trebuchet MS", Arial, Helvetica, sans-serif;
+  font-style: italic;
+}
+
+div.cuadro {
+  padding: 0.5em;
+}
+
+div.error {
+  color: #ff0000;
+  border: 1px solid #ddb3b3;
+  font-weight: bold;
+  padding-left: 40px;
+  background: url(../img/interfaz/error.png) #e8cece 10px center no-repeat;
+}
+

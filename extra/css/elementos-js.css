@@ -1,0 +1,59 @@
+#loginOverlay {
+  width: 300px;
+  display: none;
+  padding: 40px;
+}
+
+#loginOverlay div.close {
+  background: url(../img/interfaz/close.png) no-repeat;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+#progreso_overlay {
+  font-size: 90%;
+  display: none;
+  padding: 2em;
+}
+
+#progreso_contenedor {
+  margin: 0 auto 0 auto;
+  width: 200px;
+  height: 21px;
+  border: 1px solid #f0f0f0;
+}
+
+#progreso_indicador {
+  margin: 0 auto 0 auto;
+}
+
+#progreso {
+  margin: 0;
+  padding: 0;
+  background: url(../img/interfaz/progreso.png) green left center no-repeat;
+  text-align: center;
+  color: #000000;
+  overflow: visible;
+  width: 0%;
+  height: 100%;
+}
+
+#progreso_datos {
+  text-align: center;
+}
+
+#progreso_cancelar {
+  width: 90%;
+  text-align: right;
+}
+
+#progreso_velocidad, #progreso_restante {
+  font-weight: bold;
+}
+
+#iframe_upload {
+}

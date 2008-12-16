@@ -1,0 +1,9 @@
+<?php
+$config['ldap'] = array();
+
+$config['ldap']['host'] = "ldap.host.tld";
+$config['ldap']['puerto'] = 389;
+$config['ldap']['dnadmin'] = "cn=admin,dc=sitio,dc=tld";
+$config['ldap']['passwdadmin'] = "password";
+$config['ldap']['base'] = "dc=sitio,dc=tld";
+?>

@@ -37,3 +37,11 @@ CREATE TABLE IF NOT EXISTS  `ci_sessions` (
 	PRIMARY KEY (session_id)
 );
 
+CREATE TABLE IF NOT EXISTS `cacheldap` (
+	`dn` VARCHAR(200) NOT NULL,
+	`nombre` VARCHAR(255) NOT NULL,
+	`relaciones` VARCHAR(255) NOT NULL,
+	`mail` VARCHAR(255) NOT NULL,
+	`timestamp` INT UNSIGNED NOT NULL,
+
+	PRIMARY KEY(dn));

@@ -53,7 +53,7 @@ class TrabajoLDAP extends Model {
 		 $atributos = array('dn', 'sn1', 'givenName', 'UsEsRelacion',
 				 'mail');
 		 $res = @ldap_search($ds, $opciones['base'],
-				 	'uid='.$uid);
+				 	'uid='.$uid, $atributos);
 		 if ($res === FALSE) {
 			 // TODO: log o parecido
 			 return FALSE;
@@ -77,6 +77,77 @@ class TrabajoLDAP extends Model {
 			 // TODO: log de intento fallido
 			 return FALSE;
 		 }
+	}
+
+	/**
+	 * Extrae la información asociada a un DN de LDAP, prefiriendo los datos
+	 * cacheados en la base de datos.
+	 *
+	 * Un trabajo periódico en cron hará expirar a las entradas que tengan
+	 * más de cierto tiempo.
+	 *
+	 * @param 	string dn 
+	 * @param 	int fuerza la actualización de cache para el dn
+	 * @return	FALSE si falla, o un array con los datos del usuario
+	 */
+
+	function consulta($dn, $forzar = 0) {
+		if (!$forzar) {
+			$this->db->where('dn', $dn);
+			$this->db->from('cacheldap');
+			if ($this->db->count_all_results() == 1) {
+				$this->db->where('dn', $dn);
+				$q = $this->db->get('cacheldap');
+				$res = $q->result_array();
+				$res[0]['relaciones'] = unserialize($res[0]['relaciones']);
+				return $res[0];
+			}
+		}
+
+		// Si se ha forzado, o bien no se ha encontrado nada...
+		$opciones = $this->config->item('ldap');
+		$ds = @ldap_connect($opciones["host"], $opciones["puerto"]);
+		if (!$ds) {
+			// TODO: log o parecido
+			return FALSE;
+		}
+
+		if (@ldap_bind($ds, $opciones['dnadmin'],
+					$opciones['passwdadmin']) !== TRUE) {
+			// TODO: log de configuración errónea
+			return FALSE;
+		}
+
+		$atributos = array('dn', 'sn1', 'givenName', 'UsEsRelacion',
+				'mail');
+
+		$res = ldap_read($ds, $dn, '(objectClass=*)', $atributos);
+		$info = @ldap_get_entries($ds, $res);
+
+		if ($info['count'] == 0) {
+			// TODO: log de usuario no encontrado
+			return FALSE;
+		}
+
+		@ldap_unbind($ds);
+
+		// Ponemos los datos como deseamos
+		$datos = array(
+				'dn' => $info[0]['dn'],
+				'nombre' => ucwords(strtolower($info[0]['givenname'][0] 
+						. ' ' .  $info[0]['sn1'][0])),
+				'relaciones' => serialize($info[0]['usesrelacion']),
+				'mail' => $info[0]['mail'][0],
+				'timestamp' => time(),
+		);
+
+		// Actualizamos en la BD
+		$this->db->where('dn', $dn);
+		$this->db->delete('cacheldap'); 
+		$this->db->insert('cacheldap', $datos);
+
+		$datos['relaciones'] = unserialize($datos['relaciones']);
+		return $datos;
 	}
 }
 

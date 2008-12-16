@@ -310,6 +310,19 @@ $config['time_reference'] = 'local';
 */
 $config['rewrite_short_tags'] = FALSE;
 
+/*
+|--------------------------------------------------------------------------
+| Opciones de la consigna
+|--------------------------------------------------------------------------
+*/
+
+/*
+ * Directorio donde se alojarán los ficheros enviados.
+ * Se aconseja que esté fuera del alcance del servidor web
+ */
+
+$config['directorio_ficheros'] = '/var/enviados';
+
 
 
 /* End of file config.php */

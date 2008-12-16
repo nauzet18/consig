@@ -141,11 +141,13 @@ class Ficheros extends Controller {
 				$fid = $this->trabajoficheros->almacena_bd($data);
 
 				// Copia del fichero al directorio correspondiente
-				// XXX TODO cambiar el valor fijo
 				$tmp = $fichero['tmp_name'];
-				if (FALSE === move_uploaded_file($tmp,
-							'/var/enviados/' . $fid)) {
-					// TODO borrarlo de la BD
+				if (FALSE === @move_uploaded_file($tmp,
+							$this->config->item('directorio_ficheros')
+							. '/' . $fid)) {
+
+					// Borrado de la BD
+					$this->trabajoficheros->elimina_bd($fid);
 					$data_form['error'] = '<p>Hubo un problema en la copia
 						del fichero. Por favor, comuníquelo al administrador
 						de la página.</p>';

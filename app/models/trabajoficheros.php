@@ -112,5 +112,13 @@ class TrabajoFicheros extends Model {
 
 		return $fid;
 	}
+
+	/*
+	 * Elimina de la base de datos un fichero dado por su identificador
+	 */
+
+	function elimina_bd($fid) {
+		$this->db->delete('ficheros', array('fid' => $fid));
+	}
 }
 ?>

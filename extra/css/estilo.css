@@ -269,3 +269,11 @@ div.error {
   background: url(../img/interfaz/error.png) #e8cece 10px center no-repeat;
 }
 
+div.ok {
+  color: #f0f0f0;
+  border: 1px solid #95c370;
+  font-weight: bold;
+  padding-left: 40px;
+  background: url(../img/interfaz/error.png) #68c81b 10px center no-repeat;
+}
+

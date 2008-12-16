@@ -179,7 +179,10 @@ class Ficheros extends Controller {
 
 				$this->load->view('form-envio-fichero', $data_form);
 			} else {
-				// TODO
+				$data = array(
+						'fid' => $fid
+				);
+				$this->load->view('fichero-enviado-nojs', $data);
 			}
 
 
@@ -188,8 +191,10 @@ class Ficheros extends Controller {
 			if (isset($data_form['error'])) {
 				echo $data_form['error'];
 			} else {
+				// Mensaje de éxito
+				$this->session->set_flashdata('mensaje_fichero',
+						'El fichero fue enviado correctamente');
 				echo $fid;
-				//echo "111"; // XXX, id del fichero enviado
 			}
 		}
 	}
@@ -220,31 +225,24 @@ class Ficheros extends Controller {
 	}
 
 	/*
-	 * Callbacks para validación de formulario de envío.
+	 * Visualización y descarga de un fichero.
 	 *
-	 * La contraseña sólo es necesaria si se ha indicado la opción de
-	 * "acceso universal"
+	 * Si el usuario está autenticado y es su fichero, podrá enviar el
+	 * enlace a las direcciones de correo que especifique
 	 */
-	function passwd_necesario($p) {
-		if ($this->input->post('tipoacceso') == 1 && empty($p)) {
-			$this->form_validation->set_message('passwd_necesario',
-					'Dado que el acceso al fichero será público, debe
-					especificar una contraseña para el mismo');
-			return FALSE;
-		} else {
-			return TRUE;
-		}
+
+	function ver_fichero($fid) {
+		$data = array(
+				'subtitulo' => 'enviar nuevo fichero',
+		);
+		$this->load->view('cabecera', $data);
+
+		$this->load->view('ver_fichero');
+
+		$this->load->view('pie');
 	}
 
-	function fichero_necesario($f) {
-		if (!isset($_FILES) || empty($_FILES['fichero']['name'])) {
-			$this->form_validation->set_message('fichero_necesario',
-					'Debe especificar un fichero');
-			return FALSE;
-		} else {
-			return TRUE;
-		}
-	}
+
 
 	/*
 	 * Funciones privadas
@@ -269,6 +267,33 @@ class Ficheros extends Controller {
 					$tiempos['2sem']);
 		} else {
 			return $tiempos['2sem'];
+		}
+	}
+
+	/*
+	 * Callbacks para validación de formulario de envío.
+	 *
+	 * La contraseña sólo es necesaria si se ha indicado la opción de
+	 * "acceso universal"
+	 */
+	function passwd_necesario($p) {
+		if ($this->input->post('tipoacceso') == 1 && empty($p)) {
+			$this->form_validation->set_message('passwd_necesario',
+					'Dado que el acceso al fichero será público, debe
+					especificar una contraseña para el mismo');
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
+	function fichero_necesario($f) {
+		if (!isset($_FILES) || empty($_FILES['fichero']['name'])) {
+			$this->form_validation->set_message('fichero_necesario',
+					'Debe especificar un fichero');
+			return FALSE;
+		} else {
+			return TRUE;
 		}
 	}
 

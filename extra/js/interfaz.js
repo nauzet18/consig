@@ -130,14 +130,15 @@ function pagina_envio() {
  *  2: fin del envío por cancelación
  */
 function fin_envio(tipo) {
+	$("#progreso").stopTime('contador');
+	$("#iframe_upload").stop();
 	if (tipo == 1) {
 		$("#progreso").html("100%");
 		$("#progreso").width("100%");
 		// Accedemos al resultado mediante
-		alert($("#iframe_upload").contents().text());
+		var fid = $("#iframe_upload").contents().text();
+		top.location.href = url_base + 'ficheros/' + fid;
   }
-	$("#progreso").stopTime('contador');
-	$("#iframe_upload").stop();
 	$.unblockUI();
 }
 

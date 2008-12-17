@@ -204,12 +204,12 @@ class Ficheros extends Controller {
 	function estado($id) {
         // Buscamos la extensión uploadprogress
         if (!function_exists('uploadprogress_get_info')) {
-            echo "nulo";
+            echo "noimplementado";
         } else {
             $info = uploadprogress_get_info($id);
 
             if ($info == NULL) {
-                echo "0;0;0";
+                echo "nulo";
             } else {
                 $enviados = $info['bytes_uploaded'];
                 $total = $info['bytes_total'];

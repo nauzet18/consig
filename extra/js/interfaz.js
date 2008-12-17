@@ -90,15 +90,15 @@ function pagina_envio() {
 					cache: false,
 					dataType: "text",
 					success: function(d) {
-            if (d != "nulo") {
+            if (d != "noimplementado" && d != "nulo") {
               var datos = d.split(";");
               $("#progreso").html(datos[0] + "%");
               $("#progreso").width(datos[0] + "%");
               $("#progreso_velocidad").html(datos[1]);
               $("#progreso_restante").html(datos[2]);
             } else {
-              $("#progreso_velocidad").html("¿? kB/s");
-              $("#progreso_restante").html("desconocido");
+              $("#progreso_velocidad").html("- kB/s");
+              $("#progreso_restante").html("-");
             }
 					},
 					error: function(obj, quepaso, otro) {
@@ -139,11 +139,15 @@ function fin_envio(tipo) {
 		var mensaje = $("#iframe_upload").contents().text();
 		if (mensaje.match(/^\d+$/)) {
 			top.location.href = url_base + 'ficheros/' + mensaje;
+			return; // Evitamos unblockUI
 		} else {
 			$("#form_subida").before('<div class="cuadro error">' 
 				+ mensaje + '</div>');
 		}
-  } 
+  } else if (tipo == 2) {
+		// Cancelado. Paramos
+		window.stop();
+	}
 	$.unblockUI();
 }
 

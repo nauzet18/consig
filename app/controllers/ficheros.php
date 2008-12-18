@@ -32,6 +32,11 @@ class Ficheros extends Controller {
 	function index()
 	{
 		$this->load->view('cabecera');
+		$ficheros = $this->trabajoficheros->extrae_bd();
+		$data = array(
+				'ficheros' => $ficheros,
+		);
+		$this->load->view('listado-ficheros', $data);
 		$this->load->view('pie');
 	}
 

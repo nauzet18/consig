@@ -37,6 +37,8 @@ tbody tr td
 tbody tr:hover
 {
   background            : #FFF url(../img/tabla/tr_bck.gif) repeat;
+  _cursor: hand;
+  cursor: pointer;
 }
 
 tbody tr:hover td

@@ -146,19 +146,38 @@ class TrabajoFicheros extends Model {
 	}
 
     /*
-     * Extrae de la base de datos un fichero dado su identificador,
-     * devolviendo FALSE si no encuentra ninguno.
+     * Extrae de la base de datos un fichero dado su identificador, o todos
+	 * los ficheros si no se especifica ninguno (o se pasa 0 como
+	 * primer parámetro).
+	 *
+	 * Si
+     * 
+	 * En el caso de especificar un identificador, se devuelve FALSE si no
+	 * se encuentra.
+	 *
+	 * En otro caso, se devolverá un array vacío
      */
 
-    function extrae_bd($fid) {
-        $query = $this->db->get_where('ficheros', array('fid' => $fid));
+    function extrae_bd($fid = 0, $ignorar_listar = 0) {
+		if ($fid != 0) {
+			$this->db->where('fid', $fid);
+		} elseif ($ignorar_listar == 0) {
+			// Si fid != 0, ignoraremos esta bandera
+			$this->db->where('listar', '1');
+		}
+
+		// TODO: configurable
+		$this->db->order_by("fechaenvio", "desc");
+        $query = $this->db->get('ficheros');
 
         $res = $query->result();
 
-        if (!$res || count($res) == 0) {
+        if ($fid == 0 && (!$res || count($res) == 0)) {
             return FALSE;
-        } else {
-            return $res[0];
+        } else if ($fid != 0) {
+			return $res[0];
+		} else {
+            return $res;
         }
 
     }

@@ -307,3 +307,11 @@ div.ficha_fichero ul li img {
   vertical-align: middle;
 }
 
+div.ficha_fichero .descripcion_fichero {
+  margin: 1em auto 0 auto;
+  width: 80%;
+  font-family: Monaco, DejaVu Sans Mono, Consolas, monospace;
+  background-color: #F9F7ED;
+  border: 1px solid #dddddd;
+  white-space: pre;
+}

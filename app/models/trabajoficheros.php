@@ -207,12 +207,14 @@ class TrabajoFicheros extends Model {
 	/*
 	 * Devuelve un usuario formateado convenientemente en HTML
 	 */
-	function usuario_html($usuario) {
+	function usuario_html($usuario, $mostrar_autor = 1) {
 
 		$cadena = '';
 
 		if (empty($usuario)) {
 			$cadena = 'Anónimo';
+		} elseif (!$mostrar_autor) {
+			$cadena = 'Anónimo *';
 		} else {
 			// Hack para cargar un modelo desde otro modelo
 			$ci =& get_instance();

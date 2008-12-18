@@ -31,14 +31,15 @@ $mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
 	   $this->trabajoficheros->intervalo_tiempo($fichero->fechaexp - time(),
 		   3);?>)</li>
 
+  <li><?php echo $this->trabajoficheros->usuario_html($fichero->remitente,
+		  $fichero->mostrar_autor)?></li>
 
-<?php
-	  // Mostrar autor sólo si él lo ha autorizado
-	  if ($fichero->mostrar_autor || empty($fichero->remitente)) {
-		  echo '<li>' .
-			  $this->trabajoficheros->usuario_html($fichero->remitente)  . '</li>';
-	  }
-?>
+  <li><img src="<?php echo site_url('img/interfaz/descripcion.png')?>"
+  alt="descripción" /> Descripción:
+  
+  <div class="descripcion_fichero"><?php echo
+  empty($fichero->descripcion) ? 'Sin descripción' : $fichero->descripcion?></div>
+  </div>
  </ul>
 </div>
 

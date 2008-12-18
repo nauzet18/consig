@@ -280,3 +280,30 @@ div.ok {
   background: url(../img/interfaz/error.png) #68c81b 10px center no-repeat;
 }
 
+
+div.descarga_fichero {
+  text-align: center;
+}
+
+div.descarga_fichero span.nombre_fichero {
+  font-size: 140%;
+  display: block;
+}
+
+div.descarga_fichero span.tam_fichero {
+  display: block;
+}
+
+div.ficha_fichero {
+  width: 90%;
+}
+
+div.ficha_fichero ul {
+  list-style: none;
+}
+
+div.ficha_fichero ul li img {
+  margin-right: 0.5em;
+  vertical-align: middle;
+}
+

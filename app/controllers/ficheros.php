@@ -243,11 +243,15 @@ class Ficheros extends Controller {
 
 		$data = array(
 				'subtitulo' => 'ojeando un fichero',
+                'no_mostrar_aviso' => 1,
+		);
+
+		$data_fichero = array(
                 'fichero' => $fichero,
 		);
 		$this->load->view('cabecera', $data);
 
-		$this->load->view('ver_fichero');
+		$this->load->view('ver_fichero', $data_fichero);
 
 		$this->load->view('pie');
 	}

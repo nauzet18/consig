@@ -29,7 +29,7 @@ class TrabajoFicheros extends Model {
 	 * segundos
 	 */
 
-	function intervalo_tiempo($segundos) {
+	function intervalo_tiempo($segundos, $granularidad = 3) {
 		$unidades = array(
 				'sem' => 604800,
 				'd' => 86400,
@@ -44,6 +44,10 @@ class TrabajoFicheros extends Model {
 				$cadena .= ($cadena ? ' ' : '') . floor($segundos / $v) . $n;
 				$segundos %= $v;
 			}
+
+            if ($granularidad == 0)
+                break;
+            $granularidad--;
 		}
 
 		return ($cadena ? $cadena : '0s');
@@ -70,6 +74,26 @@ class TrabajoFicheros extends Model {
 		}
 
 		return ($cadena ? $cadena : '¿? B/s');
+	}
+
+	/*
+	 * Devuelve el tamaño de un fichero en formato "humano",
+	 * con una precisión moderada, a partir de su tamaño en bytes
+	 */
+
+	function tam_fichero($bytes) {
+		$unidades = array(
+				'GB' => 1073741824,
+				'MB' => 1048576,
+				'kB' => 1024,
+				'B' => 1
+		);
+
+		foreach ($unidades as $u => $v) {
+			if ($bytes >= $v) {
+				return round($bytes/$v, 2) . $u;
+			}
+		}
 	}
 
 	/*
@@ -138,5 +162,65 @@ class TrabajoFicheros extends Model {
         }
 
     }
+
+	/*
+	 * "Aproxima" el mimetype de un fichero a partir de su extensión,
+	 * devolviendo un array con dos elementos: el mimetype y su icono, si lo
+	 * hubiera
+	 */
+
+	function consigue_mimetype($nombre) {
+		// TODO: configurable
+		$mimetype = 'application/octet-stream';
+		$icono = 'mime.png';
+		if (strpos($nombre, ".") !== FALSE) {
+			$partes = split("\.", $nombre);
+			$extension = $partes[count($partes) - 1];
+			$q = $this->db->get_where('mimetypes', 
+					array('extension' => $extension),
+					1);
+			$res = $q->row();
+			if ($res) {
+				$mimetype = $res->mimetype;
+				$icono = $res->icono;
+			}
+		}
+
+		return array($mimetype, $icono);
+	}
+
+	/*
+	 * Devuelve una fecha en formato legible, según la zona
+	 * horaria configurada, a partir de un timestamp GMT
+	 */
+
+	function fecha_legible($timestamp) {
+		$timezone = $this->config->item('zona_horaria');
+		$daylight_saving = TRUE;
+
+		$nuevo_t = gmt_to_local($timestamp, $timezone, $daylight_saving);
+		return strftime("%d de %B de %Y, %H:%Mh", $nuevo_t);
+	}
+
+	/*
+	 * Devuelve un usuario formateado convenientemente en HTML
+	 */
+	function usuario_html($usuario) {
+
+		$cadena = '';
+
+		if (empty($usuario)) {
+			$cadena = 'Anónimo';
+		} else {
+			// Hack para cargar un modelo desde otro modelo
+			$ci =& get_instance();
+			$ci->load->model('trabajoldap');
+			$datos = $ci->trabajoldap->consulta($usuario);
+			$cadena = ($datos === FALSE) 
+				? 'Desconocido' : $datos['nombre'];
+		}
+
+		return '<span class="usuario">' . $cadena .  '</span>';
+	}
 }
 ?>

@@ -1,3 +1,5 @@
+DELETE FROM mimetypes;
+
 INSERT INTO mimetypes VALUES ('', 'x-world/x-3dmf', '3dm', '');
 INSERT INTO mimetypes VALUES ('', 'x-world/x-3dmf', '3dmf', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-authorware-bin', 'aab', '');
@@ -503,7 +505,7 @@ INSERT INTO mimetypes VALUES ('', 'audio/tsplayer', 'tsp',
 'krec_fileplay.png');
 INSERT INTO mimetypes VALUES ('', 'text/tab-separated-values', 'tsv', '');
 INSERT INTO mimetypes VALUES ('', 'image/florian', 'turbot', '');
-INSERT INTO mimetypes VALUES ('', 'text/plain', 'txt', '');
+INSERT INTO mimetypes VALUES ('', 'text/plain', 'txt', 'txt.png');
 INSERT INTO mimetypes VALUES ('', 'text/x-uil', 'uil', '');
 INSERT INTO mimetypes VALUES ('', 'text/uri-list', 'uni', '');
 INSERT INTO mimetypes VALUES ('', 'text/uri-list', 'unis', '');

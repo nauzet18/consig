@@ -43,11 +43,11 @@ class TrabajoFicheros extends Model {
 			if ($segundos >= $v) {
 				$cadena .= ($cadena ? ' ' : '') . floor($segundos / $v) . $n;
 				$segundos %= $v;
+				$granularidad--;
 			}
 
             if ($granularidad == 0)
                 break;
-            $granularidad--;
 		}
 
 		return ($cadena ? $cadena : '0s');
@@ -182,7 +182,7 @@ class TrabajoFicheros extends Model {
 			$res = $q->row();
 			if ($res) {
 				$mimetype = $res->mimetype;
-				$icono = $res->icono;
+				$icono = empty($res->icono) ? "mime.png" : $res->icono;
 			}
 		}
 
@@ -198,7 +198,9 @@ class TrabajoFicheros extends Model {
 		$timezone = $this->config->item('zona_horaria');
 		$daylight_saving = TRUE;
 
-		$nuevo_t = gmt_to_local($timestamp, $timezone, $daylight_saving);
+		// TODO XXX ¿no funciona en GMT?
+		//$nuevo_t = gmt_to_local($timestamp, $timezone, $daylight_saving);
+		$nuevo_t = $timestamp;
 		return strftime("%d de %B de %Y, %H:%Mh", $nuevo_t);
 	}
 

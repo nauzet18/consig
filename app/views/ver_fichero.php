@@ -27,8 +27,9 @@ $mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
   <li><img src="<?php echo site_url('img/interfaz/fecha-envio.png')?>"
   alt="fecha de envío" /><?php echo
   $this->trabajoficheros->fecha_legible($fichero->fechaenvio);?> 
-	  (caduca en <?php echo $this->trabajoficheros->intervalo_tiempo(time() -
-         $fichero->fechaexp, 2);?>)</li>
+	  (caduca en <?php echo
+	   $this->trabajoficheros->intervalo_tiempo($fichero->fechaexp - time(),
+		   3);?>)</li>
 
 
 <?php

@@ -241,8 +241,8 @@ fieldset.enrollado .contenido_enrollado {
   margin-right: 0.2em;
 }
 
-#listado-ficheros tr.prohibido td {
-  background-color: #f0f0f0;
+#listado-ficheros tr.denegado td {
+  color: #aaaaaa;
 }
 
 div#datos_autenticado {
@@ -311,7 +311,6 @@ div.ficha_fichero .descripcion_fichero {
   margin: 1em auto 0 auto;
   width: 80%;
   font-family: Monaco, DejaVu Sans Mono, Consolas, monospace;
-  background-color: #F9F7ED;
-  border: 1px solid #dddddd;
+  font-size: 90%;
   white-space: pre;
 }

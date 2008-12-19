@@ -34,14 +34,14 @@ tbody tr td
 	padding               : 5px 10px;
   color                 : #666;
 }
-tbody tr:hover
+tbody tr.permitido:hover
 {
   background            : #FFF url(../img/tabla/tr_bck.gif) repeat;
   _cursor: hand;
   cursor: pointer;
 }
 
-tbody tr:hover td
+tbody tr.permitido:hover td
 {
   color                 : #454545;
 }

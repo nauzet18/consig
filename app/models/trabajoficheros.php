@@ -91,7 +91,7 @@ class TrabajoFicheros extends Model {
 
 		foreach ($unidades as $u => $v) {
 			if ($bytes >= $v) {
-				return round($bytes/$v, 2) . $u;
+				return round($bytes/$v, 2) . ' ' . $u;
 			}
 		}
 	}
@@ -245,5 +245,26 @@ class TrabajoFicheros extends Model {
 
 		return '<span class="usuario">' . $cadena .  '</span>';
 	}
+
+	/*
+	 * Indica si un usuario tiene acceso a un determinado fichero, dado como
+	 * su objeto proveniente de la base de datos.
+	 *
+	 * Acceso permitido en los siguientes casos:
+	 *
+	 *  1. Usuario autenticado
+	 *  2. Fichero con acceso universal
+	 *  3. Usuario conectado desde una IP de las contenidas en el fichero de
+	 *     subredes
+	 *  4. TODO ¿fichero subido desde una IP interna? ¿configurable?
+	 */
+
+	function acceso_fichero($fichero) {
+		// XXX Mockup
+        if ($fichero->nombre == "12.pdf")
+            return FALSE;
+		return TRUE;
+	}
+
 }
 ?>

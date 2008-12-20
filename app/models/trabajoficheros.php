@@ -172,7 +172,7 @@ class TrabajoFicheros extends Model {
 
         $res = $query->result();
 
-        if ($fid == 0 && (!$res || count($res) == 0)) {
+        if ($fid != 0 && (!$res || count($res) == 0)) {
             return FALSE;
         } else if ($fid != 0) {
 			return $res[0];

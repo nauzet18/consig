@@ -31,23 +31,24 @@ class TrabajoLDAP extends Model {
 	 *
 	 * @param 	string uid del usuario que desea autenticarse
 	 * @param 	string contraseña del usuario 
-	 * @return	FALSE si falla, o un array con los datos del usuario
+	 * @return	FALSE si falla, -1 si hay problemas con la configuración de 
+	 *          LDAP, o un array con los datos del usuario
 	 */
 	function login($uid, $passwd) {
 		$opciones = $this->config->item('ldap');
 
 		 $ds = @ldap_connect($opciones["host"], $opciones["puerto"]);
 		 if (!$ds) {
-			 // TODO: log o parecido
-			 return FALSE;
+			log_message('error', 'No se puede conectar a LDAP');
+			return -1;
 		 }
 
 		 // Búsqueda del DN del usuario, para posteriormente hacer bind
 		 // con él
 		if (@ldap_bind($ds, $opciones['dnadmin'],
 					$opciones['passwdadmin']) !== TRUE) {
-			// TODO: log de configuración errónea
-			return FALSE;
+			log_message('error', 'No se pudo hacer bind. Revise la configuración');
+			return -1;
 		}
 
 		 $atributos = array('dn', 'sn1', 'givenName', 'UsEsRelacion',
@@ -55,13 +56,11 @@ class TrabajoLDAP extends Model {
 		 $res = @ldap_search($ds, $opciones['base'],
 				 	'uid='.$uid, $atributos);
 		 if ($res === FALSE) {
-			 // TODO: log o parecido
 			 return FALSE;
 		 }
 		 $info = @ldap_get_entries($ds, $res);
 
 		 if ($info['count'] == 0) {
-			 // TODO: log de usuario no encontrado
 			 return FALSE;
 		 }
 
@@ -70,11 +69,12 @@ class TrabajoLDAP extends Model {
 
 		 $ret = @ldap_bind($ds, $dn_usuario, $passwd);
 		 @ldap_unbind($ds);
-		 
-		 if ($ret) {
+
+		 if ($ret !== FALSE) {
 			 return $info[0];
 		 } else {
-			 // TODO: log de intento fallido
+			 log_message('info', 'Intento de login fallido. uid='.$uid
+				 .', IP: ' . $this->input->ip_address());
 			 return FALSE;
 		 }
 	}

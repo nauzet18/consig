@@ -312,6 +312,18 @@ $config['rewrite_short_tags'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
+| CUSTOM Error Logging
+|--------------------------------------------------------------------------
+| This will display error log levels contained in the array below
+| Leaving this array blank will log ALL levels
+| Deleting it entirely while MY_Log library is active will default to the
+| standard log threshold config item
+| 'ERROR','DEBUG','INFO' are the system defaults.
+*/
+$config['show_in_log']= array('ERROR','INFO'); 
+
+/*
+|--------------------------------------------------------------------------
 | Opciones de la consigna
 |--------------------------------------------------------------------------
 */

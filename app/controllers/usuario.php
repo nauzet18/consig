@@ -73,6 +73,8 @@ class Usuario extends Controller {
 			if ($res === FALSE) {
 				$data_form['error'] = 'Nombre de usuario o contraseña
 					erróneos';
+			} elseif ($res == -1) {
+				$data_form['error'] = 'Hay problemas actualmente con la autenticación. Por favor, inténtelo más tarde';
 			} else {
 				// Sólo nos interesan unos cuantos datos
 				$datos = array(

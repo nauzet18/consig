@@ -108,13 +108,13 @@ class TrabajoLDAP extends Model {
 		$opciones = $this->config->item('ldap');
 		$ds = @ldap_connect($opciones["host"], $opciones["puerto"]);
 		if (!$ds) {
-			// TODO: log o parecido
+			log_message('error', 'No se puede conectar a LDAP');
 			return FALSE;
 		}
 
 		if (@ldap_bind($ds, $opciones['dnadmin'],
 					$opciones['passwdadmin']) !== TRUE) {
-			// TODO: log de configuración errónea
+			log_message('error', 'No se pudo hacer bind. Revise la configuración');
 			return FALSE;
 		}
 
@@ -125,7 +125,8 @@ class TrabajoLDAP extends Model {
 		$info = @ldap_get_entries($ds, $res);
 
 		if ($info['count'] == 0) {
-			// TODO: log de usuario no encontrado
+			log_message('error', 'Búsqueda en LDAP de usuario inexistente: '
+					. $dn);
 			return FALSE;
 		}
 

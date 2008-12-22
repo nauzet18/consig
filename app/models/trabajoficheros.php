@@ -128,10 +128,22 @@ class TrabajoFicheros extends Model {
 			unset($datos['fid']);
 			$this->db->where('fid', $fid);
 			$this->db->update('ficheros', $datos); 
+			log_message('info', 
+					(empty($datos['remitente']) ? 
+						'-' 
+						: $datos['remitente'] )
+					. ' ('.$datos['ip'].') ' .
+					'actualiza fichero ' . $datos['fid']);
 
 		} else {
 			$this->db->insert('ficheros', $datos);
 			$fid = $this->db->insert_id();
+			log_message('info', 
+					(empty($datos['remitente']) ? 
+						'-' 
+						: $datos['remitente'] )
+					. ' ('.$datos['ip'].') ' .
+					'añade fichero ' . $fid);
 		}
 
 		return $fid;

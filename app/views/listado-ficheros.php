@@ -26,10 +26,11 @@ foreach ($ficheros as $f) {
     if (!$permitido) {
         echo ' <img src="' . site_url('img/interfaz/prohibido.png') .'"
 	  alt="acceso denegado"/>';
-    }
-    echo '
-	 <img src="' . site_url('img/tipos/16x16/' . $mimetype[1]) . '"
-	  alt="' . $mimetype[0] . '"/></td>';
+    } else {
+		echo '
+			<img src="' . site_url('img/tipos/16x16/' . $mimetype[1]) . '"
+			alt="' . $mimetype[0] . '"/></td>';
+	}
 
 	// Nombre del fichero
     if ($permitido) {

@@ -48,7 +48,7 @@ $route['scaffolding_trigger'] = "";
  * Página de cada fichero
  */
 
-$route['ficheros/(:num)'] = 'ficheros/ver_fichero/$1';
+$route['ficheros/(.*)'] = 'ficheros/ver_fichero/$1';
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

@@ -278,5 +278,20 @@ class TrabajoFicheros extends Model {
 		return TRUE;
 	}
 
+	/**
+	 * Toma una decisión respecto a una contraseña. Existe la siguiente
+	 * casuística:
+	 *
+	 *  1. Fichero sin contraseña: TRUE
+	 *  2. Fichero con contraseña: comprobación de la contraseña
+	 */
+	function comprueba_passwd($fichero, $cadena) {
+		if (empty($fichero->password)) {
+			return TRUE;
+		} else {
+			return ($fichero->password == $cadena);
+		}
+	}
+
 }
 ?>

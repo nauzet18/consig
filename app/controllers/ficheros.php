@@ -237,7 +237,7 @@ class Ficheros extends Controller {
 	 * enlace a las direcciones de correo que especifique
 	 */
 
-	function ver_fichero($fid) {
+	function ver_fichero($fid, $descargar = '') {
         $fichero = $this->trabajoficheros->extrae_bd($fid);
 
         if ($fichero === FALSE) {
@@ -245,20 +245,48 @@ class Ficheros extends Controller {
                     caducado, por tanto el enlace ya no es válido.');
             return;
         }
-
-		$data = array(
-				'subtitulo' => 'ojeando un fichero',
-                'no_mostrar_aviso' => 1,
+		
+		// Para decidir las acciones
+		$data_cabecera = array(
+				'no_mostrar_aviso' => 1
 		);
 
-		$data_fichero = array(
-                'fichero' => $fichero,
-		);
-		$this->load->view('cabecera', $data);
+		$permiso = $this->trabajoficheros->acceso_fichero($fichero);
+		$decision_password = $this->trabajoficheros->comprueba_passwd($fichero,
+				$this->input->post('passwd-fichero'));
+		$pide_descarga = $descargar == 'descarga';
 
-		$this->load->view('ver_fichero', $data_fichero);
+		// Casuística
+		if ($permiso) {
+			$data_fichero = array(
+					'fichero' => $fichero,
+			);
 
-		$this->load->view('pie');
+			if ($pide_descarga) {
+				if ($decision_password) {
+					// TODO: envío de fichero
+					return;
+				} else {
+					// Se equivocó en la contraseña
+					$data_fichero['error'] = 'La contraseña especificada
+						no es válida.';
+				}
+
+			} // pide_descarga
+			$data_cabecera['subtitulo'] = 'ojeando un fichero';
+
+			$this->load->view('cabecera', $data_cabecera);
+			$this->load->view('ver_fichero', $data_fichero);
+			$this->load->view('pie');
+		} else {
+			// Acceso denegado
+			$data_cabecera['subtitulo'] = 'acceso denegado';
+
+			$this->load->view('cabecera', $data_cabecera);
+			$this->load->view('ver_fichero_denegado');
+			$this->load->view('pie');
+		}
+
 	}
 
 

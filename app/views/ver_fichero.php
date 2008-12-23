@@ -7,6 +7,10 @@ if ($msj) {
 	echo '<div class="cuadro ok">' . $msj . '</div>';
 }
 
+if (isset($error)) {
+	echo '<div class="cuadro error">' . $error . '</div>';
+}
+
 
 // Estimación de mimetype
 $mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);

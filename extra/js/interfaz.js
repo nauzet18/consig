@@ -157,4 +157,17 @@ function fin_envio(tipo) {
 	$.unblockUI();
 }
 
+function pagina_descarga() {
+	$("#passwd_fichero").focus();
+	$("#cuadro_password_fichero").each(function() {
+			$(".descarga_fichero").click(function() {
+				$("#cuadro_password_fichero").expose({
+					speed: 400,
+					opacity: 0.3,
+				});
+			});
+	});
+}
+
+
 // vim: sw=2 tabstop=2

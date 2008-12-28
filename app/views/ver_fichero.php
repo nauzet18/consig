@@ -1,5 +1,6 @@
 <?php
 $this->load->helper('date');
+$this->load->helper('form');
 // Mensaje de actualización, envío, etc
 $msj = $this->session->flashdata('mensaje_fichero');
 
@@ -18,13 +19,49 @@ $mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
 
 
 <div class="descarga_fichero">
+<?php
+if (empty($fichero->password)) {
+	echo '<a href="' 
+		. site_url('ficheros/' . $fichero->fid . '/descarga')
+		.'">';
+}
+?>
  <img src="<?php echo site_url('img/tipos/128x128/' . $mimetype[1])?>"
   alt="<?php echo $mimetype[0]?>" />
 
  <span class="nombre_fichero"><?php echo $fichero->nombre?></span>
  <span class="tam_fichero"><?php echo
 	 $this->trabajoficheros->tam_fichero($fichero->tam)?></span>
+<?php
+if (empty($fichero->password)) {
+	echo '</a>';
+}
+?>
 </div>
+
+<?php
+	 if (!empty($fichero->password)):
+?>
+
+<div id="cuadro_password_fichero">
+<?php 
+ echo form_open('ficheros/' . $fichero->fid . '/descarga');
+ $data_passwd_fichero = array(
+	 'name' => 'passwd-fichero',
+	 'id' => 'passwd_fichero',
+	 'maxlength' => '255',
+	 'size' => '10',
+ );
+ echo form_password($data_passwd_fichero); 
+?>
+	<input type="image" src="<?php echo site_url('img/interfaz/boton-descarga.png') ?>" value="Descargar" alt="Descargar">
+<?php
+ echo form_close(); 
+?>
+</div>
+<?php
+endif;
+?>
 
 <div class="ficha_fichero">
  <ul>

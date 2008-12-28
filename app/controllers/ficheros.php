@@ -264,7 +264,8 @@ class Ficheros extends Controller {
 
 			if ($pide_descarga) {
 				if ($decision_password) {
-					// TODO: envío de fichero
+					// Correcto. Enviamos el fichero
+					$this->trabajoficheros->fuerza_descarga($fichero);
 					return;
 				} else {
 					// Se equivocó en la contraseña
@@ -274,6 +275,7 @@ class Ficheros extends Controller {
 
 			} // pide_descarga
 			$data_cabecera['subtitulo'] = 'ojeando un fichero';
+			$data_cabecera['body_onload'] = 'pagina_descarga()';
 
 			$this->load->view('cabecera', $data_cabecera);
 			$this->load->view('ver_fichero', $data_fichero);

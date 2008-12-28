@@ -314,3 +314,9 @@ div.ficha_fichero .descripcion_fichero {
   font-size: 90%;
   white-space: pre;
 }
+
+#cuadro_password_fichero {
+  width: 100%;
+  text-align: center;
+  margin: 10px auto 0 auto;
+}

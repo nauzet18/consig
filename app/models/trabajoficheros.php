@@ -293,5 +293,43 @@ class TrabajoFicheros extends Model {
 		}
 	}
 
+	/**
+	 * Fuerza la descarga de un fichero por parte del usuario
+	 */
+
+	function fuerza_descarga($fichero) {
+		$fid = $fichero->fid;
+		$ruta = $this->config->item('directorio_ficheros') . '/' . $fid;
+
+		// Incoherencia bd <-> sistema de ficheros
+		if (!file_exists($ruta)) {
+			log_message('error', 'El fichero ' . $fid . ' está en BD pero'
+				.' no en el sistema de ficheros');
+			show_error('Existe un problema con la base de datos. Por favor, '
+				.'pruebe más tarde');
+			die();
+		}
+
+		/*
+		 * Cabeceras y demás
+		 */
+
+		if (ini_get('zlib.output_compression')) {
+			ini_set('zlib.output_compression', 'Off');
+		}
+		header("Pragma: public");
+		header("Expires: 0");
+		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Cache-Control: private",false);
+
+		// TODO: ignorar mimetype o no? IE con problemas?
+		header("Content-Type: application/force-download");
+		header("Content-Disposition: attachment; filename=\""
+			. $fichero->nombre ."\";" );
+		header("Content-Transfer-Encoding: binary");
+		header("Content-Length: ". $fichero->tam);
+		readfile($ruta);
+	}
+
 }
 ?>

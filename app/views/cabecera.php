@@ -76,7 +76,6 @@ if ($autenticado !== FALSE) {
 	 Salir</a>
    </li>
    <?php
-	   // TODO: añadir en "mis ficheros" entre paréntesis sus ficheros
    endif;
    ?>
   </ul>

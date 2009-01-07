@@ -344,10 +344,19 @@ $config['directorio_ficheros'] = '/var/enviados';
 $config['zona_horaria'] = 'UP1';
 
 /*
- * Localización
+ * Traducción, etc
  */
 setlocale(LC_ALL, "es_ES");
 
+/*
+ * Tiempo de expiración por defecto. Los valores posibles son:
+ *
+ * 1h, 1d, 1sem, 2sem
+ * 
+ * Por defecto, 2 semanas
+ */
+
+$config['expiracion_defecto'] = '2sem';
 
 
 

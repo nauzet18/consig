@@ -298,8 +298,8 @@ class Ficheros extends Controller {
 	 */
 
 	/*
-	 * Devuelve un "offset" para un periodo de expiración dado, ignorándolo
-	 * en caso de explicitarse que se trata de un envío anónimo.
+	 * Devuelve un "offset" para un periodo de expiración dado, o el offset
+	 * del tiempo de expiración por defecto en caso de ser un envío anónimo.
 	 */
 
 	function _tiempo_expiracion($opcion, $todos_permitidos = 0) {
@@ -309,13 +309,14 @@ class Ficheros extends Controller {
 				'1sem' => 604800,
 				'2sem' => 1209600,
 		);
+		
+		$tiempo_defecto = $this->config->item('expiracion_defecto');
 
-		// TODO: tiempo por defecto configurable
 		if ($todos_permitidos) {
 			return (isset($tiempos[$opcion]) ? $tiempos[$opcion] :
-					$tiempos['2sem']);
+					$tiempos[$tiempo_defecto]);
 		} else {
-			return $tiempos['2sem'];
+			return $tiempos[$tiempo_defecto];
 		}
 	}
 

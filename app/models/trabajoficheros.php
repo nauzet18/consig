@@ -162,20 +162,29 @@ class TrabajoFicheros extends Model {
 	 * los ficheros si no se especifica ninguno (o se pasa 0 como
 	 * primer parámetro).
 	 *
-	 * Si
-     * 
-	 * En el caso de especificar un identificador, se devuelve FALSE si no
-	 * se encuentra.
+	 * ignorar_listar indica si debe considerarse el valor de 'listar' para
+	 * cada fichero, si se ignora todos los ficheros serán mostrados aunque
+	 * hayan sido marcados para no ser listados.
 	 *
-	 * En otro caso, se devolverá un array vacío
+	 *  @param int 	identificador del fichero a extraer, 0 para todos los
+	 *  			ficheros
+	 *  @param int	ignorar la marca 'listar' de los ficheros
+	 *
+	 *  @param string	remitente del que queremos extraer los ficheros
+	 *  @return		el elemento o elementos extraídos, FALSE si no se
+	 * 				encontró
      */
 
-    function extrae_bd($fid = 0, $ignorar_listar = 0) {
+    function extrae_bd($fid = 0, $ignorar_listar = 0, $remitente = '') {
 		if ($fid != 0) {
 			$this->db->where('fid', $fid);
 		} elseif ($ignorar_listar == 0) {
 			// Si fid != 0, ignoraremos esta bandera
 			$this->db->where('listar', '1');
+		}
+
+		if (!empty($remitente))  {
+			$this->db->where('remitente', $remitente);
 		}
 
 		// TODO: configurable

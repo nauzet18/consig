@@ -1,4 +1,7 @@
-<h2>Listado de ficheros</h2>
+<?php
+$titulo = isset($titulo) ? $titulo : "Listado de ficheros";
+?>
+<h2><?php echo $titulo; ?></h2>
  <table id="listado-ficheros">
   <thead>
    <tr>

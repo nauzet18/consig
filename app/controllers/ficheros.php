@@ -291,6 +291,25 @@ class Ficheros extends Controller {
 
 	}
 
+	/*
+	 * Muestra los ficheros del usuario actual
+	 */
+	function propios() {
+		if (!$this->autenticado) {
+            show_error('Debe autenticarse para poder ver sus ficheros.');
+		} else {
+			$this->load->view('cabecera');
+			$ficheros = $this->trabajoficheros->extrae_bd(0, 1,
+					$this->session->userdata('dn'));
+			$data = array(
+					'titulo' => 'Sus ficheros enviados',
+					'ficheros' => $ficheros,
+			);
+			$this->load->view('listado-ficheros', $data);
+			$this->load->view('pie');
+		}
+	}
+
 
 
 	/*

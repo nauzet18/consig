@@ -311,6 +311,33 @@ class Ficheros extends Controller {
 	}
 
 
+	/*
+	 * Minipágina para los bocadillos en el listado de ficheros
+	 */
+	function minipagina($fid) {
+        $fichero = $this->trabajoficheros->extrae_bd($fid);
+
+        if ($fichero === FALSE) {
+			echo "Fichero inexistente o caducado";
+        } else {
+			$permitido = $this->trabajoficheros->acceso_fichero($fichero);
+
+			if ($permitido === FALSE) {
+				echo "Prohibido";
+			} else {
+				$mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
+				echo '<strong>' . $fichero->nombre . '</strong>';
+				echo '
+				<img src="' . site_url('img/tipos/16x16/' . $mimetype[1]) . '"
+				alt="' . $mimetype[0] . '"/>';
+				echo '<div class="descripcion_fichero">';
+				echo empty($fichero->descripcion) ? 'Sin descripción' :
+					$fichero->descripcion;
+				echo '</div>';
+			}
+		}
+	}
+
 
 	/*
 	 * Funciones privadas

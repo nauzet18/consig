@@ -33,6 +33,18 @@ $(document).ready(function() {
 		top.location.href = url_base + 'ficheros/' + id;
 	});
 
+	// Burbuja con información del fichero
+	$("#listado-ficheros tr.permitido").cluetip({
+		showTitle: false,
+		cluetipClass: 'jtip',
+		ajaxCache: false,
+		hoverIntent: {
+			sensitivity:  1,
+			interval:     600,
+			timeout:      600
+		}
+	});
+
 });
 
 function pagina_login() {

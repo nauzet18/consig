@@ -24,7 +24,8 @@ foreach ($ficheros as $f) {
 	} else {
 		$clase = 'denegado';
 	}
-	echo '<tr id="fichero-'. $f->fid .'" class="'.$clase.'">';
+	echo '<tr id="fichero-'. $f->fid .'" class="'.$clase.'"
+		rel="'.site_url('ficheros/minipagina/' . $f->fid).'">';
 	echo '<td>';
     if (!$permitido) {
         echo ' <img src="' . site_url('img/interfaz/prohibido.png') .'"

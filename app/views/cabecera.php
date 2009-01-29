@@ -9,6 +9,8 @@
 <title>Consigna <?php if (!empty($subtitulo)) { echo "| ".$subtitulo;} ?></title>
 <link rel="stylesheet" href="<?php echo site_url('css/estilo.css')?>" type="text/css" media="screen"
 />
+<link rel="stylesheet" href="<?php echo site_url('css/jquery.cluetip.css')?>"
+type="text/css" media="screen" />
 <script language="JavaScript" type="text/javascript">
 //<![CDATA[
 var url_base = '<?php echo base_url()?>';
@@ -22,6 +24,12 @@ site_url('js/jquery.overlay-0.14.pack.js')?>"></script>
 site_url('js/interfaz.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/jquery.expose-0.14.pack.js')?>"></script>
+<script language="JavaScript" type="text/javascript" src="<?php echo
+site_url('js/jquery.dimensions.js')?>"></script>
+<script language="JavaScript" type="text/javascript" src="<?php echo
+site_url('js/jquery.hoverIntent.js')?>"></script>
+<script language="JavaScript" type="text/javascript" src="<?php echo
+site_url('js/jquery.cluetip.js')?>"></script>
 
 <?php
 if (isset($js_adicionales)) {

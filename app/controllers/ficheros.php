@@ -68,6 +68,7 @@ class Ficheros extends Controller {
 		$this->form_validation->set_rules('tipoacceso', '', '');
 		$this->form_validation->set_rules('descripcion', '', '');
 		$this->form_validation->set_rules('mostrar_autor', '', '');
+		$this->form_validation->set_rules('expiracion', '', '');
 
 		$data_form = array();
 		$desatendido = $this->input->post('desatendido');

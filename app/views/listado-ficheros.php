@@ -38,7 +38,15 @@ foreach ($ficheros as $f) {
 
 	// Nombre del fichero
     if ($permitido) {
-        echo '<td>'. anchor('ficheros/' . $f->fid, $f->nombre)  .'</td>';
+
+		// ¿Propietario?
+		$atributos_enlace = array();
+		if ($this->trabajoficheros->es_propietario($f)) {
+			$atributos_enlace['class'] = 'fichero_propio';
+		}
+
+        echo '<td>'. anchor('ficheros/' . $f->fid, $f->nombre,
+				$atributos_enlace) . '</td>';
     } else {
         echo '<td>'. $f->nombre  .'</td>';
     }

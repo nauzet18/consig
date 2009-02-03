@@ -340,5 +340,38 @@ class TrabajoFicheros extends Model {
 		readfile($ruta);
 	}
 
+	/**
+	 * Determina si el usuario actual tiene permiso para modificar los datos
+	 * de un fichero.
+	 *
+	 */
+	function permiso_modificacion($fichero) {
+		$autenticado = $this->session->userdata('autenticado');
+		if (!$autenticado) {
+			return FALSE;
+		} else {
+			$usuario= $this->session->userdata('dn');
+			// XXX ¿administradores?
+			return $usuario == $fichero->remitente;
+		}
+	}
+
+	/**
+	 * Determina si un fichero posee a un determinado usuario.
+	 *
+	 * @param fichero
+	 * @param string usuario, opcional. Si no se indica, se supone que se
+	 * trabaja contra el usuario actual
+	 */
+	function es_propietario($fichero, $usuario = '') {
+		if (empty($usuario) && !$this->session->userdata('autenticado')) {
+			return FALSE; // No hay usuario actual
+		} elseif (empty($usuario)) {
+			$usuario = $this->session->userdata('dn');
+		}
+
+		return $fichero->remitente == $usuario;
+	}
+
 }
 ?>

@@ -188,6 +188,10 @@ class Ficheros extends Controller {
 				}
 
 			} // pide_descarga
+			if ($this->trabajoficheros->permiso_modificacion($fichero)) {
+				$data_fichero['permiso_modificacion'] = 1;
+			}
+				
 			$data_cabecera['subtitulo'] = 'ojeando un fichero';
 			$data_cabecera['body_onload'] = 'pagina_descarga()';
 
@@ -228,7 +232,7 @@ class Ficheros extends Controller {
 	 * Edición de un fichero
 	 */
 
-	function editar($fid) {
+	function modificar($fid) {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 	}

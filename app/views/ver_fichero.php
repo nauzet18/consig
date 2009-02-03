@@ -27,9 +27,11 @@ if (empty($fichero->password)) {
 }
 ?>
  <img src="<?php echo site_url('img/tipos/128x128/' . $mimetype[1])?>"
-  alt="<?php echo $mimetype[0]?>" />
+  alt="<?php echo $mimetype[0]?>" /><br />
 
- <span class="nombre_fichero"><?php echo $fichero->nombre?></span>
+ <span class="nombre_fichero<?php echo
+ ($this->trabajoficheros->es_propietario($fichero) ? ' fichero_propio' : '')
+ ?>"><?php echo $fichero->nombre?></span><br />
  <span class="tam_fichero"><?php echo
 	 $this->trabajoficheros->tam_fichero($fichero->tam)?></span>
 <?php
@@ -65,6 +67,16 @@ endif;
 
 <div class="ficha_fichero">
  <ul>
+ <?php
+ if (isset($permiso_modificacion)):
+ ?>
+  <li class="modificar">
+  <img src="<?php echo site_url('img/interfaz/modificar.png')?>"
+  alt="modificar" /><a href="<?php echo site_url('modificar/' 
+  	. $fichero->fid)?>">Modificar</a></li>
+ <?php
+ endif;
+ ?>
   <li><img src="<?php echo site_url('img/interfaz/fecha-envio.png')?>"
   alt="fecha de envío" /><?php echo
   $this->trabajoficheros->fecha_legible($fichero->fechaenvio);?> 

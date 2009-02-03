@@ -50,5 +50,12 @@ $route['scaffolding_trigger'] = "";
 
 $route['ficheros/(:num.*)'] = 'ficheros/ver_fichero/$1';
 
+/*
+ * Modificación de un fichero
+ */
+
+
+$route['modificar/(:num.*)'] = 'ficheros/modificar/$1';
+
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

@@ -245,6 +245,11 @@ fieldset.enrollado .contenido_enrollado {
   color: #aaaaaa;
 }
 
+.fichero_propio {
+  padding: 2px 10px 2px 0;
+  background: url(../img/interfaz/fichero_propio.png) transparent center right no-repeat;
+}
+
 div#datos_autenticado {
   font-size: 90%;
   background-color: #f0f0f0;
@@ -285,13 +290,12 @@ div.descarga_fichero {
   text-align: center;
 }
 
-div.descarga_fichero span.nombre_fichero {
-  font-size: 140%;
-  display: block;
+div.descarga_fichero a {
+  text-decoration: none;
 }
 
-div.descarga_fichero span.tam_fichero {
-  display: block;
+div.descarga_fichero span.nombre_fichero {
+  font-size: 140%;
 }
 
 div.ficha_fichero {
@@ -319,4 +323,9 @@ div.ficha_fichero .descripcion_fichero {
   width: 100%;
   text-align: center;
   margin: 10px auto 0 auto;
+}
+
+li.modificar {
+  text-align: right;
+  font-weight: bold;
 }

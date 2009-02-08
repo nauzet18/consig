@@ -233,8 +233,33 @@ class Ficheros extends Controller {
 	 */
 
 	function modificar($fid) {
-		$this->load->helper('form');
-		$this->load->library('form_validation');
+        $fichero = $this->trabajoficheros->extrae_bd($fid);
+
+        if ($fichero === FALSE) {
+            show_error('El fichero indicado no existe.');
+            return;
+        }
+
+		if (!$this->trabajoficheros->es_propietario($fichero)) {
+			show_error('No tiene permiso para modificar el fichero.');
+			return;
+		} else {
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+
+			$data_form = array(
+					'fichero' => $fichero,
+			);
+
+			$data = array(
+					'subtitulo' => 'modificar fichero',
+			);
+			$this->load->view('cabecera', $data);
+			$this->load->view('form-modif-fichero', $data_form);
+			$this->load->view('pie');
+
+			// TODO almacenamiento, procesado, etc
+		}
 	}
 
 
@@ -343,7 +368,7 @@ class Ficheros extends Controller {
 			$this->form_validation->set_rules('fichero', 'fichero',
 					'callback__fichero_necesario');
 		} else {
-			// XXX
+			// TODO
 		}
 
 

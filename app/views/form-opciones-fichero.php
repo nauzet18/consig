@@ -6,17 +6,20 @@
  * que se carga (error al rellenar la ficha, por ejemplo).
  */
 
-$descripcion = isset($descripcion) ? $descripcion : '';
-$expiracion = isset($expiracion) ? $expiracion : '2sem';
+$descripcion = isset($fichero) ? $fichero->descripcion : '';
+// XXX: pensar en las posibilidades de cambiar la fecha de expiración (lo de
+// abajo es erróneo)
+//$expiracion = isset($fichero) ? $fichero->expiracion : '2sem';
+$expiracion = '2sem';
 $listar = array(
-		(isset($listar) ? ($listar == 0) : FALSE),
-		(isset($listar) ? ($listar == 1) : TRUE));
+		(isset($fichero) ? ($fichero->listar == 0) : FALSE),
+		(isset($fichero) ? ($fichero->listar == 1) : TRUE));
 $tipoacceso = array(
-		(isset($tipoacceso) ? ($tipoacceso == 0) : TRUE),
-		(isset($tipoacceso) ? ($tipoacceso == 1) : FALSE));
+		(isset($fichero) ? ($fichero->tipoacceso == 0) : TRUE),
+		(isset($fichero) ? ($fichero->tipoacceso == 1) : FALSE));
 $mostrar_autor = array(
-		(isset($mostrar_autor) ? ($mostrar_autor == 0) : FALSE),
-		(isset($mostrar_autor) ? ($mostrar_autor == 1) : TRUE));
+		(isset($fichero) ? ($fichero->mostrar_autor == 0) : FALSE),
+		(isset($fichero) ? ($fichero->mostrar_autor == 1) : TRUE));
 
 $valores_campos = array(
 		'fichero_passwd' => '',
@@ -34,8 +37,8 @@ if (isset($fid)) {
 
 
 // ¿Envío nuevo o existente?
-if (isset($fid)) {
-	echo form_hidden('fid', $fid);
+if (isset($fichero)) {
+	echo form_hidden('fid', $fichero->fid);
 }
 
 
@@ -49,7 +52,7 @@ $passwd = array(
 
 
 // ¿Envío nuevo o existente?
-if (isset($fid)) {
+if (isset($fichero)) {
 	echo form_label('Contraseña de acceso al fichero (no rellenar para dejar
 				igual):', 'fichero_passwd');
 } else {
@@ -60,7 +63,7 @@ echo form_password($passwd);
 // TODO: en edición, permitir eliminar la clave
 
 
-if ($mostrar_todo):
+if (isset($mostrar_todo) && $mostrar_todo):
 ?>
 <div class="form_descripcion">
 Es obligatorio especificar una contraseña si el fichero podrá ser
@@ -149,7 +152,13 @@ if ($mostrar_todo) {
 	echo form_fieldset_close();
 }
 
-echo form_submit('enviar', 'Enviar');
+if (isset($fichero)) {
+	$texto_boton = 'Modificar';
+} else {
+	$texto_boton = 'Enviar';
+}
+
+echo form_submit('enviar', $texto_boton);
 echo br();
 
 

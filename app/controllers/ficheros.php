@@ -246,19 +246,33 @@ class Ficheros extends Controller {
 		} else {
 			$this->load->helper('form');
 			$this->load->library('form_validation');
-
 			$data_form = array(
 					'fichero' => $fichero,
 			);
 
-			$data = array(
-					'subtitulo' => 'modificar fichero',
-			);
-			$this->load->view('cabecera', $data);
-			$this->load->view('form-modif-fichero', $data_form);
-			$this->load->view('pie');
+			// Formulario enviado
+			if ($this->input->post('enviar')) {
+				$resultado = $this->_procesado_envio_fichero('modificar',
+						$data_form, $fid);
+			}
+			
+			// ¿Errores?
+			if (!$this->input->post('enviar') || isset($data_form['error']) 
+				|| $resultado == PROCESADO_ERR_FORMULARIO) {
 
-			// TODO almacenamiento, procesado, etc
+				$data = array(
+						'subtitulo' => 'modificar fichero',
+				);
+				$this->load->view('cabecera', $data);
+				$this->load->view('form-modif-fichero', $data_form);
+				$this->load->view('pie');
+			} else {
+				// Mensaje de éxito
+				$this->session->set_flashdata('mensaje_fichero',
+						'El fichero fue modificado');
+				redirect('/ficheros/' . $fid);
+			}
+
 		}
 	}
 
@@ -362,90 +376,115 @@ class Ficheros extends Controller {
 		$this->form_validation->set_rules('mostrar_autor', '', '');
 		$this->form_validation->set_rules('expiracion', '', '');
 
+
 		if ($tipo == 'nuevo') {
-			$this->form_validation->set_rules('fichero_passwd', 'contraseña',
-					'callback__passwd_necesario');
 			$this->form_validation->set_rules('fichero', 'fichero',
 					'callback__fichero_necesario');
+			$this->form_validation->set_rules('fichero_passwd', 'contraseña',
+					'callback__passwd_necesario');
 		} else {
-			// TODO
+			// TODO: casos vaciar contraseña y dejar contraseña tal cual
 		}
 
 
 		$resultado = $this->form_validation->run();
 		if ($resultado === TRUE) {
-			$fichero = $_FILES['fichero'];
 
-			// Errores en el envío
-			if ($fichero['error'] != UPLOAD_ERR_OK) {
-				if ($fichero['error'] == UPLOAD_ERR_INI_SIZE) {
-					$data_form['error'] = '<p>El fichero excede el tamaño permitido</p>';
-				} else {
-					$data_form['error'] = '<p>Hay problemas para enviar
-						(código <tt>'.$fichero['error'].'</tt>). 
-						Póngase en contacto con el administrador</p>';
+			// Array para almacenar en BD
+			$data = array();
+
+			if ($tipo == 'nuevo') {
+				$fichero = $_FILES['fichero'];
+
+				// Errores en el envío
+				if ($fichero['error'] != UPLOAD_ERR_OK) {
+					if ($fichero['error'] == UPLOAD_ERR_INI_SIZE) {
+						$data_form['error'] = '<p>El fichero excede el tamaño permitido</p>';
+					} else {
+						$data_form['error'] = '<p>Hay problemas para enviar
+							(código <tt>'.$fichero['error'].'</tt>). 
+							Póngase en contacto con el administrador</p>';
+					}
+
+					return PROCESADO_ERR_ESCRITURA;
 				}
 
-				return PROCESADO_ERR_ESCRITURA;
-			} else {
-				/*
-				 * Pasos:
-				 *
-				 *  1. Limpiar el nombre
-				 *  2. Limpiar la descripción, si la hubiera
-				 *  3. Guardar en BD
-				 *  4. Copiar el fichero con un nombre acorde al id obtenido en
-				 *     BD
-				 *  [ lo siguiente ocurre fuera de este bloque ]
-				 *  5. Anuncio del éxito al usuario
-				 *  6. TODO: formulario para enviar el fichero a contactos
-				 */
-
 				// Limpieza del nombre
-				$nombre_fichero = $this->trabajoficheros->limpia_nombre($fichero['name']);
+				$data['nombre'] = $this->trabajoficheros->limpia_nombre($fichero['name']);
+				$data['tam'] = $fichero['size'];
 
-				// Limpieza de la descripción, si la hay
-				$descripcion_fichero =
-					$this->trabajoficheros->limpia_descripcion($this->input->post('descripcion', TRUE));
+				// Remitente, IP y fechas
+				$data['remitente'] = $this->autenticado ?
+					$this->session->userdata('dn') :
+					'';
+				$data['ip'] = $this->input->ip_address();
 
-				// Guardamos en BD, atendiendo al estado del usuario
-				// (autenticado/ no autenticado)
-				$passwd_fichero = $this->input->post('fichero_passwd');
+			} else {
+				// Cargamos de la base de datos lo referente al fichero que
+				// estemos editando
+				$fid = $this->input->post('fid', TRUE);
+				if ($fid === FALSE) {
+					$data_form['error'] = '<p>Hay algún problema con el
+						formulario de edición. Por favor, comuníquelo al administrador
+						de la página.</p>';
+					return PROCESADO_ERR_FORMULARIO;
+				}
 
+				$actual =
+					$this->trabajoficheros->extrae_bd($fid);
+				if ($actual === FALSE) {
+					$data_form['error'] = '<p>Fichero inexistente.</p>';
+					return PROCESADO_ERR_FORMULARIO;
+				}
+
+				$data['fid'] = $fid;
+			}
+
+
+			// Limpieza de la descripción, si la hay
+			$data['descripcion'] =
+				$this->trabajoficheros->limpia_descripcion($this->input->post('descripcion', TRUE));
+
+			// Contraseña
+			if ($tipo == 'nuevo') {
+				$data['password'] = $this->input->post('fichero_passwd');
+			} else {
+				// TODO: contraseña en blanco = conservar, faltaría el caso
+				// de querer eliminar la contraseña
+				$passwd_post = $this->input->post('fichero_passwd');
+				if (!empty($passwd_post)) {
+					$data['password'] = $passwd_post;
+				}
+			}
+
+			if ($tipo == 'nuevo') {
+				$fechaenvio = time();
 				$expiracion_fichero =
 					$this->_tiempo_expiracion($this->input->post('expiracion'),
 							$this->autenticado);
-				$listar_fichero = (!$this->autenticado ? '1' :
-						$this->input->post('listar'));
-				$tipoacceso_fichero = (!$this->autenticado ? '0' :
-						$this->input->post('tipoacceso'));
-				$mostrar_autor_fichero = (!$this->autenticado ? '1' :
-						$this->input->post('mostrar_autor'));
-
-				// Otras variables generadas para el usuario
-				$tam = $fichero['size'];
-				$remitente = $this->autenticado ?
-					$this->session->userdata('dn') :
-					'';
-				$ip = $this->input->ip_address();
-				$fechaenvio = time();
 				$fechaexp = $fechaenvio + $expiracion_fichero;
+				$data['fechaenvio'] = $fechaenvio;
+				$data['fechaexp'] = $fechaexp;
+			} else {
+				// TODO: actualizaciones de fecha de expiración?
+			}
 
-				$data = array(
-						'nombre' => $nombre_fichero,
-						'tam' => $tam,
-						'remitente' => $remitente,
-						'ip' => $ip,
-						'fechaenvio' => $fechaenvio,
-						'fechaexp' => $fechaexp,
-						'listar' => $listar_fichero,
-						'mostrar_autor' => $mostrar_autor_fichero,
-						'tipoacceso' => $tipoacceso_fichero,
-						'password' => $passwd_fichero,
-						'descripcion' => $descripcion_fichero,
-				);
-				$fid = $this->trabajoficheros->almacena_bd($data);
+			$listar_fichero = (!$this->autenticado ? '1' :
+					$this->input->post('listar'));
+			$tipoacceso_fichero = (!$this->autenticado ? '0' :
+					$this->input->post('tipoacceso'));
+			$mostrar_autor_fichero = (!$this->autenticado ? '1' :
+					$this->input->post('mostrar_autor'));
 
+			$data['listar'] = $listar_fichero;
+			$data['mostrar_autor'] = $mostrar_autor_fichero;
+			$data['tipoacceso'] = $tipoacceso_fichero;
+
+			// Devolverá el fid nuevo, o el actual en caso de estar
+			// actualizando un fichero
+			$fid = $this->trabajoficheros->almacena_bd($data);
+
+			if ($tipo == 'nuevo') {
 				// Copia del fichero al directorio correspondiente
 				$tmp = $fichero['tmp_name'];
 				if (FALSE === @move_uploaded_file($tmp,
@@ -461,9 +500,9 @@ class Ficheros extends Controller {
 				}
 
 				return PROCESADO_OK;
-			}
-
+			} // tipo = nuevo, copia de fichero
 		} else {
+			// Se rellenó mal el formulario
 			return PROCESADO_ERR_FORMULARIO;
 		}
 	}

@@ -132,8 +132,8 @@ class TrabajoFicheros extends Model {
 					(empty($datos['remitente']) ? 
 						'-' 
 						: $datos['remitente'] )
-					. ' ('.$datos['ip'].') ' .
-					'actualiza fichero ' . $datos['fid']);
+					. ' ('.$this->input->ip_address().') ' .
+					'actualiza fichero ' . $fid);
 
 		} else {
 			$this->db->insert('ficheros', $datos);

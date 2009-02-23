@@ -31,12 +31,6 @@ $valores_campos = array(
 );
 
 // Cuadro de envío
-if (isset($fid)) {
-	echo form_fieldset('Datos del fichero');
-}
-
-
-// ¿Envío nuevo o existente?
 if (isset($fichero)) {
 	echo form_hidden('fid', $fichero->fid);
 }
@@ -84,7 +78,8 @@ echo form_label('Describa su envío (opcional):', 'descripcion');
 echo form_textarea($data);
 echo br();
 
-if ($mostrar_todo) {
+// TODO: al editar ficheros, ¿permitir cambios de fecha de expiración?
+if ($mostrar_todo && !isset($fichero)) {
 	// Expiración
 	$opc_expiracion = array(
 			'1h' => '1 hora',

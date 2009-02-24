@@ -123,6 +123,11 @@ class TrabajoFicheros extends Model {
 	 */
 
 	function almacena_bd($datos) {
+		// Contraseña
+		if (isset($datos['password'])) {
+			$datos['password'] = sha1($datos['password']);
+		}
+
 		if (isset($datos['fid'])) {
 			$fid = $datos['fid'];
 			unset($datos['fid']);
@@ -298,7 +303,7 @@ class TrabajoFicheros extends Model {
 		if (empty($fichero->password)) {
 			return TRUE;
 		} else {
-			return ($fichero->password == $cadena);
+			return ($fichero->password == sha1($cadena));
 		}
 	}
 

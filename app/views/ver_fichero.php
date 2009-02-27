@@ -86,6 +86,15 @@ endif;
 
   <li><?php echo $this->trabajoficheros->usuario_html($fichero->remitente,
 		  $fichero->mostrar_autor)?></li>
+<?php
+  	if ($fichero->listar == 0):
+?>
+  <li><img src="<?php echo site_url('img/interfaz/oculto.png')?>"
+   alt="fichero oculto" /> Este fichero no se muestra en la página
+   principal</li>
+<?php
+	endif;
+?>
 
   <li><img src="<?php echo site_url('img/interfaz/descripcion.png')?>"
   alt="descripción" /> Descripción:

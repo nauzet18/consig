@@ -33,7 +33,13 @@ foreach ($ficheros as $f) {
     } else {
 		echo '
 			<img src="' . site_url('img/tipos/16x16/' . $mimetype[1]) . '"
-			alt="' . $mimetype[0] . '"/></td>';
+			alt="' . $mimetype[0] . '"/>';
+		if ($f->listar == 0) {
+			echo '<img src="'. site_url('img/interfaz/oculto.png')
+				.'" alt="fichero oculto" />';
+		}
+
+		echo '</td>';
 	}
 
 	// Nombre del fichero

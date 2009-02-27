@@ -296,6 +296,11 @@ class Ficheros extends Controller {
 				echo '
 				<img src="' . site_url('img/tipos/16x16/' . $mimetype[1]) . '"
 				alt="' . $mimetype[0] . '"/>';
+
+				if ($fichero->listar == 0) {
+					echo ' (oculto)';
+				}
+
 				echo '<div class="descripcion_fichero">';
 				echo empty($fichero->descripcion) ? 'Sin descripción' :
 					$fichero->descripcion;

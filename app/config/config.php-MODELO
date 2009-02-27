@@ -358,6 +358,13 @@ setlocale(LC_ALL, "es_ES");
 
 $config['expiracion_defecto'] = '2sem';
 
+/*
+ * Para que el sistema borre los ficheros cuando expiren,
+ * cambia esta opción a TRUE, si no no lo harán
+ */
+
+$config['expiracion_efectiva'] = FALSE;
+
 
 
 /* End of file config.php */

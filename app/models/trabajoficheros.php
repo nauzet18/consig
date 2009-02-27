@@ -162,6 +162,42 @@ class TrabajoFicheros extends Model {
 		$this->db->delete('ficheros', array('fid' => $fid));
 	}
 
+	/*
+	 * Elimina un fichero del sistema de ficheros pero NO de la base de
+	 * datos
+	 */
+	function elimina_fs($fid) {
+		// Nos curamos en salud
+		$fid = basename($fid);
+		$ruta = $this->config->item('directorio_ficheros') . '/' . $fid;
+
+		if (!file_exists($ruta)) {
+			return FALSE;
+		} else {
+			return unlink($ruta);
+		}
+	}
+
+	/**
+	 * Elimina totalmente un fichero
+	 */
+	function elimina_fichero($fid, $motivo = 'no especificado') {
+		$this->elimina_bd($fid);
+		if (FALSE === $this->elimina_fs($fid)) {
+			log_message('error', 
+					'Error eliminando fichero ' . $fid . '. No sigue en '
+					.'BD, comprueba los permisos. Motivo original del '
+					.'borrado: ' . $motivo);
+
+			return FALSE;
+		} else {
+			log_message('info',
+					'Se elimina del sistema el fichero ' . $fid 
+					. ' con motivo: ' . $motivo);
+			return TRUE;
+		}
+	}
+
     /*
      * Extrae de la base de datos un fichero dado su identificador, o todos
 	 * los ficheros si no se especifica ninguno (o se pasa 0 como
@@ -376,6 +412,23 @@ class TrabajoFicheros extends Model {
 		}
 
 		return $fichero->remitente == $usuario;
+	}
+
+	/**
+	 * Devuelve una lista con los ficheros que han expirado
+	 *
+	 * @return  lista de ficheros expirados
+	 */
+
+	function expirados() {
+		$ahora = time();
+
+		$this->db->where('fechaexp <=' , $ahora);
+		$query = $this->db->get('ficheros');
+
+        $res = $query->result();
+
+		return $res;
 	}
 
 }

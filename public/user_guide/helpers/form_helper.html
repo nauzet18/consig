@@ -28,7 +28,7 @@
 <div id="masthead">
 <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
 <tr>
-<td><h1>CodeIgniter User Guide Version 1.7</h1></td>
+<td><h1>CodeIgniter User Guide Version 1.7.1</h1></td>
 <td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
 </tr>
 </table>
@@ -170,7 +170,7 @@ echo form_input($data);<br />
 // Would produce:<br /><br />
 &lt;input type="text" name="username" id="username" value="johndoe" maxlength="100" size="50" style="width:50%" /></code>
 
-<p>If you would like your form to contain some additional data, like JavaScript, you can pass it as a string in the
+<p>If you would like your form to contain some additional data, like Javascript, you can pass it as a string in the
 third parameter:</p>
 
 <code>$js = 'onClick="some_function()"';<br />
@@ -232,13 +232,14 @@ echo form_dropdown('shirts', $options, $shirts_on_sale);<br />
 &lt;/select&gt;</code>
 
 
-<p>If you would like the opening &lt;select> to contain  additional data, like JavaScript, you can pass it as a string in the
+<p>If you would like the opening &lt;select> to contain additional data, like an <kbd>id</kbd> attribute or JavaScript, you can pass it as a string in the
 fourth parameter:</p>
 
-<code>$js = 'onChange="some_function()"';<br />
+<code>$js = 'id="shirts" onChange="some_function();"';<br />
 <br />
 echo form_dropdown('shirts', $options, 'large', $js);</code>
 
+<p>If the array passed as $options is a multidimensional array, form_dropdown() will produce an &lt;optgroup&gt; with the array key as the label.</p>
 
 <h2>form_fieldset()</h2>
 
@@ -349,7 +350,7 @@ fourth parameter:</p>
 echo form_button('name','content');<br />
 <br />
 // Would produce<br />
-&lt;button name="name" type="submit"&gt;Content&lt;/button&gt;
+&lt;button name="name" type="button"&gt;Content&lt;/button&gt;
 </code>
 
 Or you can pass an associative array containing any data you wish your form to contain:
@@ -418,7 +419,7 @@ The second (optional) parameter allows you to set a default value for the form. 
 
 <code>&lt;input type="text" name="quantity" value="<dfn>&lt;?php echo set_value('quantity', '0'); ?></dfn>" size="50" /></code>
 
-<p>The above form will show "0" when loaded for the firs time.</p>
+<p>The above form will show "0" when loaded for the first time.</p>
 
 <h2>set_select()</h2>
 

@@ -34,7 +34,7 @@
 <div id="masthead">
 <table cellpadding="0" cellspacing="0" border="0" style="width:100%">
 <tr>
-<td><h1>CodeIgniter User Guide Version 1.7</h1></td>
+<td><h1>CodeIgniter User Guide Version 1.7.1</h1></td>
 <td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
 </tr>
 </table>
@@ -48,7 +48,7 @@
 <td id="breadcrumb">
 <a href="http://codeigniter.com/">CodeIgniter Home</a> &nbsp;&#8250;&nbsp;
 <a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
-Security
+Style Guide
 </td>
 <td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="codeigniter.com/user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
 </tr>
@@ -69,6 +69,7 @@ Security
 
 <h2>Table of Contents</h2>
 <ul class="minitoc">
+	<li><a href="#file_format">File Format</a></li>
 	<li><a href="#php_closing_tag">PHP Closing Tag</a></li>
 	<li><a href="#class_and_method_naming">Class and Method Naming</a></li>
 	<li><a href="#variable_names">Variable Names</a></li>
@@ -97,6 +98,43 @@ Security
 	<li><a href="#default_function_arguments">Default Function Arguments</a></li>
 	<li><a href="#overlapping_tag_parameters">Overlapping Tag Parameters</a></li>
 </ul>
+
+<li>
+
+		<h2><a name="file_format"></a>File Format</h2>
+		<div class="guidelineDetails">
+			<p>Files should be saved with Unicode (UTF-8) encoding.  The <abbr title="Byte Order Mark">BOM</abbr>
+				should <em>not</em> be used.  Unlike UTF-16 and UTF-32, there's no byte order to indicate in
+				a UTF-8 encoded file, and the <abbr title="Byte Order Mark">BOM</abbr> can have a negative side effect in PHP of sending output,
+				preventing the application from being able to set its own headers.  Unix line endings should
+				be used (LF).</p>
+			
+			<p>Here is how to apply these settings in some of the more common text editors.  Instructions for your
+				text editor may vary; check your text editor's documentation.</p>
+		
+			<h5>TextMate</h5>
+		
+			<ol>
+				<li>Open the Application Preferences</li>
+				<li>Click Advanced, and then the "Saving" tab</li>
+				<li>In "File Encoding", select "UTF-8 (recommended)"</li>
+				<li>In "Line Endings", select "LF (recommended)"</li>
+				<li><em>Optional:</em> Check "Use for existing files as well" if you wish to modify the line
+					endings of files you open to your new preference.</li>
+			</ol>
+		
+			<h5>BBEdit</h5>
+		
+			<ol>
+				<li>Open the Application Preferences</li>
+				<li>Select "Text Encodings" on the left.</li>
+				<li>In "Default text encoding for new documents", select "Unicode (UTF-8, no BOM)"</li>
+				<li><em>Optional:</em> In "If file's encoding can't be guessed, use", select
+					"Unicode (UTF-8, no BOM)"</li>
+				<li>Select "Text Files" on the left.</li>
+				<li>In "Default line breaks", select "Mac OS X and Unix (LF)"</li>
+			</ol>
+		</div>
 
 		<h2><a name="php_closing_tag"></a>PHP Closing Tag</h2>
 		<div class="guidelineDetails">

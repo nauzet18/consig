@@ -124,7 +124,7 @@ class TrabajoFicheros extends Model {
 
 	function almacena_bd($datos) {
 		// Contraseña
-		if (isset($datos['password'])) {
+		if (isset($datos['password']) && !empty($datos['password'])) {
 			$datos['password'] = sha1($datos['password']);
 		}
 

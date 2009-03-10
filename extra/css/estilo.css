@@ -329,3 +329,13 @@ li.modificar {
   text-align: right;
   font-weight: bold;
 }
+
+div#busqueda-rapida {
+  margin: 0.9em;
+  padding-left: 30px;
+  text-align: right;
+}
+
+.qs_label {
+  display: inline;
+}

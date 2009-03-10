@@ -365,6 +365,14 @@ $config['expiracion_defecto'] = '2sem';
 
 $config['expiracion_efectiva'] = FALSE;
 
+/*
+ * Tipo mime por defecto, para los ficheros que no tienen mimetype
+ * conocido
+ */
+
+$config['mimetype_defecto'] = 'application/octet-stream';
+$config['mimetype_icono_defecto'] = 'mime.png';
+
 
 
 /* End of file config.php */

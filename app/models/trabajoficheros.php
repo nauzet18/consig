@@ -22,6 +22,7 @@
 class TrabajoFicheros extends Model {
 	function TrabajoFicheros() {
 		parent::Model();
+		$this->load->helper('date');
 	}
 
 	/*
@@ -228,7 +229,6 @@ class TrabajoFicheros extends Model {
 			$this->db->where('remitente', $remitente);
 		}
 
-		// TODO: configurable
 		$this->db->order_by("fechaenvio", "desc");
         $query = $this->db->get('ficheros');
 
@@ -251,9 +251,8 @@ class TrabajoFicheros extends Model {
 	 */
 
 	function consigue_mimetype($nombre) {
-		// TODO: configurable
-		$mimetype = 'application/octet-stream';
-		$icono = 'mime.png';
+		$mimetype = $this->config->item('mimetype_defecto');
+		$icono = $this->config->item('mimetype_icono_defecto');
 		if (strpos($nombre, ".") !== FALSE) {
 			$partes = split("\.", $nombre);
 			$extension = $partes[count($partes) - 1];
@@ -276,11 +275,16 @@ class TrabajoFicheros extends Model {
 	 */
 
 	function fecha_legible($timestamp) {
-		$timezone = $this->config->item('zona_horaria');
-		$daylight_saving = TRUE;
+		/*
+		 * TODO Valorar en el futuro la posibilidad de usar fechas GMT
+		 *      conviriténdolas a locales
+		 *
+		 * $timezone = $this->config->item('zona_horaria');
+		 * $daylight_saving = TRUE;
+		 *
+		 * $nuevo_t = gmt_to_local($timestamp, $timezone, $daylight_saving);
+		 */
 
-		// TODO XXX ¿no funciona en GMT?
-		//$nuevo_t = gmt_to_local($timestamp, $timezone, $daylight_saving);
 		$nuevo_t = $timestamp;
 		return strftime("%d de %B de %Y, %H:%Mh", $nuevo_t);
 	}

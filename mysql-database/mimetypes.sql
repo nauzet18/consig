@@ -274,6 +274,7 @@ INSERT INTO mimetypes VALUES ('', 'video/mpeg', 'mp2', '');
 INSERT INTO mimetypes VALUES ('', 'video/x-mpeg', 'mp2', '');
 INSERT INTO mimetypes VALUES ('', 'video/x-mpeq2a', 'mp2', '');
 INSERT INTO mimetypes VALUES ('', 'audio/mpeg3', 'mp3', 'krec_fileplay.png');
+INSERT INTO mimetypes VALUES ('', 'video/mp4', 'mp4', 'video.png');
 INSERT INTO mimetypes VALUES ('', 'audio/mpeg', 'mpa', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-project', 'mpc', '');
 INSERT INTO mimetypes VALUES ('', 'video/mpeg', 'mpe', 'video.png');

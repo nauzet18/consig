@@ -40,8 +40,8 @@ $(document).ready(function() {
 		ajaxCache: false,
 		hoverIntent: {
 			sensitivity:  1,
-			interval:     600,
-			timeout:      600
+			interval:     100,
+			timeout:      100
 		}
 	});
 

@@ -49,13 +49,19 @@ $passwd = array(
 if (isset($fichero)) {
 	echo form_label('Contraseña de acceso al fichero (no rellenar para dejar
 				igual):', 'fichero_passwd');
+	echo form_password($passwd);
+	$eliminar_passwd = array(
+			'name' => 'eliminar_passwd',
+			'class' => 'eliminar-passwd',
+			'value' => 1,
+			'checked' => FALSE
+	);
+	echo form_checkbox($eliminar_passwd);
+	echo ' Dejar fichero sin clave';
 } else {
 	echo form_label('Contraseña de acceso al fichero:', 'fichero_passwd');
+	echo form_password($passwd);
 }
-echo form_password($passwd);
-
-// TODO: en edición, permitir eliminar la clave
-
 
 if (isset($mostrar_todo) && $mostrar_todo):
 ?>

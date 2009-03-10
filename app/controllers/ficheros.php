@@ -42,6 +42,9 @@ class Ficheros extends Controller {
 				'js_adicionales' => array(
 					'jquery.quicksearch.pack.js'
 				),
+				'css_adicionales' => array(
+					'jquery.cluetip.css',
+				),
 				'body_onload' => 'formulario_busqueda()',
 		);
 		$this->load->view('cabecera', $data);
@@ -226,6 +229,9 @@ class Ficheros extends Controller {
 					'js_adicionales' => array(
 						'jquery.quicksearch.pack.js'
 					),
+					'css_adicionales' => array(
+						'jquery.cluetip.css',
+					),
 					'body_onload' => 'formulario_busqueda()',
 			);
 			$this->load->view('cabecera', $data);
@@ -274,6 +280,7 @@ class Ficheros extends Controller {
 
 				$data = array(
 						'subtitulo' => 'modificar fichero',
+						'body_onload' => 'pagina_modificacion()',
 				);
 				$this->load->view('cabecera', $data);
 				$this->load->view('form-modif-fichero', $data_form);
@@ -376,6 +383,35 @@ class Ficheros extends Controller {
 		}
 	}
 
+	function _passwd_necesario_modificacion($p) {
+		if ($this->input->post('tipoacceso') == 1) {
+			
+			if ($this->input->post('eliminar_passwd') == 1) {
+				$this->form_validation->set_message(
+						'_passwd_necesario_modificacion',
+						'Dado que el acceso al fichero será público, debe
+						especificar una contraseña para el mismo');
+				return FALSE;
+			} elseif ($this->input->post('eliminar_passwd') === FALSE) {
+				// ¿No ha rellenado la contraseña y la tenía en blanco?
+				$fichero =
+					$this->trabajoficheros->extrae_bd($this->input->post('fid'));
+				if (empty($p) &&
+						empty($fichero->password)) {
+
+					$this->form_validation->set_message(
+							'_passwd_necesario_modificacion',
+							'Dado que el acceso al fichero será público, debe
+							especificar una contraseña para el mismo');
+					return FALSE;
+				}
+				return TRUE;
+			}
+		} else {
+			return TRUE;
+		}
+	}
+
 	/*
 	 * Procesado de valores para añadir / editar un fichero, marcando los
 	 * errores para el módulo de formularios de CodeIgniter según el tipo de
@@ -400,7 +436,8 @@ class Ficheros extends Controller {
 			$this->form_validation->set_rules('fichero_passwd', 'contraseña',
 					'callback__passwd_necesario');
 		} else {
-			// TODO: casos vaciar contraseña y dejar contraseña tal cual
+			$this->form_validation->set_rules('fichero_passwd', 'contraseña',
+					'callback__passwd_necesario_modificacion');
 		}
 
 
@@ -466,11 +503,11 @@ class Ficheros extends Controller {
 			if ($tipo == 'nuevo') {
 				$data['password'] = $this->input->post('fichero_passwd');
 			} else {
-				// TODO: contraseña en blanco = conservar, faltaría el caso
-				// de querer eliminar la contraseña
 				$passwd_post = $this->input->post('fichero_passwd');
 				if (!empty($passwd_post)) {
 					$data['password'] = $passwd_post;
+				} elseif ($this->input->post('eliminar_passwd') == 1) {
+					$data['password'] = '';
 				}
 			}
 

@@ -1,10 +1,7 @@
 Versión 1.0
 
 - Restricciones de acceso (IP, etc)
-- Permitir eliminar la clave al editar el fichero
 - Borrar ficheros (el propio usuario)
-- Búsqueda "in-line"
-- Ordenación (JS) de la tabla
 - Logs, logs, logs
 
 

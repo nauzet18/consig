@@ -9,8 +9,15 @@
 <title>Consigna <?php if (!empty($subtitulo)) { echo "| ".$subtitulo;} ?></title>
 <link rel="stylesheet" href="<?php echo site_url('css/estilo.css')?>" type="text/css" media="screen"
 />
-<link rel="stylesheet" href="<?php echo site_url('css/jquery.cluetip.css')?>"
-type="text/css" media="screen" />
+<?php
+if (isset($css_adicionales)) {
+	foreach ($css_adicionales as $css) {
+		echo '<link rel="stylesheet" href="'
+			. site_url('css/' . $css) . '" '
+			.'type="text/css" media="screen" />';
+	}
+}
+?>
 <script language="JavaScript" type="text/javascript">
 //<![CDATA[
 var url_base = '<?php echo base_url()?>';

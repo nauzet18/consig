@@ -196,5 +196,50 @@ function formulario_busqueda() {
 		});
 }
 
+/**
+ * Modificación de un fichero. Realiza:
+ *
+ * - Desactivación de contraseña al estar seleccionado "Eliminar clave"
+ * - Si el tipo de acceso es 'público', desactiva el campo "Eliminar clave",
+ *   lo pone a 0 y exige una contraseña
+ */
+
+function pagina_modificacion() {
+
+	// Estado inicial para tipo público
+	if ($("input[name=tipoacceso]:checked").val() == 1) {
+			$(".eliminar-passwd").attr("disabled", true);
+	}
+
+	// Si se puede cambiar, tipoacceso = privado, vale
+	$(".eliminar-passwd").change(function() {
+		if ($(this).attr('checked') == true) {
+			$(".passwd-fichero").val("");
+			$(".passwd-fichero").attr("disabled", true);
+		} else {
+			$(".passwd-fichero").attr("disabled", false);
+		}
+	});
+
+	// Cambio de opciones. ¿Es "tipo de acceso"?
+	$(".opcion").click(function() {
+		// Opción
+		var esteinput = $(this).children("input");
+		var opcion = esteinput.attr('name');
+		if (opcion == 'tipoacceso') {
+			// Extraemos el valor
+			var valor = esteinput.val();
+			if (valor == 0) {
+				$(".eliminar-passwd").attr("disabled", false);
+			} else
+				$(".eliminar-passwd").attr("disabled", true);
+				$(".eliminar-passwd").attr("checked", false);
+				$(".passwd-fichero").attr("disabled", false);
+			}
+
+	});
+
+}
+
 
 // vim: sw=2 tabstop=2

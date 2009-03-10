@@ -93,6 +93,7 @@ class Ficheros extends Controller {
 					'js_adicionales' => array(
 						'jquery.timers.js',
 						'jquery.blockUI_2.10.js',
+						'js/jquery.dimensions.js',
 					),
 			);
 			$this->load->view('cabecera', $data);
@@ -292,6 +293,42 @@ class Ficheros extends Controller {
 				redirect('/ficheros/' . $fid);
 			}
 
+		}
+	}
+
+
+	/**
+	 * Borrado de un fichero a petición de su remitente
+	 */
+	function borrar($fid) {
+		$fichero = $this->trabajoficheros->extrae_bd($fid);
+
+        if ($fichero === FALSE) {
+            show_error('El fichero indicado no existe.');
+            return;
+		} elseif (!$this->trabajoficheros->es_propietario($fichero)) {
+			show_error('No tiene permiso para borrar el fichero.');
+			return;
+		} else {
+			// ¿Confirmación?
+			if ($this->input->post('confirmacion')) {
+                $this->trabajoficheros->elimina_fichero($fichero->fid, 
+                        'El usuario pide su eliminación');
+				$this->session->set_flashdata('mensaje_fichero',
+						'El fichero fue eliminado');
+                redirect('');
+			} else {
+				$data_cabecera = array(
+						'subtitulo' => 'borrado de un fichero',
+				);
+				$this->load->view('cabecera', $data_cabecera);
+				
+				$data_form = array(
+						'fichero' => $fichero,
+				);
+				$this->load->view('form-confirmacion-borrado', $data_form);
+				$this->load->view('pie');
+			}
 		}
 	}
 

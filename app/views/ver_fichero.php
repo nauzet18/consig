@@ -1,5 +1,4 @@
 <?php
-$this->load->helper('date');
 $this->load->helper('form');
 // Mensaje de actualización, envío, etc
 $msj = $this->session->flashdata('mensaje_fichero');
@@ -74,6 +73,10 @@ endif;
   <img src="<?php echo site_url('img/interfaz/modificar.png')?>"
   alt="modificar" /><a href="<?php echo site_url('modificar/' 
   	. $fichero->fid)?>">Modificar</a></li>
+  <li class="borrar">
+  <img src="<?php echo site_url('img/interfaz/borrar.png')?>"
+  alt="borrar" /><a href="<?php echo site_url('borrar/' 
+  	. $fichero->fid)?>">Borrar</a></li>
  <?php
  endif;
  ?>

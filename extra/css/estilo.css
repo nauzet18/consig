@@ -294,7 +294,7 @@ div.descarga_fichero a {
   text-decoration: none;
 }
 
-div.descarga_fichero span.nombre_fichero {
+span.nombre_fichero {
   font-size: 140%;
 }
 
@@ -325,7 +325,7 @@ div.ficha_fichero .descripcion_fichero {
   margin: 10px auto 0 auto;
 }
 
-li.modificar {
+li.modificar, li.borrar {
   text-align: right;
   font-weight: bold;
 }

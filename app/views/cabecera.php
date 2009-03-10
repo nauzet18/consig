@@ -32,8 +32,6 @@ site_url('js/interfaz.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/jquery.expose-0.14.pack.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.dimensions.js')?>"></script>
-<script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/jquery.hoverIntent.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/jquery.cluetip.js')?>"></script>
@@ -130,4 +128,11 @@ if ($autenticado !== FALSE) {
  </div>
  <?php
   endif;
+
+ // Mensaje de actualización, envío, etc
+ $msj = $this->session->flashdata('mensaje_fichero');
+
+ if ($msj) {
+	echo '<div class="cuadro ok">' . $msj . '</div>';
+ }
  ?>

@@ -270,11 +270,12 @@ div.cuadro {
 }
 
 div.error {
-  color: #ff0000;
+  color: #ffffff;
   border: 1px solid #ddb3b3;
   font-weight: bold;
   padding-left: 40px;
-  background: url(../img/interfaz/error.png) #e8cece 10px center no-repeat;
+  padding-top: 10px;
+  background: url(../img/interfaz/error.png) #FF4444 10px center no-repeat;
 }
 
 div.ok {

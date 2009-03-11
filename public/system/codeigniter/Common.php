@@ -206,7 +206,7 @@ function config_item($item)
 function show_error($message)
 {
 	$error =& load_class('Exceptions');
-	echo $error->show_error('An Error Was Encountered', $message);
+	echo $error->show_error('Error', $message);
 	exit;
 }
 

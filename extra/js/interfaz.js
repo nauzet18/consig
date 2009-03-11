@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	$("a[@rel=#loginOverlay]").overlay({
 		onBeforeLoad: function() { 
-			this.expose();     
+			//this.expose();     
 			$("#form_login .usuario").val("");
 			$("#form_login .passwd").val("");
 			$("#form_login .usuario").focus();
@@ -11,7 +11,7 @@ $(document).ready(function() {
 		},
 
 		onClose: function(content) {
-			$.unexpose();
+			//$.unexpose();
 		}
 	});
 
@@ -173,10 +173,13 @@ function pagina_descarga() {
 	$("#passwd_fichero").focus();
 	$("#cuadro_password_fichero").each(function() {
 			$(".descarga_fichero").click(function() {
+				/*
 				$("#cuadro_password_fichero").expose({
 					speed: 400,
 					opacity: 0.3,
 				});
+				*/
+				$("#passwd_fichero").focus();
 			});
 	});
 }

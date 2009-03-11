@@ -30,8 +30,6 @@ site_url('js/jquery.overlay-0.14.pack.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/interfaz.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.expose-0.14.pack.js')?>"></script>
-<script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/jquery.hoverIntent.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/jquery.cluetip.js')?>"></script>
@@ -130,7 +128,7 @@ if ($autenticado !== FALSE) {
   endif;
 
  // Mensaje de actualización, envío, etc
- $msj = $this->session->flashdata('mensaje_fichero');
+ $msj = $this->session->flashdata('mensaje_fichero_cabecera');
 
  if ($msj) {
 	echo '<div class="cuadro ok">' . $msj . '</div>';

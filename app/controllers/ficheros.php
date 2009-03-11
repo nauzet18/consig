@@ -165,8 +165,8 @@ class Ficheros extends Controller {
         $fichero = $this->trabajoficheros->extrae_bd($fid);
 
         if ($fichero === FALSE) {
-            show_error('El fichero indicado no existe. Puede que haya
-                    caducado, por tanto el enlace ya no es válido.');
+			show_error('El fichero indicado no existe. Es posible que '
+					.'existiera y haya caducado.');
             return;
         }
 		
@@ -314,7 +314,7 @@ class Ficheros extends Controller {
 			if ($this->input->post('confirmacion')) {
                 $this->trabajoficheros->elimina_fichero($fichero->fid, 
                         'El usuario pide su eliminación');
-				$this->session->set_flashdata('mensaje_fichero',
+				$this->session->set_flashdata('mensaje_fichero_cabecera',
 						'El fichero fue eliminado');
                 redirect('');
 			} else {

@@ -34,6 +34,7 @@ class Ficheros extends Controller {
 	{
 		parent::Controller();	
 		$this->autenticado = $this->session->userdata('autenticado');
+		$this->load->config('subredes');
 	}
 	
 	function index()

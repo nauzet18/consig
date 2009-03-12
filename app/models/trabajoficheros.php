@@ -312,7 +312,7 @@ class TrabajoFicheros extends Model {
 		return '<span class="usuario">' . $cadena .  '</span>';
 	}
 
-	/*
+	/**
 	 * Indica si un usuario tiene acceso a un determinado fichero, dado como
 	 * su objeto proveniente de la base de datos.
 	 *
@@ -322,14 +322,34 @@ class TrabajoFicheros extends Model {
 	 *  2. Fichero con acceso universal
 	 *  3. Usuario conectado desde una IP de las contenidas en el fichero de
 	 *     subredes
-	 *  4. TODO ¿fichero subido desde una IP interna? ¿configurable?
+	 *  4. Fichero subido desde una IP interna
+	 *  5. Fichero subido por un usuario autenticado
+	 *
+	 *  @param	objeto fichero sobre el que se quiere hacer la comprobación
+	 *	@return si el usuario actual tiene acceso al fichero
 	 */
 
 	function acceso_fichero($fichero) {
-		// XXX Mockup
-        if ($fichero->nombre == "12.pdf")
-            return FALSE;
-		return TRUE;
+		if ($this->session->userdata('autenticado') 
+				|| $fichero->tipoacceso == 1
+				|| !empty($fichero->remitente)) {
+			return TRUE;
+		} else {
+			// Buscamos IP del usuario que accede,
+			// y si no hay éxito comprobamos la del remitente
+			$subredes = $this->config->item('subredes');
+
+			$ip_remitente = $fichero->ip;
+			$ip_usuario = $this->input->ip_address();
+			foreach ($subredes as $subred) {
+				if (preg_match($subred, $ip_remitente) ||
+						preg_match($subred, $ip_usuario)) {
+					return TRUE;
+				}
+			}
+
+			return FALSE;
+		}
 	}
 
 	/**

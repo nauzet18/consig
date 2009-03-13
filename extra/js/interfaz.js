@@ -60,6 +60,18 @@ function pagina_envio() {
 	$("#form_subida")
 		.append('<input type="hidden" name="desatendido" value="1" />');
 
+	// Previsión de acceso
+	$(".opcion").click(function() {
+		// Opción
+		var esteinput = $(this).children("input");
+		var opcion = esteinput.attr('name');
+		if (opcion == 'tipoacceso') {
+			// Extraemos el valor
+			var valor = esteinput.val();
+			actualiza_prevision(valor);
+		}
+	});
+
 	$("#form_subida").submit(function() {
 			// Comprobación de campos
 			$("div.error").remove();
@@ -240,8 +252,28 @@ function pagina_modificacion() {
 				$(".passwd-fichero").attr("disabled", false);
 			}
 
+			// Actualizamos previsión de acceso
+			actualiza_prevision(valor);
+
 	});
 
+}
+
+/**
+ * Actualiza la previsión de acceso en el caso de usuarios anónimos y
+ * desde una IP externa.
+ *
+ * Si ha cambiado el tipo de acceso significa que el envío es autenticado,
+ * por tanto todo depende del valor de tipoacceso
+ */
+function actualiza_prevision(tipoacceso) {
+	if (tipoacceso == 0) {
+		$("#prevision-peor-caso img").attr("src",
+			url_base + '/img/interfaz/cancelar.png');
+	} else {
+		$("#prevision-peor-caso img").attr("src",
+			url_base + '/img/interfaz/vale.png');
+	}
 }
 
 

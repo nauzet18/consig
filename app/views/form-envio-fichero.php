@@ -35,7 +35,6 @@ echo br();
 
 $this->load->view('form-opciones-fichero');
 
-
 ?>
 
 <div id="progreso_overlay">

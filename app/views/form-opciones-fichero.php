@@ -159,6 +159,15 @@ if (isset($fichero)) {
 	$texto_boton = 'Enviar';
 }
 
+
+// Previsión de acceso a usuarios
+
+$valor_temporal_tipoacceso = $valores_campos['tipoacceso'][0] ? 0 : 1;
+
+$this->load->view('prevision_futuro_acceso', array('prevision' =>
+			$this->trabajoficheros->futuro_acceso($valor_temporal_tipoacceso)));
+
+
 echo form_submit('enviar', $texto_boton);
 echo br();
 

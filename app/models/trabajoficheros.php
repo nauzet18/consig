@@ -331,24 +331,69 @@ class TrabajoFicheros extends Model {
 
 	function acceso_fichero($fichero) {
 		if ($this->session->userdata('autenticado') 
-				|| $fichero->tipoacceso == 1
-				|| !empty($fichero->remitente)) {
+				|| $fichero->tipoacceso == 1) {
 			return TRUE;
 		} else {
-			// Buscamos IP del usuario que accede,
-			// y si no hay éxito comprobamos la del remitente
-			$subredes = $this->config->item('subredes');
+			/*
+			 * Buscamos IP del usuario que accede,
+			 * y si no hay éxito comprobamos la del remitente.
+			 *
+			 * Realmente tipoacceso debe ser 1 para IPs internas (se hace
+			 * así al enviar un fichero), pero puede que hayamos modificado
+			 * el fichero de subredes después de que el usuario enviara el
+			 * fichero.
+			 */
 
 			$ip_remitente = $fichero->ip;
 			$ip_usuario = $this->input->ip_address();
-			foreach ($subredes as $subred) {
-				if (preg_match($subred, $ip_remitente) ||
-						preg_match($subred, $ip_usuario)) {
+
+			$ips = array($ip_remitente, $ip_usuario);
+
+			return $this->trabajoficheros->busqueda_ips($ips);
+		}
+	}
+
+	/**
+	 * Búsqueda de una o más IPs en la lista de IPs internas
+	 */
+
+	function busqueda_ips($arrips) {
+		$subredes = $this->config->item('subredes');
+
+		foreach ($subredes as $subred) {
+			foreach ($arrips as $ip) {
+				if (preg_match($subred, $ip)) {
 					return TRUE;
 				}
 			}
+		}
 
-			return FALSE;
+		return FALSE;
+	}
+
+
+	/**
+	 * Predice el futuro acceso al fichero
+	 *
+	 * @param	el tipo de acceso al fichero (0 = privado, 1 = público). Por
+	 * defecto es privado
+	 * @return	0 si la IP no es interna y no está autenticado, o está
+	 * 		  	  autenticado pero el tipo de acceso es 0
+	 * 			1 si la IP es interna, o está autenticado y el tipo de
+	 * 			  acceso es 1
+	 */
+	function futuro_acceso($tipoacceso = 0) {
+		$ip_interna =
+			$this->trabajoficheros->busqueda_ips(array(
+						$this->input->ip_address()
+					));
+		$autenticado = $this->session->userdata('autenticado');
+
+		if ((!$autenticado && !$ip_interna) ||
+				($autenticado && $tipoacceso == 0)) {
+			return 0;
+		} else {
+			return 1;
 		}
 	}
 

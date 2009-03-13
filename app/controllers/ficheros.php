@@ -91,6 +91,7 @@ class Ficheros extends Controller {
 			$data = array(
 					'subtitulo' => 'enviar nuevo fichero',
 					'body_onload' => 'pagina_envio()',
+					'no_mostrar_aviso' => TRUE,
 					'js_adicionales' => array(
 						'jquery.timers.js',
 						'jquery.blockUI_2.10.js',
@@ -567,6 +568,17 @@ class Ficheros extends Controller {
 					$this->input->post('tipoacceso'));
 			$mostrar_autor_fichero = (!$this->autenticado ? '1' :
 					$this->input->post('mostrar_autor'));
+
+
+			// Caso excepcional de acceso a fichero: no autenticado,
+			// pero con IP interna
+			if (!$this->autenticado &&
+					$this->trabajoficheros->busqueda_ips(array(
+							$this->input->ip_address()
+							)))
+				{
+					$tipoacceso_fichero = 1;
+				}
 
 			$data['listar'] = $listar_fichero;
 			$data['mostrar_autor'] = $mostrar_autor_fichero;

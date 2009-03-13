@@ -95,7 +95,7 @@ class Ficheros extends Controller {
 					'js_adicionales' => array(
 						'jquery.timers.js',
 						'jquery.blockUI_2.10.js',
-						'js/jquery.dimensions.js',
+						'jquery.dimensions.js',
 					),
 			);
 			$this->load->view('cabecera', $data);

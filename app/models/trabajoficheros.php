@@ -134,22 +134,13 @@ class TrabajoFicheros extends Model {
 			unset($datos['fid']);
 			$this->db->where('fid', $fid);
 			$this->db->update('ficheros', $datos); 
-			log_message('info', 
-					(empty($datos['remitente']) ? 
-						'-' 
-						: $datos['remitente'] )
-					. ' ('.$this->input->ip_address().') ' .
-					'actualiza fichero ' . $fid);
+			$this->logdetalles('update', '', $fid);
 
 		} else {
 			$this->db->insert('ficheros', $datos);
 			$fid = $this->db->insert_id();
-			log_message('info', 
-					(empty($datos['remitente']) ? 
-						'-' 
-						: $datos['remitente'] )
-					. ' ('.$datos['ip'].') ' .
-					'añade fichero ' . $fid);
+			$this->logdetalles('upload',
+					$datos['tam'], $fid);
 		}
 
 		return $fid;
@@ -183,18 +174,17 @@ class TrabajoFicheros extends Model {
 	 * Elimina totalmente un fichero
 	 */
 	function elimina_fichero($fid, $motivo = 'no especificado') {
+		$this->logdetalles('delete',
+				$motivo, $fid);
 		$this->elimina_bd($fid);
 		if (FALSE === $this->elimina_fs($fid)) {
-			log_message('error', 
+			$this->logdetalles('error', 
 					'Error eliminando fichero ' . $fid . '. No sigue en '
 					.'BD, comprueba los permisos. Motivo original del '
 					.'borrado: ' . $motivo);
 
 			return FALSE;
 		} else {
-			log_message('info',
-					'Se elimina del sistema el fichero ' . $fid 
-					. ' con motivo: ' . $motivo);
 			return TRUE;
 		}
 	}
@@ -422,8 +412,8 @@ class TrabajoFicheros extends Model {
 
 		// Incoherencia bd <-> sistema de ficheros
 		if (!file_exists($ruta)) {
-			log_message('error', 'El fichero ' . $fid . ' está en BD pero'
-				.' no en el sistema de ficheros');
+			$this->logdetalles('error', 
+				'Inconsistencia BD-FS. En FS no existe', $fid);
 			show_error('Existe un problema con la base de datos. Por favor, '
 				.'pruebe más tarde');
 			die();
@@ -498,6 +488,46 @@ class TrabajoFicheros extends Model {
         $res = $query->result();
 
 		return $res;
+	}
+
+	/**
+	 * Registra un mensaje en el log con toda la información posible del
+	 * usuario actual.
+	 *
+	 * Si se refiere a un fichero, añade información sobre éste.
+	 *
+	 * @param	nivel de log del mensaje (info, debug, etc)
+	 * @param	mensaje que se desea añadir
+	 * @param	fichero del que se hace el registro
+	 */
+	function logdetalles($nivel, $msj, $fichero = 0) {
+		$autenticado = $this->session->userdata('autenticado');
+		$usuario = ($autenticado ? $this->session->userdata('dn') : '-');
+
+		$ip = $this->input->ip_address();
+
+		// Usuario
+		$msj = $usuario . '@' . $ip . ' ' . $msj;
+
+		// Fichero
+		if ($fichero != 0) {
+			$f = $this->trabajoficheros->extrae_bd($fichero, 1);
+			if ($f === FALSE) {
+				// El fichero no existe!
+				logdetalles('error', 
+						'Llamada a log() con fichero inexistente ('
+							.$fichero.')');
+				$msj = '- ' . $msj;
+			} else {
+				// Prefijamos el mensaje con los datos del fichero
+				$msj = $f->fid . ':/' . $f->nombre . '/ ' . $msj;
+			}
+		} else {
+			$msj = '- ' . $msj;
+		}
+
+		// Guardamos log
+		log_message($nivel, $msj);
 	}
 
 }

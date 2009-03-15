@@ -126,6 +126,14 @@ class Ficheros extends Controller {
 				// Mensaje de éxito
 				$this->session->set_flashdata('mensaje_fichero',
 						'El fichero fue enviado correctamente');
+
+				/* 
+				 * Permitimos el acceso al fichero por lo menos la primera
+				 * vez. Útil para usuarios fuera de la red privilegiada y no
+				 * autenticados
+				 */
+				$this->session->set_flashdata('permitir_' . $fid, '1');
+
 				echo $fid;
 			}
 		}
@@ -178,8 +186,12 @@ class Ficheros extends Controller {
 		);
 
 		$permiso = $this->trabajoficheros->acceso_fichero($fichero);
-		$decision_password = $this->trabajoficheros->comprueba_passwd($fichero,
-				$this->input->post('passwd-fichero'));
+
+		// Caso de envío nuevo no privilegiado
+		if (!$permiso) {
+			$permiso = $this->session->flashdata('permitir_' .
+					$fichero->fid);
+		}
 		$pide_descarga = $descargar == 'descarga';
 
 		// Casuística
@@ -189,6 +201,9 @@ class Ficheros extends Controller {
 			);
 
 			if ($pide_descarga) {
+				$decision_password =
+					$this->trabajoficheros->comprueba_passwd($fichero,
+							$this->input->post('passwd-fichero'));
 				if ($decision_password) {
 					// Correcto. Enviamos el fichero
 					$this->trabajoficheros->fuerza_descarga($fichero);

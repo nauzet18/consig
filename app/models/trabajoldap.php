@@ -150,6 +150,16 @@ class TrabajoLDAP extends Model {
 		$datos['relaciones'] = unserialize($datos['relaciones']);
 		return $datos;
 	}
+
+	/**
+	 * Expira las entradas en la caché que tengan más de 12h
+	 * TODO tiempo configurable
+	 */
+	function expira_cache() {
+		$fechaexp = time() - 12 * 60 * 60;
+		$this->db->where('timestamp <=', $fechaexp);
+		$this->db->delete('cacheldap'); 
+	}
 }
 
 ?>

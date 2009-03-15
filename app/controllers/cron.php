@@ -28,6 +28,9 @@ class Cron extends Controller {
 
 	function index() {
 		$this->load->model('trabajoficheros');
+		$this->load->model('trabajoldap');
+
+		// 1. Ficheros expirados
 		$expirados = $this->trabajoficheros->expirados();
 
 		if ($this->config->item('expiracion_efectiva') === TRUE) {
@@ -36,6 +39,9 @@ class Cron extends Controller {
 						.  $this->trabajoficheros->fecha_legible($f->fechaexp));
 			}
 		}
+
+		// 2. Entradas en caché de LDAP
+		$this->trabajoldap->expira_cache();
 	}
 }
 

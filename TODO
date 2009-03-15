@@ -1,11 +1,13 @@
 Versión 1.0
 
 - Logs, logs, logs
+- Correos cuando expiren los mensajes (usar caché de LDAP)
+- Documentación de instalación y configuración
 
 
 Versión 1.1
 
-- Correos
+- Correos "enviar a"
 - Administración?
 - Reflexionar acerca de cambios de fecha de expiración
 - Antivirus

@@ -21,7 +21,7 @@ $mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
 <?php
 if (empty($fichero->password)) {
 	echo '<a href="' 
-		. site_url('ficheros/' . $fichero->fid . '/descarga')
+		. site_url($fichero->fid . '/descarga')
 		.'">';
 }
 ?>
@@ -46,7 +46,7 @@ if (empty($fichero->password)) {
 
 <div id="cuadro_password_fichero">
 <?php 
- echo form_open('ficheros/' . $fichero->fid . '/descarga');
+ echo form_open($fichero->fid . '/descarga');
  $data_passwd_fichero = array(
 	 'name' => 'passwd-fichero',
 	 'id' => 'passwd_fichero',

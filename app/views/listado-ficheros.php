@@ -51,7 +51,7 @@ foreach ($ficheros as $f) {
 			$atributos_enlace['class'] = 'fichero_propio';
 		}
 
-        echo '<td>'. anchor('ficheros/' . $f->fid, $f->nombre,
+        echo '<td>'. anchor($f->fid, $f->nombre,
 				$atributos_enlace) . '</td>';
     } else {
         echo '<td>'. $f->nombre  .'</td>';

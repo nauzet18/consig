@@ -30,7 +30,7 @@ $(document).ready(function() {
 	// Click sobre un elemento de una lista de ficheros
 	$("#listado-ficheros tr.permitido").click(function() {
 		var id = $(this).attr('id').replace(/fichero-/, "");
-		top.location.href = url_base + 'ficheros/' + id;
+		top.location.href = url_base + id;
 	});
 
 	// Burbuja con información del fichero
@@ -168,7 +168,7 @@ function fin_envio(tipo) {
 		// Accedemos al resultado mediante
 		var mensaje = $("#iframe_upload").contents().text();
 		if (mensaje.match(/^\d+$/)) {
-			top.location.href = url_base + 'ficheros/' + mensaje;
+			top.location.href = url_base + mensaje;
 			return; // Evitamos unblockUI
 		} else {
 			$("#form_subida").before('<div class="cuadro error">' 

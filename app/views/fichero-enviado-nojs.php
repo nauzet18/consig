@@ -3,7 +3,7 @@
 </div>
 
 <p>El fichero que ha enviado está disponible en la dirección <?php echo
-anchor('ficheros/' . $fid)?>, de acuerdo a las opciones que ha señalado en
+anchor($fid)?>, de acuerdo a las opciones que ha señalado en
 el momento del envío.</p>
 
 <?php

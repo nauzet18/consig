@@ -292,7 +292,7 @@ class Ficheros extends Controller {
 				// Mensaje de éxito
 				$this->session->set_flashdata('mensaje_fichero',
 						'El fichero fue modificado');
-				redirect('/ficheros/' . $fid);
+				redirect($fid);
 			}
 
 		}

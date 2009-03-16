@@ -374,6 +374,12 @@ $config['mimetype_defecto'] = 'application/octet-stream';
 $config['mimetype_icono_defecto'] = 'mime.png';
 
 
+/**
+ * Usar https para la autenticación
+ */
+
+$config['https_para_login'] = FALSE;
+
 
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */

@@ -95,6 +95,17 @@ class Usuario extends Controller {
 
 		// Muestra del formulario
 		$this->load->view('cabecera', $data_cabecera);
+
+		if ($this->config->item('https_para_login') == TRUE) {
+			$url_login = preg_replace('/^http:/', 'https:',
+					site_url('usuario/login')); 
+		} else {
+			$url_login = site_url('usuario/login');
+		}
+
+		$data_form['url_login'] = $url_login;
+
+
 		$this->load->view('form-login', $data_form);
 		$this->load->view('pie', $data_pie);
 	}

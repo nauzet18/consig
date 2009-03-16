@@ -20,7 +20,11 @@ $atr = array(
 		'id' => 'form_login'
 );
 
-echo form_open('usuario/login', $atr);
+if (!isset($url_login)) {
+	$url_login = site_url('usuario/login');
+}
+
+echo form_open($url_login, $atr);
 
 // Devolver al usuario a una página concreta
 

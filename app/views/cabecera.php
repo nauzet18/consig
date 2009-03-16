@@ -69,8 +69,14 @@ if ($autenticado !== FALSE) {
    </li>
    <?php
    if ($autenticado === FALSE && !isset($no_mostrar_login)):
+   	if ($this->config->item('https_para_login') == TRUE) {
+		$url_login = preg_replace('/^http:/', 'https:',
+				site_url('usuario/login')); 
+	} else {
+		$url_login = site_url('usuario/login');
+	}
    ?>
-   <li><a rel="#loginOverlay" href="<?php echo site_url('usuario/login'); ?>"> 
+   <li><a rel="#loginOverlay" href="<?php echo $url_login; ?>"> 
      <img src="<?php echo site_url('img/interfaz/login.png')?>" alt="login" /><br />
 	 Autenticaci&oacute;n</a>
    </li>
@@ -120,6 +126,7 @@ if ($autenticado !== FALSE) {
 	 $this->load->helper('url');
 	 $data = array(
 			 'devolver_a' => uri_string(),
+			 'url_login' => $url_login,
 	 );
 	 $this->load->view("form-login", $data);
 	 ?>

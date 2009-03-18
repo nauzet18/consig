@@ -380,6 +380,16 @@ $config['mimetype_icono_defecto'] = 'mime.png';
 
 $config['https_para_login'] = FALSE;
 
+/**
+ * Opciones propias de envío de correo
+ */
+
+// Dirección de correo desde la que hacer los envíos
+$config['direccion_correo_automatico'] = 'consigna@us.es';
+
+// Enviar correo al caducar un fichero
+$config['correo_caducado'] = FALSE;
+
 
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */

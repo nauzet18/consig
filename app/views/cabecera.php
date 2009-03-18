@@ -103,16 +103,9 @@ if ($autenticado !== FALSE) {
 
 <div id="contenido">
 <?php
- if (!$autenticado && !isset($no_mostrar_aviso)):
- ?>
- <div id="aviso">
-  Puede utilizar su nombre de usuario (UVUS) y contraseña de la
-  Universidad de Sevilla para tener acceso a todos los ficheros, además
-  de poder configurar y controlar sus envíos
- </div>
- <?php
- endif;
-
+ if (!$autenticado && !isset($no_mostrar_aviso)) {
+	 $this->load->view('aviso-no-autenticado');
+ }
 
  // Ventanita flotante de login
  if ($autenticado === FALSE && !isset($no_mostrar_login)):

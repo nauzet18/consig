@@ -29,14 +29,41 @@ class Cron extends Controller {
 	function index() {
 		$this->load->model('trabajoficheros');
 		$this->load->model('trabajoldap');
+		$this->load->library('email');
 
 		// 1. Ficheros expirados
 		$expirados = $this->trabajoficheros->expirados();
 
 		if ($this->config->item('expiracion_efectiva') === TRUE) {
 			foreach ($expirados as $f) {
+				// Envío de correo al usuario, si es un fichero con
+				// propietario
+				if ($this->config->item('correo_caducado') && !empty($f->remitente)) {
+					$usuario = $this->trabajoldap->consulta($f->remitente,
+							1);
+					
+					if (!empty($usuario['mail'])) {
+						$correo_auto =
+							$this->config->item('direccion_correo_automatico');
+						$this->email->clear();
+
+						$this->email->from($correo_auto, 'Servicio de consigna');
+						$this->email->to($usuario['mail']);
+
+						$this->email->subject('Fichero caducado');
+						$this->email->message($this->load->view('email-fichero-caducado',
+									array('nombre_fichero' => $f->nombre),
+									TRUE));
+						$this->email->send();
+					}
+
+				}
+
+
+				// Borrado en sí
 				$this->trabajoficheros->elimina_fichero($f->fid, 'Expira el '
 						.  $this->trabajoficheros->fecha_legible($f->fechaexp));
+
 			}
 		}
 

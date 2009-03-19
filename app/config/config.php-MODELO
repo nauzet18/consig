@@ -320,7 +320,8 @@ $config['rewrite_short_tags'] = FALSE;
 | standard log threshold config item
 | 'ERROR','DEBUG','INFO' are the system defaults.
 */
-$config['show_in_log']= array('ERROR','INFO'); 
+$config['show_in_log']= 
+array('ERROR','INFO','DOWNLOAD','UPLOAD','UPDATE','DELETE'); 
 
 /*
 |--------------------------------------------------------------------------

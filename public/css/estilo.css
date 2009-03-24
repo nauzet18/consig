@@ -58,8 +58,15 @@ img {
 
 #logo {
 	float: left;
-	padding: 40px 0 0 107px;
-	background: url(../img/logos/Logo.gif) no-repeat left center;
+}
+
+#logo #imagen {
+  float: left;
+}
+
+#logo #titulologo {
+  padding-top: 40px;
+  float: right;
 }
 
 #logo h1 {

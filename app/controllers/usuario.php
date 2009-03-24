@@ -81,7 +81,7 @@ class Usuario extends Controller {
 						'autenticado' => TRUE,
 						'dn' => $res['dn'],
 						'nombre' => ucwords(strtolower($res['givenname'][0] 
-							. ' ' .  $res['sn1'][0])),
+							. ' ' .  $res['sn'][0])),
 						'relaciones' => $res['usesrelacion'],
 						'mail' => $res['mail'][0],
 				);

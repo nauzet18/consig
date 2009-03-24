@@ -51,7 +51,7 @@ class TrabajoLDAP extends Model {
 			return -1;
 		}
 
-		 $atributos = array('dn', 'sn1', 'givenName', 'UsEsRelacion',
+		 $atributos = array('dn', 'sn', 'givenName', 'UsEsRelacion',
 				 'mail');
 		 $res = @ldap_search($ds, $opciones['base'],
 				 	'uid='.$uid, $atributos);
@@ -118,7 +118,7 @@ class TrabajoLDAP extends Model {
 			return FALSE;
 		}
 
-		$atributos = array('dn', 'sn1', 'givenName', 'UsEsRelacion',
+		$atributos = array('dn', 'sn', 'givenName', 'UsEsRelacion',
 				'mail');
 
 		$res = ldap_read($ds, $dn, '(objectClass=*)', $atributos);
@@ -136,7 +136,7 @@ class TrabajoLDAP extends Model {
 		$datos = array(
 				'dn' => $info[0]['dn'],
 				'nombre' => ucwords(strtolower($info[0]['givenname'][0] 
-						. ' ' .  $info[0]['sn1'][0])),
+						. ' ' .  $info[0]['sn'][0])),
 				'relaciones' => serialize($info[0]['usesrelacion']),
 				'mail' => $info[0]['mail'][0],
 				'timestamp' => time(),

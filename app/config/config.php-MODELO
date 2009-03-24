@@ -330,6 +330,11 @@ array('ERROR','INFO','DOWNLOAD','UPLOAD','UPDATE','DELETE');
 */
 
 /*
+ * Usar el favicon que hay en public/img/favicon.ico
+ */
+$config['habilitar_favicon'] = FALSE;
+
+/*
  * Directorio donde se alojarán los ficheros enviados.
  * Se aconseja que esté fuera del alcance del servidor web
  */

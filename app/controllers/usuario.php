@@ -68,6 +68,9 @@ class Usuario extends Controller {
 			$usuario = $this->input->post('usuario', TRUE);
 			$passwd = $this->input->post('passwd', TRUE);
 
+			// Quitamos @ del usuario
+			$usuario = preg_replace('/@.*$/', '', $usuario);
+
 			$res = $this->trabajoldap->login($usuario, $passwd);
 
 			if ($res === FALSE) {

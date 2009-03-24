@@ -18,6 +18,17 @@ if (isset($css_adicionales)) {
 	}
 }
 ?>
+
+<?php
+ if ($this->config->item('habilitar_favicon')):
+ ?>
+ <link rel="shortcut icon" type="image/x-icon" href="<?php echo
+ site_url('img/favicon.ico')?>"/>
+ <?php
+ endif;
+?>
+
+
 <script language="JavaScript" type="text/javascript">
 //<![CDATA[
 var url_base = '<?php echo base_url()?>';

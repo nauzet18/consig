@@ -16,8 +16,14 @@
 
 <div id="cabecera">
  <div id="logo">
+  <a href="http://www.us.es">
+     <img id="imagen" src="<?php echo site_url('img/logos/Logo.gif')?>" 
+  	alt="Universidad de Sevilla" />
+  </a>
+  <div id="titulologo">
   <h1><a href="<?php echo site_url()?>">Consigna</a></h1>
   <h2 id="subtitulo">Env&iacute;o y recogida de ficheros</h2>
+  </div>
  </div> <!-- logo -->
 </div>
 

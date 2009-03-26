@@ -57,8 +57,8 @@ function pagina_envio() {
 
 	$("#form_subida").attr("target", "iframe_upload");
 
-	$("#form_subida")
-		.append('<input type="hidden" name="desatendido" value="1" />');
+	var accion = $("#form_subida").attr("action");
+	$("#form_subida").attr("action", accion + "/desatendido");
 
 	// Previsión de acceso
 	$(".opcion").click(function() {

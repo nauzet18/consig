@@ -68,16 +68,26 @@ class Ficheros extends Controller {
 	 *
 	 *  El segundo es el habitual, usado para el caso en que javascript no 
 	 *  esté habilitado
+	 *
+	 *  Para prevenir ante desbordamientos de post_max_size, se introduce un
+	 *  parámetro en la ruta del controlador: 'desatendido', que
+	 *  anteriormente era pasado como variable POST.
 	 */
 
-	function nuevo() {
+	function nuevo($desatendido = '') {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
 		$data_form = array();
 		$fid = null;
 
-		$desatendido = $this->input->post('desatendido');
+		$desatendido = !empty($desatendido);
+
+		// Formulario que excede post_max_size usado desde JS
+		if ($desatendido && !$this->input->post('enviar')) {
+			$data_form['error'] = '<p>El fichero excede el tamaño '
+				.'permitido</p>';
+		}
 
 		// Formulario enviado
 		if ($this->input->post('enviar')) {

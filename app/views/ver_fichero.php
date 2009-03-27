@@ -42,16 +42,20 @@ if (empty($fichero->password)) {
 
 <?php
 	 if (!empty($fichero->password)):
+		 echo form_open($fichero->fid . '/descarga');
+
 ?>
 
 <div id="cuadro_password_fichero">
 <?php 
- echo form_open($fichero->fid . '/descarga');
+ echo form_label('Contraseña:', 'passwd-fichero');
+
  $data_passwd_fichero = array(
 	 'name' => 'passwd-fichero',
 	 'id' => 'passwd_fichero',
 	 'maxlength' => '255',
-	 'size' => '10',
+	 'size' => '15',
+	 'class' => 'passwd',
  );
  echo form_password($data_passwd_fichero); 
 ?>

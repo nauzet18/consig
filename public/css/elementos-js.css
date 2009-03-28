@@ -1,7 +1,8 @@
 #loginOverlay {
-  width: 300px;
+  width: 350px;
   display: none;
   padding: 40px;
+  font-size: 80%;
 }
 
 #loginOverlay div.close {
@@ -25,6 +26,7 @@
   width: 200px;
   height: 21px;
   border: 1px solid #f0f0f0;
+  text-align: left;
 }
 
 #progreso_indicador {

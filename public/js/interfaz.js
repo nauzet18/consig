@@ -110,7 +110,7 @@ function pagina_envio() {
 					message: $("#progreso_overlay"),
 					applyPlatformOpacityRules: false, 
 					css: { 
-						width: '300px',
+						width: '300px'
 					}
 			});
 
@@ -134,7 +134,7 @@ function pagina_envio() {
 					error: function(obj, quepaso, otro) {
 						$("#progreso_velocidad").html("¿? kB/s");
             $("#progreso_restante").html("desconocido");
-					},
+					}
 				});
 			}, 0, true);
 			

@@ -66,7 +66,7 @@ img {
 
 #logo #titulologo {
   padding-top: 40px;
-  float: right;
+  float: left;
 }
 
 #logo h1 {
@@ -155,8 +155,6 @@ textarea {
   border: 1px solid #e0e0e0;
   margin-bottom: 1em;
   background-color: #ffffff;
-  background-position: top left;
-  background-repeat: no-repeat;
 }
 
 textarea {
@@ -169,11 +167,15 @@ input[type="submit"] {
 
 input.passwd {
   padding: 2px 2px 2px 22px;
+  background-position: top left;
+  background-repeat: no-repeat;
   background-image: url(../img/interfaz/form-passwd.png);
 }
 
 input.usuario {
   padding: 2px 2px 2px 22px;
+  background-position: top left;
+  background-repeat: no-repeat;
   background-image: url(../img/interfaz/form-usuario.png);
 }
 

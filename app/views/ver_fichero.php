@@ -85,13 +85,21 @@ endif;
   	. $fichero->fid)?>">Borrar</a></li>
  <?php
  endif;
+
+
+ // Cálculo del tiempo de expiración
+ $texp =  $fichero->fechaexp - time();
+ if ($texp <= 0) {
+	 $texto_expiracion = 'a punto de caducar';
+ } else {
+	 $texto_expiracion = 'caduca en ' 
+		 . $this->trabajoficheros->intervalo_tiempo($texp, 3);
+ }
  ?>
   <li><img src="<?php echo site_url('img/interfaz/fecha-envio.png')?>"
   alt="fecha de envío" /><?php echo
   $this->trabajoficheros->fecha_legible($fichero->fechaenvio);?> 
-	  (caduca en <?php echo
-	   $this->trabajoficheros->intervalo_tiempo($fichero->fechaexp - time(),
-		   3);?>)</li>
+	  (<?php echo $texto_expiracion; ?>)</li>
 
   <li><?php echo $this->trabajoficheros->usuario_html($fichero->remitente,
 		  $fichero->mostrar_autor)?></li>

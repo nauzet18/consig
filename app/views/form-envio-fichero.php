@@ -47,6 +47,4 @@ $this->load->view('form-opciones-fichero');
  <div id="progreso_contenedor"><div id="progreso">0%</div></div>
  <div id="progreso_datos"><span id="progreso_velocidad">- kB/s</span>
  (tiempo restante: <span id="progreso_restante">desconocido</span>)</div>
- <div id="progreso_cancelar"><img src="<?php echo
-	 site_url('img/interfaz/cancelar.png')?>" /></div>
 </div>

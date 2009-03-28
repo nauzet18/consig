@@ -37,10 +37,10 @@ if (empty($fichero->password)) {
 if (empty($fichero->password)) {
 	echo '</a>';
 }
-?>
-</div>
 
-<?php
+
+	 // Contraseña del fichero
+
 	 if (!empty($fichero->password)):
 		 echo form_open($fichero->fid . '/descarga');
 
@@ -67,6 +67,8 @@ if (empty($fichero->password)) {
 <?php
 endif;
 ?>
+</div>
+
 
 <div class="ficha_fichero">
  <ul>

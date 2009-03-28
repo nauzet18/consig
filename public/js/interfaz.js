@@ -139,19 +139,23 @@ function pagina_envio() {
 			}, 0, true);
 			
 			// Pulsación de ESC para cancelar
+			/*
 			$(document).keypress(function (e) {
 				if (e.which == 0) {
 					fin_envio(2);
 				}
 			});
+			*/
 
 	});
 
 	// Evitamos que se siga enviando
 	$(window).unload(fin_envio);
+	/*
   $("#progreso_cancelar").click(function() {
     fin_envio(2);
   });
+	*/
 }
 
 /*
@@ -176,7 +180,7 @@ function fin_envio(tipo) {
 		}
   } else if (tipo == 2) {
 		// Cancelado. Paramos
-		window.stop();
+		// window.stop();
 	}
 	$.unblockUI();
 }

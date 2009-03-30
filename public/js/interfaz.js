@@ -101,8 +101,8 @@ function pagina_envio() {
 
 			$("#iframe_upload").remove();
 			$("body")
-				.append('<iframe name="iframe_upload" id="iframe_upload"></iframe>');
-			$("#iframe_upload").attr("onload", "javascript:fin_envio(1);");
+				.append('<iframe name="iframe_upload" id="iframe_upload" '
+				+'onload="javascript:fin_envio(1);"></iframe>');
 			$("#progreso").html("0%");
 			$("#progreso").width("0%");
 			$("#progreso_velocidad").html("- kB/s");

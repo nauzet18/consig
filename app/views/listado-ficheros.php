@@ -1,7 +1,7 @@
 <?php
 $titulo = isset($titulo) ? $titulo : "Listado de ficheros";
 ?>
-<h2><?php echo $titulo; ?></h2>
+<h1><?php echo $titulo; ?></h1>
  <table id="listado-ficheros">
   <thead>
    <tr>

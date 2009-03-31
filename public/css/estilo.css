@@ -357,3 +357,15 @@ div#busqueda-rapida {
   list-style: none;
   margin-top: 1em;
 }
+
+#contenido p {
+  width: 55em;
+}
+
+.centrar_ayuda {
+  margin: 20px auto;
+}
+
+img.centrar_ayuda {
+  display: block;
+}

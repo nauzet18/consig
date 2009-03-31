@@ -80,7 +80,12 @@ if ($autenticado !== FALSE) {
 
  <div id="menu">
   <ul>
-   <li class="first"><a href="<?php echo site_url('ficheros/nuevo')?>">
+   <li class="first"><a href="<?php echo site_url('ayuda')?>">
+     <img src="<?php echo site_url('img/interfaz/ayuda.png')?>" alt="Ayuda" /><br />
+	 Ayuda</a>
+   </li>
+
+   <li><a href="<?php echo site_url('ficheros/nuevo')?>">
      <img src="<?php echo site_url('img/interfaz/nuevo.png')?>" alt="Nuevo" /><br />
 	 Nuevo</a>
    </li>

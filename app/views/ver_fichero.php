@@ -83,6 +83,13 @@ endif;
   <img src="<?php echo site_url('img/interfaz/borrar.png')?>"
   alt="borrar" /><a href="<?php echo site_url('borrar/' 
   	. $fichero->fid)?>">Borrar</a></li>
+
+  <li><img src="<?php echo site_url('img/interfaz/www.png')?>"
+  alt="enlace" />
+  <a href="<?php echo site_url($fichero->fid)?>">
+	<?php echo site_url($fichero->fid)?>
+  </a></li>
+
  <?php
  endif;
 

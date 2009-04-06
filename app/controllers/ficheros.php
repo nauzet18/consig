@@ -95,8 +95,7 @@ class Ficheros extends Controller {
 					$data_form, $fid);
 		}
 
-		// Si es desatendido, sólo imprimir el identificador que 
-		// ha asignado la bd ($this->input->post('desatendido'))
+		// Si no es desatendido, mostrar las vistas habituales
 		if (!$desatendido) {
 			$data = array(
 					'subtitulo' => 'enviar nuevo fichero',
@@ -130,6 +129,9 @@ class Ficheros extends Controller {
 
 			$this->load->view('pie');
 		} else {
+			// Si es desatendido, sólo imprimir el identificador que 
+			// ha asignado la bd
+
 			if (isset($data_form['error'])) {
 				echo $data_form['error'];
 			} else {

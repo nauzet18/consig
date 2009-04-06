@@ -102,13 +102,14 @@ valores por defecto, que son usados además para los envíos anónimos:</p>
   </tr>
 
   <tr>
-   <td>Fichero accesible desde cualquier ubicación sin autenticar</td>
+   <td>Fichero accesible sólo por usuarios de la Universidad de Sevilla</td>
    <td>Escoja la opción <em>Sí</em> si desea que su fichero sea accesible
-   desde cualquier IP y sin necesidad de autenticarse. Si no, se aplican
-   todas las restricciones mencionadas en el punto <a
-   href="#descarga">2.1</a>. Si se escoge esta opción, es obligatorio el
-   establecimiento de una contraseña para su descarga.</td>
-   <td>No</td>
+   según las restricciones mencionadas en el punto <a
+   href="#descarga">2.1</a>. Si se escoge la opción <em>No</em>, es
+   obligatorio el establecimiento de una contraseña para su descarga, ya que
+   el fichero será accesible desde cualquier IP y por cualquier usuario,
+   esté o no identificado.</td>
+   <td>No (anónimos: Sí)</td>
   </tr>
 
   <tr>

@@ -14,9 +14,15 @@ $expiracion = '2sem';
 $listar = array(
 		(isset($fichero) ? ($fichero->listar == 0) : FALSE),
 		(isset($fichero) ? ($fichero->listar == 1) : TRUE));
+
+// El valor por defecto del tipo de acceso depende de si el usuario es
+// anónimo o no
+
+$defecto_ta_publico = ($this->session->userdata('autenticado') == 1);
+
 $tipoacceso = array(
-		(isset($fichero) ? ($fichero->tipoacceso == 0) : TRUE),
-		(isset($fichero) ? ($fichero->tipoacceso == 1) : FALSE));
+		(isset($fichero) ? ($fichero->tipoacceso == 0) : !$defecto_ta_publico),
+		(isset($fichero) ? ($fichero->tipoacceso == 1) : $defecto_ta_publico));
 $mostrar_autor = array(
 		(isset($fichero) ? ($fichero->mostrar_autor == 0) : FALSE),
 		(isset($fichero) ? ($fichero->mostrar_autor == 1) : TRUE));

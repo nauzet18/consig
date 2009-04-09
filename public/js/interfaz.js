@@ -45,6 +45,13 @@ $(document).ready(function() {
 		}
 	});
 
+
+	// Huevo de pascua
+	$("#version_consigna span").click(function() {
+		$("#version_consigna span.p").html('<img src="' + 
+			url_base + 'img/logos/pistacho.gif" alt="pistachito" />');
+	});
+
 });
 
 function pagina_login() {

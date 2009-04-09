@@ -139,6 +139,11 @@ img {
   text-align: center;
 }
 
+#version_consigna {
+  text-align: center;
+  font-family: monospace;
+}
+
 
 /* Formularios */
 

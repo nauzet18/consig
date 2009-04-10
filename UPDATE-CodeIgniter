@@ -1,0 +1,14 @@
+Para actualizar CodeIgniter hay que llevar a cabo los siguientes pasos:
+
+ 0) Hacer una copia de seguridad del directorio public/ en primer lugar
+
+ 1) Sobreescribir el directorio public/system/ de consigna con el que
+ proporciona CodeIgniter.
+
+ 2) Sobreescribir el fichero index.php que hay en public/ de consigna con el
+ que proporciona CodeIgniter.
+
+ 3) Editar el fichero index.php y cambiar la variable $application_folder
+ por:
+
+         $application_folder = "../app";

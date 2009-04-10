@@ -1,0 +1,66 @@
+1. Instalación de Apache (normal y SSL), PHP 5.2, PHP PEAR, MySQL y
+uploadprogress
+
+	# pear install uploadprogress-xxx.tar.gz
+   
+   Añadir en php.ini:
+
+   	extension=uploadprogress.so
+
+
+   Y habilitar la subida de ficheros, junto con algunos parámetros
+   relacionados:
+
+   	file_uploads = On
+	upload_max_filesize = 1000M
+	post_max_size = 1008M
+	max_execution_time = 300     ; Maximum execution time of each
+	script, in seconds
+	max_input_time = 400    ; Maximum amount of time each script may
+	spend parsing request data
+
+
+2. Descompresión de consigna
+
+	# tar xzf consigna-1.x.tar.gz
+	# cd consigna-1.x/
+
+3. Creación del usuario en MySQL para consigna
+
+	# mysql -uroot -p
+	Enter password: (el de root)
+	mysql> GRANT ALL PRIVILEGES ON consigna.* TO consigna@localhost
+	       IDENTIFIED BY 'password-de-consigna'
+	mysql> CREATE DATABASE consigna;
+	mysql> FLUSH PRIVILEGES
+
+4. Creación de las tablas de consigna
+	# mysql -uconsigna -p consigna < mysql-database/bloque.sql
+	# mysql -uconsigna -p consigna < mysql-database/mimetypes.sql
+
+5. Configurar la aplicación. Para ello hay que copiar los ficheros
+*-MODELO con el mismo nombre sin ese sufijo y editarlos uno a uno. Fichero
+de subredes
+
+6. Crear la disposición de directorios en el directorio de documentos de
+Apache, y hacer que el el directorio public/ sea accesible desde Apache, a
+ser posible como DocumentRoot:
+	# cp -R consigna-1.x/ /var/www
+
+	...
+
+	@httpd.conf:
+	DocumentRoot /var/www/consigna-1.x/public
+
+	Activar en el módulo mod_rewrite, y permitir el uso de ficheros
+	.htaccess con "AllowOverride All" en el contexto que corresponda.
+
+Hay que editar además el fichero public/.htaccess y cambiar (o eliminar) el
+RewriteBase de acuerdo a la instalación
+
+7. Crear directorios de logs y ficheros enviados de acuerdo a lo configurado
+
+8. Añadir el siguiente trabajo en crontab para las tareas periódicas
+
+  */15 *    *   *   *   wget -O - -t 1 -q http://url/cron
+

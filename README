@@ -1,0 +1,41 @@
+Consigna es posible gracias a los siguientes proyectos:
+ * PHP  - http://www.php.net
+
+ * Nuvola - http://www.icon-king.com/projects/nuvola/
+ 	Iconos que conforman la apariencia de Consigna
+	
+ * CodeIgniter - http://codeigniter.com/ 
+ 	Framework PHP
+
+ * jQuery -  http://jquery.com/ 
+	Framework JavaScript
+ 
+ * uploadprogress - http://pecl.php.net/package/uploadprogress
+ 	Extensión para PHP que permite controlar el estado del envío de un
+	fichero
+
+ * jQuery BlockUI - http://www.malsup.com/jquery/block/
+	Plugin que permite bloquear la navegación en
+	determinadas circunstancias
+
+ * jQuery clueTip - http://plugins.learningjquery.com/cluetip/
+ 	Plugin que muestra bocadillos flotantes
+
+ * jQuery dimensions - http://brandonaaron.net/code
+ 	Plugin usado para desplazar la zona visualizada en la
+	ventana
+ 
+ * jQuery hoverIntent -
+    http://cherne.net/brian/resources/jquery.hoverIntent.html
+    	Plugin que anticipa los movimientos del usuario. Se usa
+	en clueTip
+ 
+ * jQuery overlay - http://flowplayer.org/tools/overlay.html
+ 	Plugin que muestra cuadros flotantes
+
+ * jQuery quickSearch - http://rikrikrik.com/jquery/quicksearch/
+ 	Plugin que permite hacer búsquedas al vuelo en tablas de datos
+
+ * jQuery timers - http://plugins.jquery.com/project/timers
+ 	Plugin para activar eventos periódicos 
+

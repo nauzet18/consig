@@ -6,7 +6,7 @@
  <a href="http://www.us.es">Universidad de Sevilla</a>
 
  <p id="version_consigna">
-  consigna v1<span>.</span>0
+  consigna v1<span>.</span>1
   <br />
    <span class="p"></span>
  </p>

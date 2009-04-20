@@ -376,6 +376,7 @@ class Ficheros extends Controller {
 			if ($permitido === FALSE) {
 				echo "Prohibido";
 			} else {
+				echo '<div class="envoltura_minipagina">';
 				$mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
 				echo '<strong>' . $fichero->nombre . '</strong>';
 				echo '
@@ -389,6 +390,7 @@ class Ficheros extends Controller {
 				echo '<div class="descripcion_fichero">';
 				echo empty($fichero->descripcion) ? 'Sin descripción' :
 					$fichero->descripcion;
+				echo '</div>';
 				echo '</div>';
 			}
 		}

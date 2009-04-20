@@ -36,8 +36,9 @@ $(document).ready(function() {
 	// Burbuja con información del fichero
 	$("#listado-ficheros tr.permitido").cluetip({
 		showTitle: false,
+		width: '300px',
 		cluetipClass: 'jtip',
-		ajaxCache: false,
+		ajaxCache: true,
 		hoverIntent: {
 			sensitivity:  1,
 			interval:     100,

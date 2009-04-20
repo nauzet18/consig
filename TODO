@@ -10,3 +10,6 @@ Versión 1.1
 - Administración?
 - Reflexionar acerca de cambios de fecha de expiración
 - Antivirus
+- Dar una solución al problema de las páginas 404, en el código está
+  predeterminado que la aplicación está en el raíz, y no se permite usar
+  funciones como site_url().

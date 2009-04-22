@@ -60,11 +60,9 @@ if (empty($fichero->password)) {
  echo form_password($data_passwd_fichero); 
 ?>
 	<input type="image" src="<?php echo site_url('img/interfaz/boton-descarga.png') ?>" value="Descargar" alt="Descargar">
-<?php
- echo form_close(); 
-?>
 </div>
 <?php
+echo form_close(); 
 endif;
 ?>
 </div>

@@ -85,8 +85,9 @@ INSERT INTO mimetypes VALUES ('', 'video/dl', 'dl', '');
 INSERT INTO mimetypes VALUES ('', 'video/x-dl', 'dl', '');
 INSERT INTO mimetypes VALUES ('', 'application/msword', 'doc',
 'package_editors.png');
-INSERT INTO mimetypes VALUES ('', 'application/msword', 'docx',
-'package_editors.png');
+INSERT INTO mimetypes VALUES ('',
+'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+'docx', 'package_editors.png');
 INSERT INTO mimetypes VALUES ('', 'application/msword', 'dot', '');
 INSERT INTO mimetypes VALUES ('', 'application/commonground', 'dp', '');
 INSERT INTO mimetypes VALUES ('', 'application/drafting', 'drw', '');
@@ -360,6 +361,9 @@ INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-powerpoint', 'ppt',
 'document.png');
 INSERT INTO mimetypes VALUES ('',
 'application/vnd.oasis.opendocument.presentation ', 'odp', 'document.png');
+INSERT INTO mimetypes VALUES ('',
+'application/vnd.openxmlformats-officedocument.presentationml.presentation', 
+'pptx', 'document.png');
 INSERT INTO mimetypes VALUES ('', 'application/mspowerpoint', 'ppz', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-freelance', 'pre', '');
 INSERT INTO mimetypes VALUES ('', 'application/pro_eng', 'prt', '');
@@ -595,6 +599,11 @@ INSERT INTO mimetypes VALUES ('', 'application/excel', 'xlv',
 INSERT INTO mimetypes VALUES ('',
 'application/vnd.oasis.opendocument.spreadsheet ', 'ods',
 'kspread_ksp.png');
+INSERT INTO mimetypes VALUES ('',
+'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
+'xlsx', 'kspread_ksp.png');
+INSERT INTO mimetypes VALUES ('', 'application/msaccess ', 'mdb', 'kdict.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'odb', 'kdict.png');
 INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-excel', 'xlw', '');
 INSERT INTO mimetypes VALUES ('', 'audio/xm', 'xm', 'krec_fileplay.png');
 INSERT INTO mimetypes VALUES ('', 'application/xml', 'xml', '');

@@ -6,6 +6,11 @@ Versión 1.0
 Versión 1.1
 
 - Correos "enviar a"
+- Paginación y ordenación por campo
+
+Versión 2.0
+
+- Correos "enviar a"
 - Email.php: añadir un "format=flowed" al Content-Type
 - Administración?
 - Reflexionar acerca de cambios de fecha de expiración

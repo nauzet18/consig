@@ -23,8 +23,8 @@ INSERT INTO mimetypes VALUES ('', 'application/mime', 'aps', '');
 INSERT INTO mimetypes VALUES ('', 'application/arj', 'arj', 'tar.png');
 INSERT INTO mimetypes VALUES ('', 'image/x-jg', 'art', '');
 INSERT INTO mimetypes VALUES ('', 'video/x-ms-asf', 'asf', 'video.png');
-INSERT INTO mimetypes VALUES ('', 'text/x-asm', 'asm', '');
-INSERT INTO mimetypes VALUES ('', 'text/asp', 'asp', '');
+INSERT INTO mimetypes VALUES ('', 'text/x-asm', 'asm', 'binary.png');
+INSERT INTO mimetypes VALUES ('', 'text/asp', 'asp', 'source.png');
 INSERT INTO mimetypes VALUES ('', 'video/x-ms-asf', 'asx', 'video.png');
 INSERT INTO mimetypes VALUES ('', 'audio/basic', 'au', '');
 INSERT INTO mimetypes VALUES ('', 'audio/x-au', 'au', '');
@@ -112,6 +112,8 @@ INSERT INTO mimetypes VALUES ('', 'text/x-setext', 'etx', '');
 INSERT INTO mimetypes VALUES ('', 'application/envoy', 'evy', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-envoy', 'evy', '');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'exe',
+'ejecutable.png');
+INSERT INTO mimetypes VALUES ('', 'application/x-ole-storage ', 'msi',
 'ejecutable.png');
 INSERT INTO mimetypes VALUES ('', 'text/plain', 'f', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-fortran', 'f', '');
@@ -368,10 +370,12 @@ INSERT INTO mimetypes VALUES ('', 'application/mspowerpoint', 'ppz', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-freelance', 'pre', '');
 INSERT INTO mimetypes VALUES ('', 'application/pro_eng', 'prt', '');
 INSERT INTO mimetypes VALUES ('', 'application/postscript', 'ps', '');
-INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'psd', '');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'psd',
+'image_gimp.png');
 INSERT INTO mimetypes VALUES ('', 'paleovu/x-pv', 'pvu', '');
 INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-powerpoint', 'pwz', '');
-INSERT INTO mimetypes VALUES ('', 'text/x-script.phyton', 'py', '');
+INSERT INTO mimetypes VALUES ('', 'text/x-script.phyton', 'py',
+'source_py.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-bytecode.python', 'pyc', '');
 INSERT INTO mimetypes VALUES ('', 'audio/vnd.qcelp', 'qcp',
 'krec_fileplay.png');
@@ -427,7 +431,7 @@ INSERT INTO mimetypes VALUES ('', 'application/vnd.oasis.opendocument.text',
 INSERT INTO mimetypes VALUES ('', 'application/rtf', 'rtx', '');
 INSERT INTO mimetypes VALUES ('', 'text/richtext', 'rtx', '');
 INSERT INTO mimetypes VALUES ('', 'video/vnd.rn-realvideo', 'rv', '');
-INSERT INTO mimetypes VALUES ('', 'text/x-asm', 's', '');
+INSERT INTO mimetypes VALUES ('', 'text/x-asm', 's', 'binary.png');
 INSERT INTO mimetypes VALUES ('', 'audio/s3m', 's3m', 'krec_fileplay.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-tbook', 'sbk', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-lotusscreencam', 'scm', '');
@@ -495,11 +499,11 @@ INSERT INTO mimetypes VALUES ('', 'application/x-tbook', 'tbk', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-tcl', 'tcl', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-script.tcl', 'tcl', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-script.tcsh', 'tcsh', '');
-INSERT INTO mimetypes VALUES ('', 'application/x-tex', 'tex', '');
-INSERT INTO mimetypes VALUES ('', 'application/x-texinfo', 'texi', '');
-INSERT INTO mimetypes VALUES ('', 'application/x-texinfo', 'texinfo', '');
-INSERT INTO mimetypes VALUES ('', 'application/plain', 'text', '');
-INSERT INTO mimetypes VALUES ('', 'text/plain', 'text', '');
+INSERT INTO mimetypes VALUES ('', 'application/x-tex', 'tex', 'tex.png');
+INSERT INTO mimetypes VALUES ('', 'application/x-texinfo', 'texi', 'tex.png');
+INSERT INTO mimetypes VALUES ('', 'application/x-texinfo', 'texinfo',
+'tex.png');
+INSERT INTO mimetypes VALUES ('', 'text/plain', 'text', 'txt.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-compressed', 'tgz',
 'tgz.png');
 INSERT INTO mimetypes VALUES ('', 'image/tiff', 'tif', 'image.png');
@@ -615,9 +619,9 @@ INSERT INTO mimetypes VALUES ('', 'video/x-amt-showrun', 'xsr', '');
 INSERT INTO mimetypes VALUES ('', 'image/x-xwd', 'xwd', '');
 INSERT INTO mimetypes VALUES ('', 'chemical/x-pdb', 'xyz', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-compressed', 'z', '');
-INSERT INTO mimetypes VALUES ('', 'application/x-compressed', 'zip',
-'tar.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-zip-compressed', 'zip',
+'tar.png');
+INSERT INTO mimetypes VALUES ('', 'application/x-7z-compressed', '7z',
 'tar.png');
 INSERT INTO mimetypes VALUES ('', 'text/x-script.zsh', 'zsh', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-rar', 'rar', 'tar.png');

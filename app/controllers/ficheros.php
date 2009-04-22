@@ -46,8 +46,13 @@ class Ficheros extends Controller {
 				'css_adicionales' => array(
 					'jquery.cluetip.css',
 				),
-				'body_onload' => 'formulario_busqueda()',
 		);
+
+		// Formulario de búsqueda
+		if ($this->config->item('caja_busqueda') === TRUE) {
+			$data['body_onload'] = 'formulario_busqueda()';
+		}
+
 		$this->load->view('cabecera', $data);
 		$ficheros = $this->trabajoficheros->extrae_bd();
 		$data = array(

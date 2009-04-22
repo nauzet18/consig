@@ -203,11 +203,14 @@ class TrabajoFicheros extends Model {
 	 *  @param int	ignorar la marca 'listar' de los ficheros
 	 *
 	 *  @param string	remitente del que queremos extraer los ficheros
+	 *  @param array	array de filtros para el nombre, usado para
+	 * 					paginación
 	 *  @return		el elemento o elementos extraídos, FALSE si no se
 	 * 				encontró
      */
 
-    function extrae_bd($fid = 0, $ignorar_listar = 0, $remitente = '') {
+    function extrae_bd($fid = 0, $ignorar_listar = 0, $remitente = '',
+			$filtros_like = array()) {
 		if ($fid != 0) {
 			$this->db->where('fid', $fid);
 		} elseif ($ignorar_listar == 0) {
@@ -219,7 +222,15 @@ class TrabajoFicheros extends Model {
 			$this->db->where('remitente', $remitente);
 		}
 
-		$this->db->order_by("fechaenvio", "desc");
+		// Paginación o no?
+		if (count($filtros_like) == 0) {
+			$this->db->order_by("fechaenvio", "desc");
+		} else {
+			// Engañamos a la función or_like con un "match" vacío
+			$this->db->or_like($filtros_like, '', 'after');
+			$this->db->order_by("nombre", "asc");
+		}
+
         $query = $this->db->get('ficheros');
 
         $res = $query->result();

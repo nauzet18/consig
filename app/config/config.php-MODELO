@@ -396,6 +396,11 @@ $config['direccion_correo_automatico'] = 'consigna@us.es';
 // Enviar correo al caducar un fichero
 $config['correo_caducado'] = FALSE;
 
+/*
+ * Habilitar caja de búsqueda
+ */
+
+$config['caja_busqueda'] = FALSE;
 
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */

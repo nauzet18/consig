@@ -29,6 +29,7 @@ INSERT INTO mimetypes VALUES ('', 'video/x-ms-asf', 'asx', 'video.png');
 INSERT INTO mimetypes VALUES ('', 'audio/basic', 'au', '');
 INSERT INTO mimetypes VALUES ('', 'audio/x-au', 'au', '');
 INSERT INTO mimetypes VALUES ('', 'video/avi', 'avi', 'video.png');
+INSERT INTO mimetypes VALUES ('', 'video/x-ms-wmv', 'wmv', 'video.png');
 INSERT INTO mimetypes VALUES ('', 'video/avs-video', 'avs', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-bcpio', 'bcpio', '');
 INSERT INTO mimetypes VALUES ('', 'application/mac-binary', 'bin', '');
@@ -82,7 +83,10 @@ INSERT INTO mimetypes VALUES ('', 'video/x-dv', 'dif', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-director', 'dir', '');
 INSERT INTO mimetypes VALUES ('', 'video/dl', 'dl', '');
 INSERT INTO mimetypes VALUES ('', 'video/x-dl', 'dl', '');
-INSERT INTO mimetypes VALUES ('', 'application/msword', 'doc', 'document.png');
+INSERT INTO mimetypes VALUES ('', 'application/msword', 'doc',
+'package_editors.png');
+INSERT INTO mimetypes VALUES ('', 'application/msword', 'docx',
+'package_editors.png');
 INSERT INTO mimetypes VALUES ('', 'application/msword', 'dot', '');
 INSERT INTO mimetypes VALUES ('', 'application/commonground', 'dp', '');
 INSERT INTO mimetypes VALUES ('', 'application/drafting', 'drw', '');
@@ -107,7 +111,7 @@ INSERT INTO mimetypes VALUES ('', 'text/x-setext', 'etx', '');
 INSERT INTO mimetypes VALUES ('', 'application/envoy', 'evy', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-envoy', 'evy', '');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'exe',
-'core.png');
+'ejecutable.png');
 INSERT INTO mimetypes VALUES ('', 'text/plain', 'f', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-fortran', 'f', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-fortran', 'f77', '');
@@ -354,6 +358,8 @@ INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-powerpoint', 'pps',
 'document.png');
 INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-powerpoint', 'ppt',
 'document.png');
+INSERT INTO mimetypes VALUES ('',
+'application/vnd.oasis.opendocument.presentation ', 'odp', 'document.png');
 INSERT INTO mimetypes VALUES ('', 'application/mspowerpoint', 'ppz', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-freelance', 'pre', '');
 INSERT INTO mimetypes VALUES ('', 'application/pro_eng', 'prt', '');
@@ -402,12 +408,18 @@ INSERT INTO mimetypes VALUES ('', 'application/vnd.nokia.ringing-tone', 'rng', '
 INSERT INTO mimetypes VALUES ('', 'application/vnd.rn-realplayer', 'rnx', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-troff', 'roff', '');
 INSERT INTO mimetypes VALUES ('', 'image/vnd.rn-realpix', 'rp', '');
-INSERT INTO mimetypes VALUES ('', 'audio/x-pn-realaudio-plugin', 'rpm', '');
+INSERT INTO mimetypes VALUES ('', 'application/x-rpm', 'rpm',
+'ejecutable.png');
+INSERT INTO mimetypes VALUES ('', 'application/deb', 'deb',
+'ejecutable.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'dmg',
+'ejecutable.png');
 INSERT INTO mimetypes VALUES ('', 'text/richtext', 'rt', '');
 INSERT INTO mimetypes VALUES ('', 'text/vnd.rn-realtext', 'rt', '');
-INSERT INTO mimetypes VALUES ('', 'application/rtf', 'rtf', '');
-INSERT INTO mimetypes VALUES ('', 'application/x-rtf', 'rtf', '');
-INSERT INTO mimetypes VALUES ('', 'text/richtext', 'rtf', '');
+INSERT INTO mimetypes VALUES ('', 'application/rtf', 'rtf',
+'package_editors.png');
+INSERT INTO mimetypes VALUES ('', 'application/vnd.oasis.opendocument.text', 
+'odt', 'package_editors.png');
 INSERT INTO mimetypes VALUES ('', 'application/rtf', 'rtx', '');
 INSERT INTO mimetypes VALUES ('', 'text/richtext', 'rtx', '');
 INSERT INTO mimetypes VALUES ('', 'video/vnd.rn-realvideo', 'rv', '');
@@ -580,6 +592,9 @@ INSERT INTO mimetypes VALUES ('', 'application/x-excel', 'xlt',
 'kspread_ksp.png');
 INSERT INTO mimetypes VALUES ('', 'application/excel', 'xlv',
 'kspread_ksp.png');
+INSERT INTO mimetypes VALUES ('',
+'application/vnd.oasis.opendocument.spreadsheet ', 'ods',
+'kspread_ksp.png');
 INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-excel', 'xlw', '');
 INSERT INTO mimetypes VALUES ('', 'audio/xm', 'xm', 'krec_fileplay.png');
 INSERT INTO mimetypes VALUES ('', 'application/xml', 'xml', '');
@@ -597,3 +612,5 @@ INSERT INTO mimetypes VALUES ('', 'application/x-zip-compressed', 'zip',
 'tar.png');
 INSERT INTO mimetypes VALUES ('', 'text/x-script.zsh', 'zsh', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-rar', 'rar', 'tar.png');
+INSERT INTO mimetypes VALUES ('', 'application/x-bittorrent', 'torrent',
+'ftp.png');

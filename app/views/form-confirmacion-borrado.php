@@ -9,7 +9,7 @@ echo form_fieldset('Confirmación de borrado');
 ?>
 
 <p>¿Está seguro de querer borrar el fichero <img src="<?php echo
-site_url('img/tipos/16x16/' . $mimetype[1])?>" alt="<?php echo
+site_url('img/tipos/32x32/' . $mimetype[1])?>" alt="<?php echo
 $mimetype[0]?>" /> <span class="nombre_fichero"><?php echo
 $fichero->nombre?></span> (<span class="tam_fichero"><?php echo
 	 $this->trabajoficheros->tam_fichero($fichero->tam)?>)</span>?

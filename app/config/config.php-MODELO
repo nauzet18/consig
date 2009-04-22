@@ -402,5 +402,11 @@ $config['correo_caducado'] = FALSE;
 
 $config['caja_busqueda'] = FALSE;
 
+/*
+ * Número de resultados por página
+ */
+
+$config['resultados_por_pagina'] = 50;
+
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */

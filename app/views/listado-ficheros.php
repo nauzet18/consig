@@ -69,3 +69,5 @@ foreach ($ficheros as $f) {
 ?>
   </tbody>
  </table>
+
+<?php echo $this->pagination->create_links(); ?>

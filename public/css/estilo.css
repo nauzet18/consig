@@ -379,3 +379,32 @@ img.centrar_ayuda {
   padding-right: 20px;
   background: transparent url(../img/interfaz/email.png) top right no-repeat;
 }
+
+/*
+ * Paginacion
+ */
+
+#paginacion {
+  margin-top: 2em;
+  text-align: center;
+}
+
+#paginacion a {
+  font-weight: bold;
+  color: #ffffff;
+  text-decoration: none;
+  padding:2px 5px;
+  background: #A33948;
+  border:1px solid #A32638;
+  -moz-border-radius:2px;
+  -webkit-border-radius:2px;
+}
+#paginacion a:hover {
+  background-color: #A32638;
+}
+
+#paginacion_actual {
+  font-weight: bold;
+  margin-left: 2px;
+  padding:2px 5px;
+}

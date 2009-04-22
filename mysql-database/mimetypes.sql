@@ -608,6 +608,8 @@ INSERT INTO mimetypes VALUES ('',
 'xlsx', 'kspread_ksp.png');
 INSERT INTO mimetypes VALUES ('', 'application/msaccess ', 'mdb', 'kdict.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'odb', 'kdict.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'iso',
+'cdimage.png');
 INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-excel', 'xlw', '');
 INSERT INTO mimetypes VALUES ('', 'audio/xm', 'xm', 'krec_fileplay.png');
 INSERT INTO mimetypes VALUES ('', 'application/xml', 'xml', '');

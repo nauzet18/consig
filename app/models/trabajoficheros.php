@@ -209,25 +209,16 @@ class TrabajoFicheros extends Model {
 	 * 				encontró
      */
 
-    function extrae_bd($fid = 0, $ignorar_listar = 0, $remitente = '',
-			$filtros_like = array()) {
-		if ($fid != 0) {
-			$this->db->where('fid', $fid);
-		} elseif ($ignorar_listar == 0) {
-			// Si fid != 0, ignoraremos esta bandera
-			$this->db->where('listar', '1');
-		}
+	function extrae_bd($condiciones = array(), $patrones = array()) {
 
-		if (!empty($remitente))  {
-			$this->db->where('remitente', $remitente);
-		}
+		$this->db->where($condiciones);
 
 		// Paginación o no?
-		if (count($filtros_like) == 0) {
+		if (count($patrones) == 0) {
 			$this->db->order_by("fechaenvio", "desc");
 		} else {
 			// Engañamos a la función or_like con un "match" vacío
-			$this->db->or_like($filtros_like, '', 'after');
+			$this->db->or_like($patrones, '', 'after');
 			$this->db->order_by("nombre", "asc");
 		}
 
@@ -235,9 +226,9 @@ class TrabajoFicheros extends Model {
 
         $res = $query->result();
 
-        if ($fid != 0 && (!$res || count($res) == 0)) {
+        if (isset($condiciones['fid']) && (!$res || count($res) == 0)) {
             return FALSE;
-        } else if ($fid != 0) {
+        } else if (isset($condiciones['fid'])) {
 			return $res[0];
 		} else {
             return $res;
@@ -522,7 +513,7 @@ class TrabajoFicheros extends Model {
 
 		// Fichero
 		if ($fichero != 0) {
-			$f = $this->trabajoficheros->extrae_bd($fichero, 1);
+			$f = $this->trabajoficheros->extrae_bd(array('fid' => $fichero));
 			if ($f === FALSE) {
 				// El fichero no existe!
 				logdetalles('error', 

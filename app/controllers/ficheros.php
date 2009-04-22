@@ -39,6 +39,7 @@ class Ficheros extends Controller {
 	
 	function index()
 	{
+		$this->load->library('pagination');
 		$data = array(
 				'js_adicionales' => array(
 					'jquery.quicksearch.pack.js'
@@ -54,9 +55,17 @@ class Ficheros extends Controller {
 		}
 
 		$this->load->view('cabecera', $data);
-		$ficheros = $this->trabajoficheros->extrae_bd();
+		$ficheros = $this->trabajoficheros->extrae_bd(array(
+					'listar' => '1',
+		));
+
+		/*
+		 * Paginación
+		 */
+		$this->_paginacion_config('ficheros/index', count($ficheros));
+
 		$data = array(
-				'ficheros' => $ficheros,
+				'ficheros' => $this->_paginacion_subconjunto($ficheros),
 		);
 		$this->load->view('listado-ficheros', $data);
 		$this->load->view('pie');
@@ -189,7 +198,7 @@ class Ficheros extends Controller {
 	 */
 
 	function ver_fichero($fid, $descargar = '') {
-        $fichero = $this->trabajoficheros->extrae_bd($fid);
+        $fichero = $this->trabajoficheros->extrae_bd(array('fid' => $fid));
 
         if ($fichero === FALSE) {
 			show_error('El fichero indicado no existe. Es posible que '
@@ -257,6 +266,8 @@ class Ficheros extends Controller {
 	 * Muestra los ficheros del usuario actual
 	 */
 	function propios() {
+		$this->load->library('pagination');
+
 		if (!$this->autenticado) {
             show_error('Debe autenticarse para poder ver sus ficheros.');
 		} else {
@@ -270,11 +281,19 @@ class Ficheros extends Controller {
 					'body_onload' => 'formulario_busqueda()',
 			);
 			$this->load->view('cabecera', $data);
-			$ficheros = $this->trabajoficheros->extrae_bd(0, 1,
-					$this->session->userdata('dn'));
+
+
+			$ficheros = $this->trabajoficheros->extrae_bd(array(
+						'remitente' => $this->session->userdata('dn')));
+
+			/*
+			 * Paginación
+			 */
+			$this->_paginacion_config('ficheros/propios', count($ficheros));
+
 			$data = array(
 					'titulo' => 'Sus ficheros enviados',
-					'ficheros' => $ficheros,
+					'ficheros' => $this->_paginacion_subconjunto($ficheros),
 			);
 			$this->load->view('listado-ficheros', $data);
 			$this->load->view('pie');
@@ -286,7 +305,7 @@ class Ficheros extends Controller {
 	 */
 
 	function modificar($fid) {
-        $fichero = $this->trabajoficheros->extrae_bd($fid);
+        $fichero = $this->trabajoficheros->extrae_bd(array('fid' => $fid));
 
         if ($fichero === FALSE) {
             show_error('El fichero indicado no existe.');
@@ -335,7 +354,7 @@ class Ficheros extends Controller {
 	 * Borrado de un fichero a petición de su remitente
 	 */
 	function borrar($fid) {
-		$fichero = $this->trabajoficheros->extrae_bd($fid);
+		$fichero = $this->trabajoficheros->extrae_bd(array('fid' => $fid));
 
         if ($fichero === FALSE) {
             show_error('El fichero indicado no existe.');
@@ -371,7 +390,7 @@ class Ficheros extends Controller {
 	 * Minipágina para los bocadillos en el listado de ficheros
 	 */
 	function minipagina($fid) {
-        $fichero = $this->trabajoficheros->extrae_bd($fid);
+        $fichero = $this->trabajoficheros->extrae_bd(array('fid' => $fid));
 
         if ($fichero === FALSE) {
 			echo "Fichero inexistente o caducado";
@@ -468,7 +487,8 @@ class Ficheros extends Controller {
 			} elseif ($this->input->post('eliminar_passwd') === FALSE) {
 				// ¿No ha rellenado la contraseña y la tenía en blanco?
 				$fichero =
-					$this->trabajoficheros->extrae_bd($this->input->post('fid'));
+					$this->trabajoficheros->extrae_bd(array(
+								'fid' => $this->input->post('fid')));
 				if (empty($p) &&
 						empty($fichero->password)) {
 
@@ -558,7 +578,8 @@ class Ficheros extends Controller {
 				}
 
 				$actual =
-					$this->trabajoficheros->extrae_bd($fid);
+					$this->trabajoficheros->extrae_bd(array(
+								'fid' => $fid));
 				if ($actual === FALSE) {
 					$data_form['error'] = '<p>Fichero inexistente.</p>';
 					return PROCESADO_ERR_FORMULARIO;
@@ -645,5 +666,35 @@ class Ficheros extends Controller {
 		}
 	}
 
+	/**
+	 * Define las opciones para la paginación
+	 */
+
+	function _paginacion_config($ruta, $total) {
+		$config = array(
+			'base_url' => site_url($ruta),
+			'total_rows' => $total,
+			'per_page' => $this->config->item('resultados_por_pagina'),
+			'full_tag_open' => '<div id="paginacion">',
+			'full_tag_close' => '</div>',
+			'first_link' => 'Primera',
+			'last_link' => '&Uacute;ltima',
+			'cur_tag_open' => '<span id="paginacion_actual">',
+			'cur_tag_close' => '</span>',
+		); 
+
+		$this->pagination->initialize($config);
+	}
+
+	/**
+	 * Devuelve la porción de array de ficheros indicada por la paginación
+	 */
+
+	function _paginacion_subconjunto($ficheros) {
+		$rpp = $this->config->item('resultados_por_pagina');
+		$pagina_actual = $this->uri->segment(3, 0);
+
+		return array_slice($ficheros, $pagina_actual, $rpp);
+	}
 }
 

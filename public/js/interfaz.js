@@ -122,7 +122,7 @@ function pagina_envio() {
 					}
 			});
 
-			$("#progreso").everyTime(1000, 'contador', function() {
+			$("#progreso").everyTime(3000, 'contador', function() {
 				$.ajax({
 					url: url_base + "ficheros/estado/" + $("#id_envio").val(),
 					cache: false,

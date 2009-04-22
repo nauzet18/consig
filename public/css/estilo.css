@@ -374,3 +374,8 @@ div#busqueda-rapida {
 img.centrar_ayuda {
   display: block;
 }
+
+.dircorreo {
+  padding-right: 20px;
+  background: transparent url(../img/interfaz/email.png) top right no-repeat;
+}

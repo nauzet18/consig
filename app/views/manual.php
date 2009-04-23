@@ -30,6 +30,26 @@ borrado) y el acceso a todos los ficheros publicados.</p>
 
 <h2>2. Trabajo con ficheros</h2>
 
+<p>Los listados de ficheros son presentados por defecto ordenados en orden
+cronológico inverso, pero puede alterarse este criterio haciendo click sobre
+el título de cada columna. La columna que en ese momento esté funcionando
+como referencia para ordenar los resultados estará acompañada de un símbolo
+gráfico que determinará el criterio de ordenación (ascendente o
+descendente).</p>
+
+<img class="centrar_ayuda" 
+ src="<?php echo site_url('img/ayuda/ordenacion_ficheros.png');?>"
+ alt="Ordenación de los ficheros" />
+
+<p>Además, si la cantidad de ficheros es muy elevada, el listado se paginará
+mostrando <?php $this->config->item('resultados_por_pagina')?> resultados en
+cada página. Podrá moverse entre las páginas conservando el criterio de
+ordenación.</p>
+
+<img class="centrar_ayuda" 
+ src="<?php echo site_url('img/ayuda/paginacion_ficheros.png');?>"
+ alt="Paginación de los ficheros" />
+
 <h2><a name="descarga">2.1. Descarga de un fichero</a></h2>
 
 <p>En consigna hay dos niveles de acceso: de entrada a la ficha del fichero

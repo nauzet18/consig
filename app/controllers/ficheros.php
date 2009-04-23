@@ -37,9 +37,15 @@ class Ficheros extends Controller {
 		$this->load->config('subredes');
 	}
 	
-	function index()
+	function index($atr_orden = 'fechaenvio', $orden = 'desc')
 	{
 		$this->load->library('pagination');
+
+		if (FALSE === $this->_controla_ordenacion($atr_orden, $orden)) {
+			$atr_orden = 'fechaenvio';
+			$orden = 'desc';
+		}
+
 		$data = array(
 				'js_adicionales' => array(
 					'jquery.quicksearch.pack.js'
@@ -57,15 +63,17 @@ class Ficheros extends Controller {
 		$this->load->view('cabecera', $data);
 		$ficheros = $this->trabajoficheros->extrae_bd(array(
 					'listar' => '1',
-		));
+		), array(), $atr_orden, $orden);
 
 		/*
 		 * Paginación
 		 */
-		$this->_paginacion_config('ficheros/index', count($ficheros));
+		$this->_paginacion_config('ficheros/index/'.$atr_orden.'/'.$orden, count($ficheros));
+		$columnas = $this->_columnas_con_ordenacion('ficheros/index', $atr_orden, $orden);
 
 		$data = array(
 				'ficheros' => $this->_paginacion_subconjunto($ficheros),
+				'orden' => $columnas,
 		);
 		$this->load->view('listado-ficheros', $data);
 		$this->load->view('pie');
@@ -265,8 +273,12 @@ class Ficheros extends Controller {
 	/*
 	 * Muestra los ficheros del usuario actual
 	 */
-	function propios() {
+	function propios($atr_orden = 'fechaenvio', $orden = 'desc') {
 		$this->load->library('pagination');
+		if (FALSE === $this->_controla_ordenacion($atr_orden, $orden)) {
+			$atr_orden = 'fechaenvio';
+			$orden = 'desc';
+		}
 
 		if (!$this->autenticado) {
             show_error('Debe autenticarse para poder ver sus ficheros.');
@@ -284,16 +296,19 @@ class Ficheros extends Controller {
 
 
 			$ficheros = $this->trabajoficheros->extrae_bd(array(
-						'remitente' => $this->session->userdata('dn')));
+						'remitente' => $this->session->userdata('dn')),
+					array(), $atr_orden, $orden);
 
 			/*
 			 * Paginación
 			 */
-			$this->_paginacion_config('ficheros/propios', count($ficheros));
+			$this->_paginacion_config('ficheros/propios/'.$atr_orden.'/'.$orden, count($ficheros));
+			$columnas = $this->_columnas_con_ordenacion('ficheros/propios', $atr_orden, $orden);
 
 			$data = array(
 					'titulo' => 'Sus ficheros enviados',
 					'ficheros' => $this->_paginacion_subconjunto($ficheros),
+					'orden' => $columnas,
 			);
 			$this->load->view('listado-ficheros', $data);
 			$this->load->view('pie');
@@ -681,6 +696,7 @@ class Ficheros extends Controller {
 			'last_link' => '&Uacute;ltima',
 			'cur_tag_open' => '<span id="paginacion_actual">',
 			'cur_tag_close' => '</span>',
+			'uri_segment' => 5,
 		); 
 
 		$this->pagination->initialize($config);
@@ -692,9 +708,51 @@ class Ficheros extends Controller {
 
 	function _paginacion_subconjunto($ficheros) {
 		$rpp = $this->config->item('resultados_por_pagina');
-		$pagina_actual = $this->uri->segment(3, 0);
+		$pagina_actual = $this->uri->segment(5, 0);
 
 		return array_slice($ficheros, $pagina_actual, $rpp);
 	}
-}
 
+	/*
+	 * Ordenación
+	 */
+
+	function _controla_ordenacion($atr_orden, $orden) {
+		if (($atr_orden != 'fechaenvio' && $atr_orden != 'tam'
+				&& $atr_orden != 'nombre') 
+				|| ($orden != 'asc' && $orden != 'desc')) {
+			// Indicamos que se debe volver a 'fechaenvio', 'desc'
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
+	function _columnas_con_ordenacion($seccion, $atr_orden, $orden) {
+		$columnas = array(
+				'nombre' => 'Nombre del fichero', 
+				'tam' => 'Tama&ntilde;o',
+				'fechaenvio' => 'Fecha de env&iacute;o'
+		);
+		$resultado = array();
+
+		foreach ($columnas as $k => $t) {
+			if ($atr_orden == $k) {
+				$orden_contrario = ($orden == 'asc' ? 'desc' : 'asc');
+				$resultado[$k] = anchor(site_url($seccion . '/' . $atr_orden
+							.'/' . $orden_contrario), $t);
+				$resultado[$k] .= ' <img src="'
+					.site_url('img/interfaz/flecha_'.$orden_contrario.'.png')
+					.'" alt="Ordenar " />';
+			} else {
+				$resultado[$k] = anchor(site_url($seccion . '/' . $k
+							.'/asc'), $t);
+			}
+
+		}
+
+		return $resultado;
+	}
+
+}
+?>

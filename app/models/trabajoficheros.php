@@ -190,37 +190,33 @@ class TrabajoFicheros extends Model {
 	}
 
     /*
-     * Extrae de la base de datos un fichero dado su identificador, o todos
-	 * los ficheros si no se especifica ninguno (o se pasa 0 como
-	 * primer parámetro).
+     * Extrae de la base de datos el fichero o los ficheros que indiquen las
+	 * condiciones del primer parámetro, aplicando si fuera necesario los
+	 * patrones definidos en el segundo
 	 *
-	 * ignorar_listar indica si debe considerarse el valor de 'listar' para
-	 * cada fichero, si se ignora todos los ficheros serán mostrados aunque
-	 * hayan sido marcados para no ser listados.
+	 *  @param array 	array asociativo con condiciones
+	 *  @param array	array asociativo con patrones
+	 *	@param string	atributo por el que se ordenan los resultados. si no
+	 *					se especifica ninguno, se usa 'fechaenvio'
 	 *
-	 *  @param int 	identificador del fichero a extraer, 0 para todos los
-	 *  			ficheros
-	 *  @param int	ignorar la marca 'listar' de los ficheros
-	 *
-	 *  @param string	remitente del que queremos extraer los ficheros
-	 *  @param array	array de filtros para el nombre, usado para
-	 * 					paginación
 	 *  @return		el elemento o elementos extraídos, FALSE si no se
 	 * 				encontró
      */
 
-	function extrae_bd($condiciones = array(), $patrones = array()) {
+	function extrae_bd($condiciones = array(), $patrones = array(),
+			$ordenar_por = 'fechaenvio', $orden = 'desc') {
 
 		$this->db->where($condiciones);
 
 		// Paginación o no?
 		if (count($patrones) == 0) {
-			$this->db->order_by("fechaenvio", "desc");
 		} else {
 			// Engañamos a la función or_like con un "match" vacío
 			$this->db->or_like($patrones, '', 'after');
-			$this->db->order_by("nombre", "asc");
 		}
+
+		// Orden
+		$this->db->order_by($ordenar_por, $orden);
 
         $query = $this->db->get('ficheros');
 

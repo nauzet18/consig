@@ -6,9 +6,9 @@ $titulo = isset($titulo) ? $titulo : "Listado de ficheros";
   <thead>
    <tr>
     <th></th>
-	<th>Nombre del fichero</th>
-	<th>Tama&ntilde;o</th>
-	<th>Fecha de env&iacute;o</th>
+	<th><?php echo $orden['nombre']?></th>
+	<th><?php echo $orden['tam']?></th>
+	<th><?php echo $orden['fechaenvio']?></th>
    </tr>
   </thead>
   <tbody>
@@ -70,4 +70,6 @@ foreach ($ficheros as $f) {
   </tbody>
  </table>
 
-<?php echo $this->pagination->create_links(); ?>
+<?php 
+echo $this->pagination->create_links();
+?>

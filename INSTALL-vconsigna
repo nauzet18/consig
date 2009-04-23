@@ -1,0 +1,48 @@
+chcon -R -t httpd_sys_content_t /var/www/consigna/
+chcon -t httpd_sys_script_rw_t \
+	/var/www/consigna/app/libraries/MY_Log.php \
+	/var/www/consigna/public/system/libraries/Log.php \
+	/var/www/consigna/app/controllers/ficheros.php \
+	/var/www/consigna/app/models/trabajoficheros.php
+
+
+mkdir /var/log/consigna
+chmod 700 /var/log/consigna
+chown apache /var/log/consigna
+chcon -u system_u -t httpd_sys_script_rw_t /var/log/consigna
+
+mkdir /var/consigna
+chmod -R 700 /var/consigna
+chown -R apache /var/consigna
+chcon -R -t httpd_sys_script_rw_t /var/consigna
+
+
+favicon.ico
+
+
+ssmtp:
+
+# yum install ssmtp
+# update-alternatives --config mta
+
+Hay 2 programas que proporcionan 'mta'.
+
+  Selección    Comando
+  -----------------------------------------------
+  *+ 1           /usr/sbin/sendmail.sendmail
+     2           /usr/sbin/sendmail.ssmtp
+
+     Presione Intro para mantener la selección actual[+], o escriba el
+     número de la selección:  2
+
+-> Configuramos /etc/ssmtp/ssmtp.conf
+
+root=consigna@us.es
+mailhub=mail.us.es
+FromLineOverride=YES
+UseSTARTTLS=YES
+AuthUser=consigna@us.es
+AuthPass=xxxx
+
+   -> Se usa StartTLS
+   -> El correo para root llega a consigna@us.es

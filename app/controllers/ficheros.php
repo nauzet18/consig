@@ -47,18 +47,10 @@ class Ficheros extends Controller {
 		}
 
 		$data = array(
-				'js_adicionales' => array(
-					'jquery.quicksearch.pack.js'
-				),
 				'css_adicionales' => array(
 					'jquery.cluetip.css',
 				),
 		);
-
-		// Formulario de búsqueda
-		if ($this->config->item('caja_busqueda') === TRUE) {
-			$data['body_onload'] = 'formulario_busqueda()';
-		}
 
 		$this->load->view('cabecera', $data);
 		$ficheros = $this->trabajoficheros->extrae_bd(array(
@@ -284,13 +276,9 @@ class Ficheros extends Controller {
             show_error('Debe autenticarse para poder ver sus ficheros.');
 		} else {
 			$data = array(
-					'js_adicionales' => array(
-						'jquery.quicksearch.pack.js'
-					),
 					'css_adicionales' => array(
 						'jquery.cluetip.css',
 					),
-					'body_onload' => 'formulario_busqueda()',
 			);
 			$this->load->view('cabecera', $data);
 

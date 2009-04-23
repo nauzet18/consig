@@ -397,12 +397,6 @@ $config['direccion_correo_automatico'] = 'consigna@us.es';
 $config['correo_caducado'] = FALSE;
 
 /*
- * Habilitar caja de búsqueda
- */
-
-$config['caja_busqueda'] = FALSE;
-
-/*
  * Número de resultados por página
  */
 

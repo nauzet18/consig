@@ -209,20 +209,6 @@ function pagina_descarga() {
 }
 
 
-function formulario_busqueda() {
-	$("#listado-ficheros").before('<div id="busqueda-rapida"></div>');
-	$("#listado-ficheros tbody tr").quicksearch({
-		labelText: 'Buscar',
-		position: 'prepend',
-		attached: 'div#busqueda-rapida',
-		//loaderImg: url_base + 'img/interfaz/ajax-loader.gif',
-		loaderText: '',
-		inputText: 'fichero...',
-		labelText: 'Búsqueda:',
-		fixWidths: true
-		});
-}
-
 /**
  * Modificación de un fichero. Realiza:
  *

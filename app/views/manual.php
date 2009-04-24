@@ -225,6 +225,9 @@ su decisión, el ficheo será eliminado del sistema de consigna.</p>
 
 <h2><a name="busqueda">3. Búsqueda de ficheros</a></h2>
 
+<img class="centrar_ayuda" src="<?php echo
+site_url('img/ayuda/busqueda.png')?>" alt="B&uacute;squeda" />
+
 <p>Consigna le permite buscar un fichero entre todos los enviados
 especificando un texto a buscar. Este texto sólo puede contener:</p>
 

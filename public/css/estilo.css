@@ -398,3 +398,15 @@ img.centrar_ayuda {
   margin-left: 2px;
   padding:2px 5px;
 }
+
+#cuadro_busqueda {
+  margin-left: 2em;
+  text-align: right;
+}
+
+#cuadro_busqueda .textobusqueda {
+  padding: 2px 2px 2px 22px;
+  background-position: top left;
+  background-repeat: no-repeat;
+  background-image: url(../img/interfaz/buscar.png);
+}

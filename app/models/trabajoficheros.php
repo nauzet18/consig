@@ -209,10 +209,9 @@ class TrabajoFicheros extends Model {
 		$this->db->where($condiciones);
 
 		// Paginación o no?
-		if (count($patrones) == 0) {
-		} else {
+		if (count($patrones) > 0) {
 			// Engañamos a la función or_like con un "match" vacío
-			$this->db->or_like($patrones, '', 'after');
+			$this->db->or_like($patrones, '', 'both');
 		}
 
 		// Orden

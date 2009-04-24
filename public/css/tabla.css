@@ -78,3 +78,7 @@ table a:active
 {
 	color                 : #003366;
 }
+
+.td_nombrefich {
+  width: 65%;
+}

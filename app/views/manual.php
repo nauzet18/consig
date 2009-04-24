@@ -11,6 +11,7 @@
 	 <li><a href="#modificacion">2.3. Modificación de un fichero</a></li>
 	 <li><a href="#borrado">2.4. Borrado de un fichero</a></li>
  </ul>
+ <li><a href="#busqueda">3. Búsqueda de ficheros</a></li>
 </ul>
 
 
@@ -221,3 +222,21 @@ propietario" />
 
 <p>Para borrar un fichero se le pedirá confirmación del borrado. Si confirma
 su decisión, el ficheo será eliminado del sistema de consigna.</p>
+
+<h2><a name="busqueda">3. Búsqueda de ficheros</a></h2>
+
+<p>Consigna le permite buscar un fichero entre todos los enviados
+especificando un texto a buscar. Este texto sólo puede contener:</p>
+
+<ul>
+ <li>Letras (A-Z y a-z)</li>
+ <li>Números</li>
+ <li>Punto, barra baja y guion</li>
+</ul>
+
+<p>Si se encuentra un carácter no incluido en esta lista, la cadena de
+búsqueda queda cortada a partir del primer carácter ilegal incluido.</p>
+
+<p>La búsqueda se realiza tanto en el nombre del fichero como en la
+descripción de los mismos, de manera que sea más fácil localizarlos. Los
+ficheros ocultos no se muestran como resultado de las búsquedas.</p>

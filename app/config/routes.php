@@ -54,9 +54,15 @@ $route['(:num.*)'] = 'ficheros/ver_fichero/$1';
  * Modificación de un fichero
  */
 
-
 $route['modificar/(:num.*)'] = 'ficheros/modificar/$1';
 $route['borrar/(:num.*)'] = 'ficheros/borrar/$1';
+
+/*
+ * Búsqueda
+ */
+
+$route['buscar'] = 'ficheros/buscar';
+$route['-/(.*)'] = 'ficheros/buscar/$1';
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

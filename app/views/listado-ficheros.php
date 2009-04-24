@@ -2,6 +2,12 @@
 $titulo = isset($titulo) ? $titulo : "Listado de ficheros";
 ?>
 <h1><?php echo $titulo; ?></h1>
+
+<?php
+if (isset($caja_busqueda) && $caja_busqueda == 1) {
+	$this->load->view('busqueda');
+}
+?>
  <table id="listado-ficheros">
   <thead>
    <tr>
@@ -51,10 +57,10 @@ foreach ($ficheros as $f) {
 			$atributos_enlace['class'] = 'fichero_propio';
 		}
 
-        echo '<td>'. anchor($f->fid, $f->nombre,
+        echo '<td class="td_nombrefich">'. anchor($f->fid, $f->nombre,
 				$atributos_enlace) . '</td>';
     } else {
-        echo '<td>'. $f->nombre  .'</td>';
+        echo '<td class="td_nombrefich">'. $f->nombre  .'</td>';
     }
 
 	// Tamaño

@@ -50,6 +50,7 @@ class Ficheros extends Controller {
 				),
 				'busquedas' => array(),
 				'seccion' => 'index',
+				'caja_busqueda' => 1,
 		);
 
 
@@ -358,6 +359,48 @@ class Ficheros extends Controller {
 		}
 	}
 
+	/**
+	 * Búsqueda de un fichero.
+	 *
+	 * Como se llamará desde un alias de ruta (/-xx) los segmentos de
+	 * la URL no se corresponden con los de /fichero/buscar/xx, por tanto
+	 * hay que pensar en las URLs del primero
+	 */
+	function buscar($cadena = '', $atr_orden = 'nombre', $orden = 'asc') {
+		// Redirección a la página buena
+		$cadena_post = $this->input->post('cadena', TRUE);
+		if (empty($cadena) && $cadena_post !== FALSE) {
+			$cadena_post = trim($cadena_post);
+			$cadena_post = preg_replace('/([^\w\d\._-].*)$/', '', $cadena_post);
+			redirect('-/' . $cadena_post);
+		} elseif (empty($cadena)) {
+			show_error('La búsqueda no puede quedar vacía. Recuerde que'
+					.' la búsqueda se trunca tras el primer carácter'
+					.' no alfanumérico.');
+		} else {
+			$this->load->library('pagination');
+			$this->load->library('manejoauxiliar');
+
+			$opciones = array(
+					'atr_orden' => $atr_orden,
+					'orden' => $orden,
+					'filtros' => array(
+						'listar' => 1
+					),
+					'busquedas' => array(
+						'nombre' => $cadena,
+						'descripcion' => $cadena),
+					'seccion' => '/-/' . $cadena,
+					'caja_busqueda' => 1,
+					'titulo' => 'Resultado de la búsqueda ('.
+						$cadena .')',
+			);
+
+
+			$this->_presentar_listado($opciones);
+		}
+	}
+
 
 	/*
 	 * Minipágina para los bocadillos en el listado de ficheros
@@ -644,11 +687,19 @@ class Ficheros extends Controller {
 	 * ello implica
 	 *
 	 * @param	array	array asociativo con las opciones necesarias para
-	 * 					generar un listado
+	 * 					generar un listado.
+	 *
 	 */
 
 	function _presentar_listado($opciones) {
 		$seccion = $opciones['seccion'];
+
+		// Si la sección comienza con '/' se entiende que es una ruta dentro
+		// CI 'absoluta'. Si no, cuelga de '/ficheros'
+		if (substr($seccion, 0, 1) != '/') {
+			$seccion = 'ficheros/' . $seccion;
+		}
+
 		$atr_orden = $opciones['atr_orden'];
 		$orden = $opciones['orden'];
 
@@ -671,11 +722,11 @@ class Ficheros extends Controller {
 		/*
 		 * Paginación
 		 */
-		$this->manejoauxiliar->paginacion_config('ficheros/'.$seccion
+		$this->manejoauxiliar->paginacion_config($seccion
 				.'/'.$atr_orden.'/'.$orden, count($ficheros));
 		$columnas =
-			$this->manejoauxiliar->columnas_con_ordenacion('ficheros/' 
-					. $seccion, $atr_orden, $orden);
+			$this->manejoauxiliar->columnas_con_ordenacion($seccion, 
+					$atr_orden, $orden);
 
 		$data = array(
 				'ficheros' => $this->manejoauxiliar->paginacion_subconjunto($ficheros),
@@ -685,6 +736,11 @@ class Ficheros extends Controller {
 		// Título
 		if (isset($opciones['titulo'])) {
 			$data['titulo'] = $opciones['titulo'];
+		}
+
+		// Búsqueda en la página principal
+		if (isset($opciones['caja_busqueda'])){
+			$data['caja_busqueda'] = 1;
 		}
 		$this->load->view('listado-ficheros', $data);
 		$this->load->view('pie');

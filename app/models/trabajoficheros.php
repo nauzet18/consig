@@ -206,18 +206,26 @@ class TrabajoFicheros extends Model {
 	function extrae_bd($condiciones = array(), $patrones = array(),
 			$ordenar_por = 'fechaenvio', $orden = 'desc') {
 
-		$this->db->where($condiciones);
+		// Ignitedquery da más potencia en la búsqueda
+		$this->load->library('ignitedquery');
 
-		// Paginación o no?
-		if (count($patrones) > 0) {
-			// Engañamos a la función or_like con un "match" vacío
-			$this->db->or_like($patrones, '', 'both');
+		$q = new IgnitedQuery();
+		foreach ($condiciones as $a => $v) {
+			$sub =& $q->where();
+			$sub->where($a, $v);
+
+			if (count($patrones) > 0) {
+				$sub2 =& $sub->where();
+				foreach ($patrones as $a2 => $p) {
+					$sub2->or_like($a2, $p, 'both');
+				}
+			}
 		}
 
 		// Orden
-		$this->db->order_by($ordenar_por, $orden);
+		$q->order_by($ordenar_por, $orden);
 
-        $query = $this->db->get('ficheros');
+        $query = $q->get('ficheros');
 
         $res = $query->result();
 

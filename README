@@ -6,6 +6,10 @@ Consigna es posible gracias a los siguientes proyectos:
 	
  * CodeIgniter - http://codeigniter.com/ 
  	Framework PHP
+ 
+ * IgnitedQuery - http://www.assembla.com/spaces/IgnitedRecord
+ 	Biblioteca para CodeIgniter que permite mayor potencia en la
+	especificació de consultas
 
  * jQuery -  http://jquery.com/ 
 	Framework JavaScript

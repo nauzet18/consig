@@ -41,7 +41,8 @@ foreach ($ficheros as $f) {
 			<img src="' . site_url('img/tipos/32x32/' . $mimetype[1]) . '"
 			alt="' . $mimetype[0] . '"/>';
 		if ($f->listar == 0) {
-			echo '<img src="'. site_url('img/interfaz/oculto.png')
+			echo '<img class="icono_oculto" src="'
+				. site_url('img/interfaz/oculto.png')
 				.'" alt="fichero oculto" />';
 		}
 

@@ -406,7 +406,12 @@ img.centrar_ayuda {
 
 #cuadro_busqueda .textobusqueda {
   padding: 2px 2px 2px 22px;
-  background-position: top left;
+  background-position: center left;
   background-repeat: no-repeat;
   background-image: url(../img/interfaz/buscar.png);
+}
+
+.icono_oculto {
+  clear: both;
+  float: right;
 }

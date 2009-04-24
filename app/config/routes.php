@@ -62,6 +62,7 @@ $route['borrar/(:num.*)'] = 'ficheros/borrar/$1';
  */
 
 $route['buscar'] = 'ficheros/buscar';
+$route['-'] = 'ficheros/buscar'; // Búsqueda vacía
 $route['-/(.*)'] = 'ficheros/buscar/$1';
 
 /* End of file routes.php */

@@ -90,11 +90,16 @@ class TrabajoFicheros extends Model {
 				'B' => 1
 		);
 
+		$res = '0 B';
+
 		foreach ($unidades as $u => $v) {
 			if ($bytes >= $v) {
-				return round($bytes/$v, 2) . ' ' . $u;
+				$res = round($bytes/$v, 2) . ' ' . $u;
+				break;
 			}
 		}
+
+		return $res;
 	}
 
 	/*

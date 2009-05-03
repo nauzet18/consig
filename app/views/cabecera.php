@@ -62,7 +62,7 @@ $autenticado = $this->session->userdata('autenticado');
 if ($autenticado !== FALSE) {
 	echo '<div id="datos_autenticado">';
 	echo 'Su identidad en este momento: ';
-	echo '<span class="usuario">'.$this->session->userdata('nombre').'</span>';
+	echo '<span class="usuario">'.$this->session->userdata('name').'</span>';
 	echo '</div>';
 }
 ?>
@@ -97,8 +97,11 @@ if ($autenticado !== FALSE) {
 	} else {
 		$url_login = site_url('usuario/login');
 	}
+	
+	// Módulo de autenticación con formulario?
+	$has_form = $this->auth->has_form();
    ?>
-   <li><a rel="#loginOverlay" href="<?php echo $url_login; ?>"> 
+   <li><a <?php echo ($has_form ? 'rel="#loginOverlay"' : '')?> href="<?php echo $url_login; ?>"> 
      <img src="<?php echo site_url('img/interfaz/login.png')?>" alt="login" /><br />
 	 Autenticaci&oacute;n</a>
    </li>
@@ -130,7 +133,8 @@ if ($autenticado !== FALSE) {
  }
 
  // Ventanita flotante de login
- if ($autenticado === FALSE && !isset($no_mostrar_login)):
+ if ($autenticado === FALSE && !isset($no_mostrar_login)
+		 && $has_form):
  ?>
 
  <div id="loginOverlay"

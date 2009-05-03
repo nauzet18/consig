@@ -40,77 +40,72 @@ class Usuario extends Controller {
 
 	// Sección de autenticación
 	function login() {
-		$this->load->model('trabajoldap');
-		$this->load->helper('form');
-		$this->load->library('form_validation');
+		$final_id = FALSE;
+		$has_form = $this->auth->has_form();
+		$err = '';
 
-		$data_cabecera = array(
-				'subtitulo' => 'autenticación',
-				'no_mostrar_aviso' => TRUE,
-				'no_mostrar_login' => TRUE,
-				'body_onload' => 'pagina_login()',
-		);
-		$data_form = array();
-		$data_pie = array();
-
-		// Reglas para el formulario
-		$this->form_validation->set_rules('usuario', 'Usuario',
-				'required');
-		$this->form_validation->set_rules('passwd', 'Contraseña',
-				'required');
-
-		// ¿Envío de formulario?
-		if ($this->input->post('login') 
-				&& $this->form_validation->run() !== FALSE) {
-
-			// Recogida de valores (cuidado con XSS) y comprobación de
-			// validez
-			$usuario = $this->input->post('usuario', TRUE);
-			$passwd = $this->input->post('passwd', TRUE);
-
-			// Quitamos @ del usuario
-			$usuario = preg_replace('/@.*$/', '', $usuario);
-
-			$res = $this->trabajoldap->login($usuario, $passwd);
-
-			if ($res === FALSE) {
-				$data_form['error'] = 'Nombre de usuario o contraseña
-					erróneos';
-			} elseif ($res == -1) {
-				$data_form['error'] = 'Hay problemas actualmente con la autenticación. Por favor, inténtelo más tarde';
-			} else {
-				// Sólo nos interesan unos cuantos datos
-				$datos = array(
-						'autenticado' => TRUE,
-						'dn' => $res['dn'],
-						'nombre' => ucwords(strtolower($res['givenname'][0] 
-							. ' ' .  $res['sn'][0])),
-						'relaciones' => $res['usesrelacion'],
-						'mail' => $res['mail'][0],
-				);
-
-				$this->session->set_userdata($datos);
-
-				redirect($this->input->post('devolver'));
-			}
-
-		}
-
-		// Muestra del formulario
-		$this->load->view('cabecera', $data_cabecera);
-
-		if ($this->config->item('https_para_login') == TRUE) {
-			$url_login = preg_replace('/^http:/', 'https:',
-					site_url('usuario/login')); 
+		if ($has_form === FALSE) {
+			$final_id = $this->auth->login_action($err);
 		} else {
-			$url_login = site_url('usuario/login');
+			// Formulario
+			$this->load->helper('form');
+			$this->load->library('form_validation');
+
+			$data_cabecera = array(
+					'subtitulo' => 'autenticación',
+					'no_mostrar_aviso' => TRUE,
+					'no_mostrar_login' => TRUE,
+					'body_onload' => 'pagina_login()',
+					);
+			$data_form = array();
+			$data_pie = array();
+
+			// Reglas para el formulario
+			$this->form_validation->set_rules('usuario', 'Usuario',
+					'required');
+			$this->form_validation->set_rules('passwd', 'Contraseña',
+					'required');
+
+			// ¿Envío de formulario?
+			if ($this->input->post('login') 
+					&& $this->form_validation->run() !== FALSE) {
+				$final_id = $this->auth->login_action($err);
+			}
+		} // has_form
+
+		if ($final_id !== FALSE) {
+			$data = $this->auth->get_user_data($final_id, TRUE);
+			$data['autenticado'] = TRUE;
+
+			$this->session->set_userdata($data);
+
+			redirect($this->input->post('devolver'));
+		} else {
+
+			if ($has_form) {
+				// Muestra del formulario
+				$this->load->view('cabecera', $data_cabecera);
+				if ($this->config->item('https_para_login') == TRUE) {
+					$url_login = preg_replace('/^http:/', 'https:',
+							site_url('usuario/login')); 
+				} else {
+					$url_login = site_url('usuario/login');
+				}
+
+				$data_form['url_login'] = $url_login;
+
+				// ¿Hubo errores?
+				if (!empty($err)) {
+					$data_form['error'] = $err;
+				}
+
+
+				$this->load->view('form-login', $data_form);
+				$this->load->view('pie', $data_pie);
+			} else {
+				show_error($err);
+			}
 		}
-
-		$data_form['url_login'] = $url_login;
-
-
-		$this->load->view('form-login', $data_form);
-		$this->load->view('pie', $data_pie);
 	}
 
 	// Salir (logout)
@@ -119,15 +114,17 @@ class Usuario extends Controller {
 			// Posible bug en CI 1.7.0 con sess_destroy()
 			// Eliminamos los valores
 			$data = array(
-				'dn' => '',
-				'nombre' => '',
-				'relaciones' => array(),
+				'id' => '',
+				'name' => '',
 				'mail' => '',
 				'autenticado' => FALSE,
 			);
 			$this->session->unset_userdata($data);
 			$this->session->sess_destroy();
 		}
+
+		// Acciones adicionales
+		$this->auth->logout();
 
 		redirect('');
 	}

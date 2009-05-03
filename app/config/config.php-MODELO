@@ -381,10 +381,11 @@ $config['mimetype_icono_defecto'] = 'mime.png';
 
 
 /**
- * Usar https para la autenticación
+ * Opciones de autenticación
  */
 
-$config['https_para_login'] = FALSE;
+$config['authmodule'] = 'LDAP';
+$config['https_para_login'] = TRUE;
 
 /**
  * Opciones propias de envío de correo

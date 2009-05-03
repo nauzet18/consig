@@ -301,12 +301,10 @@ class TrabajoFicheros extends Model {
 		} elseif (!$mostrar_autor) {
 			$cadena = 'Anónimo *';
 		} else {
-			// Hack para cargar un modelo desde otro modelo
 			$ci =& get_instance();
-			$ci->load->model('trabajoldap');
-			$datos = $ci->trabajoldap->consulta($usuario);
+			$datos = $ci->auth->get_user_data($usuario);
 			$cadena = ($datos === FALSE) 
-				? 'Desconocido' : $datos['nombre'];
+				? 'Desconocido' : $datos['name'];
 		}
 
 		return '<span class="usuario">' . $cadena .  '</span>';
@@ -460,7 +458,7 @@ class TrabajoFicheros extends Model {
 		if (!$autenticado) {
 			return FALSE;
 		} else {
-			$usuario= $this->session->userdata('dn');
+			$usuario= $this->session->userdata('id');
 			// XXX ¿administradores?
 			return $usuario == $fichero->remitente;
 		}
@@ -477,7 +475,7 @@ class TrabajoFicheros extends Model {
 		if (empty($usuario) && !$this->session->userdata('autenticado')) {
 			return FALSE; // No hay usuario actual
 		} elseif (empty($usuario)) {
-			$usuario = $this->session->userdata('dn');
+			$usuario = $this->session->userdata('id');
 		}
 
 		return $fichero->remitente == $usuario;
@@ -512,7 +510,7 @@ class TrabajoFicheros extends Model {
 	 */
 	function logdetalles($nivel, $msj, $fichero = 0) {
 		$autenticado = $this->session->userdata('autenticado');
-		$usuario = ($autenticado ? $this->session->userdata('dn') : '-');
+		$usuario = ($autenticado ? $this->session->userdata('id') : '-');
 
 		$ip = $this->input->ip_address();
 

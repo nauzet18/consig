@@ -28,7 +28,6 @@ class Cron extends Controller {
 
 	function index() {
 		$this->load->model('trabajoficheros');
-		$this->load->model('trabajoldap');
 		$this->load->library('email');
 
 		// 1. Ficheros expirados
@@ -39,8 +38,8 @@ class Cron extends Controller {
 				// Envío de correo al usuario, si es un fichero con
 				// propietario
 				if ($this->config->item('correo_caducado') && !empty($f->remitente)) {
-					$usuario = $this->trabajoldap->consulta($f->remitente,
-							1);
+					$usuario = $this->auth->get_user_data($f->remitente,
+							TRUE);
 					
 					if (!empty($usuario['mail'])) {
 						$correo_auto =
@@ -68,7 +67,7 @@ class Cron extends Controller {
 		}
 
 		// 2. Entradas en caché de LDAP
-		$this->trabajoldap->expira_cache();
+		$this->auth->cache_expiration();
 	}
 }
 

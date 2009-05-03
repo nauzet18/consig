@@ -262,7 +262,7 @@ class Ficheros extends Controller {
 				'atr_orden' => $atr_orden,
 				'orden' => $orden,
 				'filtros' => array(
-					'remitente' => $this->session->userdata('dn'),
+					'remitente' => $this->session->userdata('id'),
 				),
 				'busquedas' => array(),
 				'seccion' => 'propios',
@@ -578,7 +578,7 @@ class Ficheros extends Controller {
 
 				// Remitente, IP y fechas
 				$data['remitente'] = $this->autenticado ?
-					$this->session->userdata('dn') :
+					$this->session->userdata('id') :
 					'';
 				$data['ip'] = $this->input->ip_address();
 

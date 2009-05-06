@@ -88,7 +88,8 @@ INSERT INTO mimetypes VALUES ('', 'application/msword', 'doc',
 INSERT INTO mimetypes VALUES ('',
 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
 'docx', 'package_editors.png');
-INSERT INTO mimetypes VALUES ('', 'application/msword', 'dot', '');
+INSERT INTO mimetypes VALUES ('', 'application/msword', 'dot',
+'package_editors.png');
 INSERT INTO mimetypes VALUES ('', 'application/commonground', 'dp', '');
 INSERT INTO mimetypes VALUES ('', 'application/drafting', 'drw', '');
 INSERT INTO mimetypes VALUES ('', 'video/x-dv', 'dv', '');
@@ -96,6 +97,7 @@ INSERT INTO mimetypes VALUES ('', 'application/x-dvi', 'dvi', '');
 INSERT INTO mimetypes VALUES ('', '('', old) dwf', 'drawing/x-dwf', '');
 INSERT INTO mimetypes VALUES ('', 'model/vnd.dwf', 'dwf', '');
 INSERT INTO mimetypes VALUES ('', 'application/acad', 'dwg', 'kfig.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', '3dm', 'kfig.png');
 INSERT INTO mimetypes VALUES ('', 'application/dxf', 'dxf', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-director', 'dxr', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-script.elisp', 'el', '');
@@ -110,6 +112,8 @@ INSERT INTO mimetypes VALUES ('', 'application/x-envoy', 'evy', '');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'exe',
 'ejecutable.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-ole-storage ', 'msi',
+'ejecutable.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'dll',
 'ejecutable.png');
 INSERT INTO mimetypes VALUES ('', 'text/plain', 'f', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-fortran', 'f', '');
@@ -269,7 +273,7 @@ INSERT INTO mimetypes VALUES ('', 'application/base64', 'mme', '');
 INSERT INTO mimetypes VALUES ('', 'audio/mod', 'mod', '');
 INSERT INTO mimetypes VALUES ('', 'audio/x-mod', 'mod', '');
 INSERT INTO mimetypes VALUES ('', 'video/quicktime', 'moov', '');
-INSERT INTO mimetypes VALUES ('', 'video/quicktime', 'mov', '');
+INSERT INTO mimetypes VALUES ('', 'video/quicktime', 'mov', 'video.png');
 INSERT INTO mimetypes VALUES ('', 'video/x-sgi-movie', 'movie', '');
 INSERT INTO mimetypes VALUES ('', 'audio/mpeg', 'mp2', '');
 INSERT INTO mimetypes VALUES ('', 'audio/x-mpeg', 'mp2', '');
@@ -621,7 +625,16 @@ INSERT INTO mimetypes VALUES ('', 'application/x-zip-compressed', 'zip',
 'tar.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-7z-compressed', '7z',
 'tar.png');
+INSERT INTO mimetypes VALUES ('', 'application/x-compressed', 'ace',
+'tar.png');
 INSERT INTO mimetypes VALUES ('', 'text/x-script.zsh', 'zsh', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-rar', 'rar', 'tar.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-bittorrent', 'torrent',
 'ftp.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', '1sc',
+'scanner.png');
+INSERT INTO mimetypes VALUES ('', 'application/dbase', 'dbf',
+'kdict.png');
+INSERT INTO mimetypes VALUES ('', 'video/3gpp', '3gp', '');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'zbr',
+'kdict.png');

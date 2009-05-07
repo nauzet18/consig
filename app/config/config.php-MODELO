@@ -173,7 +173,7 @@ $config['directory_trigger'] 	= 'd'; // experimental not currently in use
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 0;
+$config['log_threshold'] = 4;
 
 /*
 |--------------------------------------------------------------------------
@@ -184,7 +184,7 @@ $config['log_threshold'] = 0;
 | system/logs/ folder.  Use a full server path with trailing slash.
 |
 */
-$config['log_path'] = '';
+$config['log_path'] = '/var/enviados/logs/';
 
 /*
 |--------------------------------------------------------------------------
@@ -231,14 +231,24 @@ $config['encryption_key'] = "";
 | 'time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 7200;
-$config['sess_encrypt_cookie']	= TRUE;
-$config['sess_use_database']	= TRUE;
-$config['sess_table_name']		= 'ci_sessions';
-$config['sess_match_ip']		= FALSE;
-$config['sess_match_useragent']	= TRUE;
-$config['sess_time_to_update'] 	= 300;
+$config['sess_cookie_name'] = 'ci_session';
+$config['sess_expiration'] = 0; // Al cerrar el navegador
+$config['sess_encrypt_cookie'] = FALSE;
+$config['sess_table_name'] = 'ci_sessions';
+$config['sess_match_ip'] = FALSE;
+$config['sess_match_useragent'] = TRUE;
+// [OB] additional config items: Set to 'database' to keep userdata exclusively on server database.
+$config['sess_storage'] = 'database';
+// [OB] additional config items: You can leave these as defaults for a standard session
+$config['sess_data_cookie'] = 'ci_session_data';
+$config['sess_database'] = 'default';
+$config['sess_timeout'] = 0;
+$config['sess_destroy_on_timeout'] = FALSE;
+$config['sess_update_interval'] = 180;
+$config['sess_gc_probability'] = 10;
+$config['sess_http_only'] = FALSE;
+$config['sess_secure'] = FALSE;
+$config['sess_forwarded_ip'] = FALSE; 
 
 /*
 |--------------------------------------------------------------------------

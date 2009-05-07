@@ -9,7 +9,11 @@ Consigna es posible gracias a los siguientes proyectos:
  
  * IgnitedQuery - http://www.assembla.com/spaces/IgnitedRecord
  	Biblioteca para CodeIgniter que permite mayor potencia en la
-	especificació de consultas
+	especificación de consultas
+
+ * OBSession - http://bleakview.orgfree.com/obsession/
+ 	Biblioteca para CodeIgniter que amplía y corrige el funcionamiento
+	de las sesiones
 
  * jQuery -  http://jquery.com/ 
 	Framework JavaScript

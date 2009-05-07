@@ -1,7 +1,5 @@
 DELETE FROM mimetypes;
 
-INSERT INTO mimetypes VALUES ('', 'x-world/x-3dmf', '3dm', '');
-INSERT INTO mimetypes VALUES ('', 'x-world/x-3dmf', '3dmf', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-authorware-bin', 'aab', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-authorware-map', 'aam', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-authorware-seg', 'aas', '');
@@ -635,6 +633,6 @@ INSERT INTO mimetypes VALUES ('', 'application/octet-stream', '1sc',
 'scanner.png');
 INSERT INTO mimetypes VALUES ('', 'application/dbase', 'dbf',
 'kdict.png');
-INSERT INTO mimetypes VALUES ('', 'video/3gpp', '3gp', '');
+INSERT INTO mimetypes VALUES ('', 'video/3gpp', '3gp', 'pda.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'zbr',
 'kdict.png');

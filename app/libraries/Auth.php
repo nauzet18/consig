@@ -73,18 +73,18 @@ class Auth {
 				$res = $q->result_array();
 				return $res[0];
 			}
-		} else {
-			$data = $this->CI->authmod->get_user_data($id);
-
-			if ($data !== FALSE) {
-				// Actualizamos en la BD
-				$this->CI->db->where('id', $id);
-				$this->CI->db->delete('usercache'); 
-				$this->CI->db->insert('usercache', $data);
-			}
-
-			return $data;
 		}
+
+		$data = $this->CI->authmod->get_user_data($id);
+
+		if ($data !== FALSE) {
+			// Actualizamos en la BD
+			$this->CI->db->where('id', $id);
+			$this->CI->db->delete('usercache'); 
+			$this->CI->db->insert('usercache', $data);
+		}
+
+		return $data;
 	}
 }
 

@@ -636,3 +636,13 @@ INSERT INTO mimetypes VALUES ('', 'application/dbase', 'dbf',
 INSERT INTO mimetypes VALUES ('', 'video/3gpp', '3gp', 'pda.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'zbr',
 'kdict.png');
+# SPSS
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'spo',
+'kspread_ksp.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'sav',
+'kspread_ksp.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'oib',
+'scanner.png');
+INSERT INTO mimetypes VALUES ('', 'application/acad', 'his', 'kfig.png');
+INSERT INTO mimetypes VALUES ('', 'audio/AMR', 'amr', 'pda.png');
+INSERT INTO mimetypes VALUES ('', 'application/msaccess ', 'accdb', 'kdict.png');

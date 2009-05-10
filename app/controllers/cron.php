@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2008 Jorge López Pérez <jorge@adobo.org>
+ * Copyright 2008 Jorge López Pérez <jorgelp@us.es>
  *
  *    This file is part of Consigna.
  *

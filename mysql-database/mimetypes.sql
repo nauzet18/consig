@@ -643,6 +643,9 @@ INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'sav',
 'kspread_ksp.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'oib',
 'scanner.png');
-INSERT INTO mimetypes VALUES ('', 'application/acad', 'his', 'kfig.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'his', 
+'kfig.png');
 INSERT INTO mimetypes VALUES ('', 'audio/AMR', 'amr', 'pda.png');
 INSERT INTO mimetypes VALUES ('', 'application/msaccess ', 'accdb', 'kdict.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'jnb', 
+'kfig.png');

@@ -46,7 +46,18 @@ class Auth {
 	}
 
 	function login_action(&$err) {
-		return $this->CI->authmod->login_action($err);
+		$id = '';
+		$ret = $this->CI->authmod->login_action($err, $id);
+
+		if ($ret === FALSE) {
+			log_message('info', 'Intento de login fallido. id=' . $id
+					.', IP: ' . $this->CI->input->ip_address());
+		} else {
+			log_message('info', 'Login correcto. id=' . $ret
+					.', IP: ' . $this->CI->input->ip_address());
+		}
+
+		return $ret;
 	}
 
 	function cache_expiration() {
@@ -54,6 +65,22 @@ class Auth {
 	}
 
 	function logout() {
+		if ($this->CI->session->userdata('autenticado')) {
+			log_message('info', 'Logout. id=' .
+					$this->CI->session->userdata('id')
+					.', IP: ' . $this->CI->input->ip_address());
+			// Posible bug en CI 1.7.0 con sess_destroy()
+			// Eliminamos los valores
+			$data = array(
+					'id' => '',
+					'name' => '',
+					'mail' => '',
+					'autenticado' => FALSE,
+					);
+			$this->CI->session->unset_userdata($data);
+			$this->CI->session->sess_destroy();
+		}
+
 		$this->CI->authmod->logout();
 	}
 

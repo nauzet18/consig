@@ -110,20 +110,6 @@ class Usuario extends Controller {
 
 	// Salir (logout)
 	function salir() {
-		if ($this->autenticado) {
-			// Posible bug en CI 1.7.0 con sess_destroy()
-			// Eliminamos los valores
-			$data = array(
-				'id' => '',
-				'name' => '',
-				'mail' => '',
-				'autenticado' => FALSE,
-			);
-			$this->session->unset_userdata($data);
-			$this->session->sess_destroy();
-		}
-
-		// Acciones adicionales
 		$this->auth->logout();
 
 		redirect('');

@@ -649,3 +649,7 @@ INSERT INTO mimetypes VALUES ('', 'audio/AMR', 'amr', 'pda.png');
 INSERT INTO mimetypes VALUES ('', 'application/msaccess ', 'accdb', 'kdict.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'jnb', 
 'kfig.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'c3e', 
+'kfig.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'cyp', 
+'kfig.png');

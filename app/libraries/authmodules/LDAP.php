@@ -31,10 +31,12 @@ class LDAP {
 	 * Comprueba si un usuario puede autenticarse con el nombre de
 	 * usuario y la contraseña dados
 	 *
+	 * Devuelve en $id el usuario que inicialmente se usa para autenticar
+	 *
 	 * @return	FALSE si falla, o el identificador de usuario final si todo
 	 *          es correcto
 	 */
-	function login_action(&$err) {
+	function login_action(&$err, &$id) {
 		$opciones = $this->CI->config->item('ldap');
 
 		 $ds = @ldap_connect($opciones["host"], $opciones["puerto"]);
@@ -52,6 +54,9 @@ class LDAP {
 
 		 // Quitamos @ del usuario
 		 $usuario = preg_replace('/@.*$/', '', $usuario);
+
+		 // Para el mensaje de log
+		 $id = $usuario;
 
 
 		 // Búsqueda del DN del usuario, para posteriormente hacer bind
@@ -87,8 +92,6 @@ class LDAP {
 		 if ($ret !== FALSE) {
 			 return $dn_usuario;
 		 } else {
-			 log_message('info', 'Intento de login fallido. uid='.$usuario
-				 .', IP: ' . $this->CI->input->ip_address());
 			 $err = 'Nombre de usuario o contraseña erróneos';
 			 return FALSE;
 		 }

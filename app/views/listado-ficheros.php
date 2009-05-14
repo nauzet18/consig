@@ -19,6 +19,11 @@ if (isset($caja_busqueda) && $caja_busqueda == 1) {
   </thead>
   <tbody>
 <?php
+if (count($ficheros) == 0) {
+	echo '<tr><td colspan="4" class="sin-ficheros">'
+		.'No hay ficheros para mostrar</td></tr>';
+}
+
 foreach ($ficheros as $f) {
 	// Estimación de mimetype
 	$mimetype = $this->trabajoficheros->consigue_mimetype($f->nombre);

@@ -166,9 +166,9 @@ INSERT INTO mimetypes VALUES ('', 'application/x-binhex40', 'hqx', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-mac-binhex40', 'hqx', '');
 INSERT INTO mimetypes VALUES ('', 'application/hta', 'hta', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-component', 'htc', '');
-INSERT INTO mimetypes VALUES ('', 'text/html', 'htm', '');
-INSERT INTO mimetypes VALUES ('', 'text/html', 'html', '');
-INSERT INTO mimetypes VALUES ('', 'text/html', 'htmls', '');
+INSERT INTO mimetypes VALUES ('', 'text/html', 'htm', 'html.png');
+INSERT INTO mimetypes VALUES ('', 'text/html', 'html', 'html.png');
+INSERT INTO mimetypes VALUES ('', 'text/html', 'htmls', 'html.png');
 INSERT INTO mimetypes VALUES ('', 'text/webviewhtml', 'htt', '');
 INSERT INTO mimetypes VALUES ('', 'text/html', 'htx', '');
 INSERT INTO mimetypes VALUES ('', 'x-conference/x-cooltalk', 'ice', '');
@@ -245,8 +245,8 @@ INSERT INTO mimetypes VALUES ('', 'image/vasa', 'mcf', '');
 INSERT INTO mimetypes VALUES ('', 'text/mcf', 'mcf', '');
 INSERT INTO mimetypes VALUES ('', 'application/netmc', 'mcp', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-troff-me', 'me', '');
-INSERT INTO mimetypes VALUES ('', 'message/rfc822', 'mht', '');
-INSERT INTO mimetypes VALUES ('', 'message/rfc822', 'mhtml', '');
+INSERT INTO mimetypes VALUES ('', 'message/rfc822', 'mht', 'html.png');
+INSERT INTO mimetypes VALUES ('', 'message/rfc822', 'mhtml', 'html.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-midi', 'mid', '');
 INSERT INTO mimetypes VALUES ('', 'audio/midi', 'mid', '');
 INSERT INTO mimetypes VALUES ('', 'audio/x-mid', 'mid', '');
@@ -653,3 +653,8 @@ INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'c3e',
 'kfig.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'cyp', 
 'kfig.png');
+INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-works ', 'wps',
+'package_editors.png');
+INSERT INTO mimetypes VALUES ('', 'text/plain', 'rst', 'binary.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'm', 
+'kspread_ksp.png');

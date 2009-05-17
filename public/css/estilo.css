@@ -419,3 +419,8 @@ img.centrar_ayuda {
 .sin-ficheros {
   text-align: center;
 }
+
+#sourcecode {
+  padding: 0 0 5px 20px;
+  background: transparent url(../img/interfaz/source.png) top left no-repeat;
+}

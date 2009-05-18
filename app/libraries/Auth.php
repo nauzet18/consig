@@ -94,7 +94,7 @@ class Auth {
 		if (!$force_reload) {
 			$this->CI->db->where('id', $id);
 			$this->CI->db->from('usercache');
-			if ($this->CI->db->count_all_results() == 1) {
+			if ($this->CI->db->count_all_results() != 0) {
 				$this->CI->db->where('id', $id);
 				$q = $this->CI->db->get('usercache');
 				$res = $q->result_array();

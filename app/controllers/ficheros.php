@@ -468,10 +468,15 @@ class Ficheros extends Controller {
 	 * Callbacks para validación de formulario de envío.
 	 *
 	 * La contraseña sólo es necesaria si se ha indicado la opción de
-	 * "acceso universal"
+	 * "acceso universal", o si el usuario es anónimo.
+	 *
+	 * En ciertas circunstancias (usuario desde una IP privilegiada) el
+	 * usuario puede enviar ficheros sin contraseña por error.
 	 */
 	function _passwd_necesario($p) {
-		if ($this->input->post('tipoacceso') == 1 && empty($p)) {
+		if (empty($p) && 
+				($this->input->post('tipoacceso') == 1 
+				 || !$this->autenticado)) {
 			$this->form_validation->set_message('_passwd_necesario',
 					'Dado que el acceso al fichero será público, debe
 					especificar una contraseña para el mismo');

@@ -31,7 +31,18 @@ if (isset($css_adicionales)) {
 
 <script language="JavaScript" type="text/javascript">
 //<![CDATA[
+
+// Variables útiles para procesado Javascript
 var url_base = '<?php echo base_url()?>';
+var user_auth = '<?php echo $this->session->userdata('autenticado'); ?>';
+<?php
+if ($this->session->userdata('autenticado')):
+?>
+var user_id = '<?php echo $this->session->userdata('id')?>';
+var user_name = '<?php echo $this->session->userdata('name')?>';
+<?php
+endif;
+?>
 //]]>
 </script>
 <script language="JavaScript" type="text/javascript" src="<?php echo

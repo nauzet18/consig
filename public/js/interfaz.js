@@ -93,7 +93,7 @@ function pagina_envio() {
 				errores += "<p>Debe especificar un fichero</p>";
 			}
 
-			if (tipoacceso == 1 && passwd == "") {
+			if (passwd == "" && (tipoacceso == 1 || user_auth == "")) {
 				errores += "<p>Dado que el acceso al fichero será público, debe "
 				+ "especificar una contraseña para el mismo</p>";
 			}

@@ -341,11 +341,7 @@ div.ficha_fichero .descripcion_fichero {
   text-align: center;
   padding: 0.5em;
   margin: 10px auto 10px auto;
-}
-
-li.modificar, li.borrar {
-  text-align: right;
-  font-weight: bold;
+  -moz-border-radius: 5px;
 }
 
 .lista-permisos {
@@ -423,4 +419,13 @@ img.centrar_ayuda {
 #sourcecode {
   padding: 0 0 5px 20px;
   background: transparent url(../img/interfaz/source.png) top left no-repeat;
+}
+
+.operaciones_fichero {
+  float: right;
+  background-color: #f0f0f0;
+  border: 1px solid #e0e0e0;
+  -moz-border-radius: 5px;
+  width: 150px;
+  padding: 10px;
 }

@@ -413,5 +413,10 @@ $config['correo_caducado'] = FALSE;
 
 $config['resultados_por_pagina'] = 50;
 
+// Usuarios con privilegios
+$config['privilegiados'] = array(
+		'admin',
+);
+
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */

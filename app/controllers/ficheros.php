@@ -227,7 +227,8 @@ class Ficheros extends Controller {
 				}
 
 			} // pide_descarga
-			if ($this->trabajoficheros->permiso_modificacion($fichero)) {
+			if ($this->trabajoficheros->permiso_modificacion($fichero) 
+					|| $this->trabajoficheros->es_privilegiado()) {
 				$data_fichero['permiso_modificacion'] = 1;
 			}
 				
@@ -286,7 +287,8 @@ class Ficheros extends Controller {
             return;
         }
 
-		if (!$this->trabajoficheros->es_propietario($fichero)) {
+		if (!$this->trabajoficheros->es_propietario($fichero) &&
+				!$this->trabajoficheros->es_privilegiado()) {
 			show_error('No tiene permiso para modificar el fichero.');
 			return;
 		} else {
@@ -333,14 +335,15 @@ class Ficheros extends Controller {
         if ($fichero === FALSE) {
             show_error('El fichero indicado no existe.');
             return;
-		} elseif (!$this->trabajoficheros->es_propietario($fichero)) {
+		} elseif (!$this->trabajoficheros->es_propietario($fichero)
+				&& !$this->trabajoficheros->es_privilegiado()) {
 			show_error('No tiene permiso para borrar el fichero.');
 			return;
 		} else {
 			// ¿Confirmación?
 			if ($this->input->post('confirmacion')) {
                 $this->trabajoficheros->elimina_fichero($fichero->fid, 
-                        'El usuario pide su eliminación');
+                        'Eliminación manual');
 				$this->session->set_flashdata('mensaje_fichero_cabecera',
 						'El fichero fue eliminado');
                 redirect('');

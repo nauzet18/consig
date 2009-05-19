@@ -538,5 +538,39 @@ class TrabajoFicheros extends Model {
 		log_message($nivel, $msj);
 	}
 
+	/**
+	 * Comprueba si un usuario es privilegiado
+	 *
+	 * @param	identificador del usuario, opcional. Si no, se busca en la
+	 *          sesión actual
+	 * @return	TRUE si lo es, FALSE en otro caso
+	 */
+
+	function es_privilegiado($id = FALSE) {
+
+		// Paso sin parámetros
+		if ($id === FALSE) {
+			if ($this->session->userdata('autenticado')) {
+				$id = $this->session->userdata('id');
+			} else {
+				$id = '';
+			}
+		}
+
+		// Usuario anónimo
+		if (empty($id)) {
+			return FALSE;
+		}
+
+		$privilegiados = $this->config->item('privilegiados');
+		for($i=0;$i<count($privilegiados);$i++) {
+			if ($privilegiados[$i] == $id) {
+				return TRUE;
+			}
+		}
+
+		return FALSE;
+	}
+
 }
 ?>

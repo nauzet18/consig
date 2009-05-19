@@ -69,10 +69,10 @@ endif;
 
 
 <div class="ficha_fichero">
- <ul>
  <?php
  if (isset($permiso_modificacion)):
  ?>
+ <ul class="operaciones_fichero">
   <li class="modificar">
   <img src="<?php echo site_url('img/interfaz/modificar.png')?>"
   alt="modificar" /><a href="<?php echo site_url('modificar/' 
@@ -82,11 +82,7 @@ endif;
   alt="borrar" /><a href="<?php echo site_url('borrar/' 
   	. $fichero->fid)?>">Borrar</a></li>
 
-  <li><img src="<?php echo site_url('img/interfaz/www.png')?>"
-  alt="enlace" />
-  <a href="<?php echo site_url($fichero->fid)?>">
-	<?php echo site_url($fichero->fid)?>
-  </a></li>
+  </ul>
 
  <?php
  endif;
@@ -101,6 +97,14 @@ endif;
 		 . $this->trabajoficheros->intervalo_tiempo($texp, 3);
  }
  ?>
+
+ <ul>
+  <li><img src="<?php echo site_url('img/interfaz/www.png')?>"
+  alt="enlace" />
+  <a href="<?php echo site_url($fichero->fid)?>">
+	<?php echo site_url($fichero->fid)?>
+  </a></li>
+
   <li><img src="<?php echo site_url('img/interfaz/fecha-envio.png')?>"
   alt="fecha de envío" /><?php echo
   $this->trabajoficheros->fecha_legible($fichero->fechaenvio);?> 

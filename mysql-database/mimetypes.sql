@@ -658,3 +658,11 @@ INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-works ', 'wps',
 INSERT INTO mimetypes VALUES ('', 'text/plain', 'rst', 'binary.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'm', 
 'kspread_ksp.png');
+INSERT INTO mimetypes VALUES ('', 'audio/x-ms-wma ', 'wma', 
+'krec_fileplay.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream ', 'frt', 'kdict.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'mdl', 'kfig.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'kmz',
+'browser.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'nrg',
+'cdimage.png');

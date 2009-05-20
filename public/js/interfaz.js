@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$("a[@rel=#loginOverlay]").overlay({
+	$("a[rel=#loginOverlay]").overlay({
 		onBeforeLoad: function() { 
 			//this.expose();     
 			$("#form_login .usuario").val("");

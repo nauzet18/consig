@@ -2,6 +2,8 @@
   display: none;
   padding: 40px;
   font-size: 80%;
+  background-image: url(../img/fondos/white.png);
+  width: 310px;
 }
 
 #loginOverlay p {

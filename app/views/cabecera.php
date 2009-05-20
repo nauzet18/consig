@@ -46,9 +46,9 @@ endif;
 //]]>
 </script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery-1.2.6.min.js')?>"></script>
+site_url('js/jquery-1.3.2.min.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.overlay-0.14.pack.js')?>"></script>
+site_url('js/jquery.overlay-1.0.1.pack.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/interfaz.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
@@ -148,9 +148,7 @@ if ($autenticado !== FALSE) {
 		 && $has_form):
  ?>
 
- <div id="loginOverlay"
-	 style="background-image:url(<?php echo
-	 site_url('img/fondos/white.png')?>);">
+ <div id="loginOverlay">
 
 	 <?php
 	 $this->load->helper('url');

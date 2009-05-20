@@ -103,8 +103,8 @@ class Ficheros extends Controller {
 					'no_mostrar_aviso' => TRUE,
 					'js_adicionales' => array(
 						'jquery.timers.js',
-						'jquery.blockUI_2.10.js',
-						'jquery.dimensions.js',
+						'jquery.blockUI_2.20.js',
+						'jquery.dimensions.pack.js',
 					),
 			);
 			$this->load->view('cabecera', $data);

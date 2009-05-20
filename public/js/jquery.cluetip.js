@@ -1,63 +1,24 @@
 /*
  * jQuery clueTip plugin
- * Version 0.9.8  (05/22/2008)
- * @requires jQuery v1.1.4+
- * @requires Dimensions plugin (for jQuery versions < 1.2.5)
+ * Version 1.0.1  (April 23, 2009)
+ * @requires jQuery v1.2.6+
  *
  * Dual licensed under the MIT and GPL licenses:
  * http://www.opensource.org/licenses/mit-license.php
  * http://www.gnu.org/licenses/gpl.html
  *
  */
-;(function($) { 
+ 
 /*
- * @name clueTip
- * @type jQuery
- * @cat Plugins/tooltip
- * @return jQuery
- * @author Karl Swedberg
  *
- * @credit Inspired by Cody Lindley's jTip (http://www.codylindley.com)
- * @credit Thanks to the following people for their many and varied contributions:
-      Shelane Enos, Glen Lipka, Hector Santos, Torben Schreiter, Dan G. Switzer, Jörn Zaefferer 
- * @credit Thanks to Jonathan Chaffer, as always, for help with the hard parts. :-)
- */
-
- /**
- * 
- * Displays a highly customizable tooltip when the user hovers (default) or clicks (optional) the matched element. 
- * By default, the clueTip plugin loads a page indicated by the "rel" attribute via ajax and displays its contents.
- * If a "title" attribute is specified, its value is used as the clueTip's heading.
- * The attribute to be used for both the body and the heading of the clueTip is user-configurable. 
- * Optionally, the clueTip's body can display content from an element on the same page.
- * * Just indicate the element's id (e.g. "#some-id") in the rel attribute.
- * Optionally, the clueTip's body can display content from the title attribute, when a delimiter is indicated. 
- * * The string before the first instance of the delimiter is set as the clueTip's heading.
- * * All subsequent strings are wrapped in separate DIVs and placed in the clueTip's body.
- * The clueTip plugin allows for many, many more options. Pleasee see the examples and the option descriptions below...
- * 
- * 
- * @example $('#tip).cluetip();
- * @desc This is the most basic clueTip. It displays a 275px-wide clueTip on mouseover of the element with an ID of "tip." On mouseout of the element, the clueTip is hidden.
- *
- *
- * @example $('a.clue').cluetip({
- *  hoverClass: 'highlight',
- *  sticky: true,
- *  closePosition: 'bottom',
- *  closeText: '<img src="cross.png" alt="close" />',
- *  truncate: 60,
- *  ajaxSettings: {
- *    type: 'POST'
- *  }
- * });
- * @desc Displays a clueTip on mouseover of all <a> elements with class="clue". The hovered element gets a class of "highlight" added to it (so that it can be styled appropriately. This is esp. useful for non-anchor elements.). The clueTip is "sticky," which means that it will not be hidden until the user either clicks on its "close" text/graphic or displays another clueTip. The "close" text/graphic is set to diplay at the bottom of the clueTip (default is top) and display an image rather than the default "Close" text. Moreover, the body of the clueTip is truncated to the first 60 characters, which are followed by an ellipsis (...). Finally, the clueTip retrieves the content using POST rather than the $.ajax method's default "GET."
- * 
- * More examples can be found at http://plugins.learningjquery.com/cluetip/demo/
- * 
  * Full list of options/settings can be found at the bottom of this file and at http://plugins.learningjquery.com/cluetip/
- */
+ *
+ * Examples can be found at http://plugins.learningjquery.com/cluetip/demo/
+ *
+*/
 
+;(function($) { 
+  $.cluetip = {version: '1.0.1'};
   var $cluetip, $cluetipInner, $cluetipOuter, $cluetipTitle, $cluetipArrows, $dropShadow, imgCount;
   $.fn.cluetip = function(js, options) {
     if (typeof js == 'object') {
@@ -65,10 +26,10 @@
       js = null;
     }
     return this.each(function(index) {
-      var $this = $(this);      
+      var link = this, $this = $(this);      
       
       // support metadata plugin (v1.0 and 2.0)
-      var opts = $.extend(false, {}, $.fn.cluetip.defaults, options || {}, $.metadata ? $this.metadata() : $.meta ? $this.data() : {});
+      var opts = $.extend(true, {}, $.fn.cluetip.defaults, options || {}, $.metadata ? $this.metadata() : $.meta ? $this.data() : {});
 
       // start out with no contents (for ajax activation)
       var cluetipContents = false;
@@ -99,7 +60,8 @@
       }
       var tipAttribute = $this.attr(opts.attribute), ctClass = opts.cluetipClass;
       if (!tipAttribute && !opts.splitTitle && !js) return true;
-      // if hideLocal is set to true, on DOM ready hide the local content that will be displayed in the clueTip      
+      // if hideLocal is set to true, on DOM ready hide the local content that will be displayed in the clueTip
+      if (opts.local && opts.localPrefix) {tipAttribute = opts.localPrefix + tipAttribute;}
       if (opts.local && opts.hideLocal) { $(tipAttribute + ':first').hide(); }
       var tOffset = parseInt(opts.topOffset, 10), lOffset = parseInt(opts.leftOffset, 10);
       // vertical measurement variables
@@ -108,7 +70,7 @@
       var sTop, linkTop, posY, tipY, mouseY, baseline;
       // horizontal measurement variables
       var tipInnerWidth = isNaN(parseInt(opts.width, 10)) ? 275 : parseInt(opts.width, 10);
-      var tipWidth = tipInnerWidth + (parseInt($cluetip.css('paddingLeft'))||0) + (parseInt($cluetip.css('paddingRight'))||0) + dropShadowSteps;
+      var tipWidth = tipInnerWidth + (parseInt($cluetip.css('paddingLeft'),10)||0) + (parseInt($cluetip.css('paddingRight'),10)||0) + dropShadowSteps;
       var linkWidth = this.offsetWidth;
       var linkLeft, posX, tipX, mouseX, winWidth;
             
@@ -120,6 +82,10 @@
         tipParts = tipTitle.split(opts.splitTitle);
         tipTitle = tipParts.shift();
       }
+      if (opts.escapeTitle) {
+        tipTitle = tipTitle.replace(/&/g,'&amp;').replace(/>/g,'&gt;').replace(/</g,'&lt;');
+      }
+      
       var localContent;
 
 /***************************************      
@@ -174,6 +140,9 @@
 * load a string from cluetip method's first argument
 ***************************************/
       if (js) {
+        if (typeof js == 'function') {
+          js = js($this[0]);
+        }
         $cluetipInner.html(js);
         cluetipShow(pY);
       }
@@ -185,6 +154,7 @@
 
       else if (tipParts) {
         var tpl = tipParts.length;
+        $cluetipInner.empty();
         for (var i=0; i < tpl; i++){
           if (i == 0) {
             $cluetipInner.html(tipParts[i]);
@@ -199,57 +169,74 @@
 ***************************************/
 
       else if (!opts.local && tipAttribute.indexOf('#') != 0) {
-        if (cluetipContents && opts.ajaxCache) {
+        if (/\.(jpe?g|tiff?|gif|png)$/i.test(tipAttribute)) {
+          $cluetipInner.html('<img src="' + tipAttribute + '" alt="' + tipTitle + '" />');
+          cluetipShow(pY);
+        } else if (cluetipContents && opts.ajaxCache) {
           $cluetipInner.html(cluetipContents);
           cluetipShow(pY);
-        }
-        else {
-          var ajaxSettings = opts.ajaxSettings;
-          ajaxSettings.url = tipAttribute;
-          ajaxSettings.beforeSend = function() {
-            $cluetipOuter.children().empty();
-            if (opts.waitImage) {
-              $('#cluetip-waitimage')
-              .css({top: mouseY+20, left: mouseX+20})
-              .show();
+        } else {
+          var optionBeforeSend = opts.ajaxSettings.beforeSend,
+              optionError = opts.ajaxSettings.error,
+              optionSuccess = opts.ajaxSettings.success,
+              optionComplete = opts.ajaxSettings.complete;
+          var ajaxSettings = {
+            cache: false, // force requested page not to be cached by browser
+            url: tipAttribute,
+            beforeSend: function(xhr) {
+              if (optionBeforeSend) {optionBeforeSend.call(link, xhr, $cluetip, $cluetipInner);}
+              $cluetipOuter.children().empty();
+              if (opts.waitImage) {
+                $('#cluetip-waitimage')
+                .css({top: mouseY+20, left: mouseX+20})
+                .show();
+              }
+            },
+            error: function(xhr, textStatus) {
+              if (isActive) {
+                if (optionError) {
+                  optionError.call(link, xhr, textStatus, $cluetip, $cluetipInner);
+                } else {
+                  $cluetipInner.html('<i>sorry, the contents could not be loaded</i>');  
+                }
+              }
+            },
+            success: function(data, textStatus) {       
+              cluetipContents = opts.ajaxProcess.call(link, data);
+              if (isActive) {
+                if (optionSuccess) {optionSuccess.call(link, data, textStatus, $cluetip, $cluetipInner);}
+                $cluetipInner.html(cluetipContents);
+              }
+            },
+            complete: function(xhr, textStatus) {
+              if (optionComplete) {optionComplete.call(link, xhr, textStatus, $cluetip, $cluetipInner);}
+              imgCount = $('#cluetip-inner img').length;
+              if (imgCount && !$.browser.opera) {
+                $('#cluetip-inner img').load(function() {
+                  imgCount--;
+                  if (imgCount<1) {
+                    $('#cluetip-waitimage').hide();
+                    if (isActive) cluetipShow(pY);
+                  }
+                }); 
+              } else {
+                $('#cluetip-waitimage').hide();
+                if (isActive) { cluetipShow(pY); }
+              } 
             }
           };
-         ajaxSettings.error = function() {
-            if (isActive) {
-              $cluetipInner.html('<i>sorry, the contents could not be loaded</i>');
-            }
-          };
-          ajaxSettings.success = function(data) {
-            cluetipContents = opts.ajaxProcess(data);
-            if (isActive) {
-              $cluetipInner.html(cluetipContents);
-            }
-          };
-          ajaxSettings.complete = function() {
-          	imgCount = $('#cluetip-inner img').length;
-        		if (imgCount && !$.browser.opera) {
-        		  $('#cluetip-inner img').load(function() {
-          			imgCount--;
-          			if (imgCount<1) {
-          				$('#cluetip-waitimage').hide();
-          			  if (isActive) cluetipShow(pY);
-          			}
-        		  }); 
-        		} else {
-      				$('#cluetip-waitimage').hide();
-        		  if (isActive) cluetipShow(pY);    
-        		} 
-          };
-          $.ajax(ajaxSettings);
+          var ajaxMergedSettings = $.extend(true, {}, opts.ajaxSettings, ajaxSettings);
+          
+          $.ajax(ajaxMergedSettings);
         }
 
 /***************************************
 * load an element from the same page
 ***************************************/
-      } else if (opts.local){
-        var $localContent = $(tipAttribute + ':first');
-        var localCluetip = $.fn.wrapInner ? $localContent.wrapInner('<div></div>').children().clone(true) : $localContent.html();
-        $.fn.wrapInner ? $cluetipInner.empty().append(localCluetip) : $cluetipInner.html(localCluetip);
+      } else if (opts.local) {
+        
+        var $localContent = $(tipAttribute + (/#\w+$/.test(tipAttribute) ? '' : ':eq(' + index + ')')).clone(true).show();
+        $cluetipInner.html($localContent);
         cluetipShow(pY);
       }
     };
@@ -257,7 +244,6 @@
 // get dimensions and options for cluetip and prepare it to be shown
     var cluetipShow = function(bpY) {
       $cluetip.addClass('cluetip-' + ctClass);
-      
       if (opts.truncate) { 
         var $truncloaded = $cluetipInner.text().slice(0,opts.truncate) + '...';
         $cluetipInner.html($truncloaded);
@@ -267,7 +253,7 @@
       if (opts.sticky) {
         var $closeLink = $('<div id="cluetip-close"><a href="#">' + opts.closeText + '</a></div>');
         (opts.closePosition == 'bottom') ? $closeLink.appendTo($cluetipInner) : (opts.closePosition == 'title') ? $closeLink.prependTo($cluetipTitle) : $closeLink.prependTo($cluetipInner);
-        $closeLink.click(function() {
+        $closeLink.bind('click.cluetip', function() {
           cluetipClose();
           return false;
         });
@@ -323,20 +309,20 @@
 // (first hide, then) ***SHOW THE CLUETIP***
       $dropShadow.hide();
       $cluetip.hide()[opts.fx.open](opts.fx.open != 'show' && opts.fx.openSpeed);
-      if (opts.dropShadow) $dropShadow.css({height: tipHeight, width: tipInnerWidth}).show();
+      if (opts.dropShadow) { $dropShadow.css({height: tipHeight, width: tipInnerWidth}).show(); }
       if ($.fn.bgiframe) { $cluetip.bgiframe(); }
-      // trigger the optional onShow function
+      // delayed close (not fully tested)
       if (opts.delayedClose > 0) {
         closeOnDelay = setTimeout(cluetipClose, opts.delayedClose);
       }
-      opts.onShow($cluetip, $cluetipInner);
-      
+      // trigger the optional onShow function
+      opts.onShow.call(link, $cluetip, $cluetipInner);
     };
 
 /***************************************
    =INACTIVATION
 -------------------------------------- */
-    var inactivate = function() {
+    var inactivate = function(event) {
       isActive = false;
       $('#cluetip-waitimage').hide();
       if (!opts.sticky || (/click|toggle/).test(opts.activation) ) {
@@ -346,13 +332,13 @@ clearTimeout(closeOnDelay);
       if (opts.hoverClass) {
         $this.removeClass(opts.hoverClass);
       }
-      $('.cluetip-clicked').removeClass('cluetip-clicked');
     };
 // close cluetip and reset some things
     var cluetipClose = function() {
       $cluetipOuter 
-      .parent().hide().removeClass().end()
-      .children().empty();
+      .parent().hide().removeClass();
+      opts.onHide.call(link, $cluetip, $cluetipInner);
+      $this.removeClass('cluetip-clicked');
       if (tipTitle) {
         $this.attr(opts.titleAttribute, tipTitle);
       }
@@ -360,36 +346,37 @@ clearTimeout(closeOnDelay);
       if (opts.arrows) $cluetipArrows.css({top: ''});
     };
 
+    $(document).bind('hideCluetip', function(e) {
+      cluetipClose();
+    });
 /***************************************
    =BIND EVENTS
 -------------------------------------- */
   // activate by click
       if ( (/click|toggle/).test(opts.activation) ) {
-        $this.click(function(event) {
+        $this.bind('click.cluetip', function(event) {
           if ($cluetip.is(':hidden') || !$this.is('.cluetip-clicked')) {
             activate(event);
             $('.cluetip-clicked').removeClass('cluetip-clicked');
             $this.addClass('cluetip-clicked');
-
           } else {
             inactivate(event);
-
           }
           this.blur();
           return false;
         });
   // activate by focus; inactivate by blur    
       } else if (opts.activation == 'focus') {
-        $this.focus(function(event) {
+        $this.bind('focus.cluetip', function(event) {
           activate(event);
         });
-        $this.blur(function(event) {
+        $this.bind('blur.cluetip', function(event) {
           inactivate(event);
         });
   // activate by hover
     // clicking is returned false if cluetip url is same as href url
       } else {
-        $this.click(function() {
+        $this.bind('click.cluetip', function() {
           if ($this.attr('href') && $this.attr('href') == tipAttribute && !opts.clickThrough) {
             return false;
           }
@@ -399,13 +386,13 @@ clearTimeout(closeOnDelay);
           if (opts.tracking == true) {
             var trackX = posX - evt.pageX;
             var trackY = tipY ? tipY - evt.pageY : posY - evt.pageY;
-            $this.mousemove(function(evt) {
+            $this.bind('mousemove.cluetip', function(evt) {
               $cluetip.css({left: evt.pageX + trackX, top: evt.pageY + trackY });
             });
           }
         };
         if ($.fn.hoverIntent && opts.hoverIntent) {
-          $this.mouseover(function() {$this.attr('title',''); })
+          $this.bind('mouseover.cluetip', function() {$this.attr('title',''); })
           .hoverIntent({
             sensitivity: opts.hoverIntent.sensitivity,
             interval: opts.hoverIntent.interval,  
@@ -414,15 +401,16 @@ clearTimeout(closeOnDelay);
               mouseTracks(event);
             }, 
             timeout: opts.hoverIntent.timeout,  
-            out: function(event) {inactivate(event); $this.unbind('mousemove');}
+            out: function(event) {inactivate(event); $this.unbind('mousemove.cluetip');}
           });           
         } else {
-          $this.hover(function(event) {
+          $this.bind('mouseenter.cluetip', function(event) {
             activate(event);
             mouseTracks(event);
-          }, function(event) {
+          })
+          .bind('mouseleave.cluetip', function(event) {
             inactivate(event);
-            $this.unbind('mousemove');
+            $this.unbind('mousemove.cluetip');
           });
         }
       }
@@ -450,12 +438,14 @@ clearTimeout(closeOnDelay);
     topOffset:        15,       // Number of px to offset clueTip from top of invoking element
     leftOffset:       15,       // Number of px to offset clueTip from left of invoking element
     local:            false,    // Whether to use content from the same page for the clueTip's body
+    localPrefix:      null,       // string to be prepended to the tip attribute if local is true
     hideLocal:        true,     // If local option is set to true, this determines whether local content
                                 // to be shown in clueTip should be hidden at its original location
     attribute:        'rel',    // the attribute to be used for fetching the clueTip's body content
     titleAttribute:   'title',  // the attribute to be used for fetching the clueTip's title
     splitTitle:       '',       // A character used to split the title attribute into the clueTip title and divs
                                 // within the clueTip body. more info below [6]
+    escapeTitle:      false,    // whether to html escape the title attribute
     showTitle:        true,     // show title bar of the clueTip, even if title attribute not set
     cluetipClass:     'default',// class added to outermost clueTip div in the form of 'cluetip-' + clueTipClass.
     hoverClass:       '',       // class applied to the invoking element onmouseover and removed onmouseout
@@ -489,23 +479,28 @@ clearTimeout(closeOnDelay);
               			  timeout:      0
     },
 
-    // function to run just before clueTip is shown.           
+    // short-circuit function to run just before clueTip is shown. 
     onActivate:       function(e) {return true;},
 
-    // function to run just after clueTip is shown.
-    onShow:           function(ct, c){},
-    
+    // function to run just after clueTip is shown. 
+    onShow:           function(ct, ci){},
+    // function to run just after clueTip is hidden.
+    onHide:           function(ct, ci){},
     // whether to cache results of ajax request to avoid unnecessary hits to server    
     ajaxCache:        true,  
 
     // process data retrieved via xhr before it's displayed
     ajaxProcess:      function(data) {
-                        data = data.replace(/<s(cript|tyle)(.|\s)*?\/s(cript|tyle)>/g, '').replace(/<(link|title)(.|\s)*?\/(link|title)>/g,'');
+                        data = data.replace(/<(script|style|title)[^<]+<\/(script|style|title)>/gm, '').replace(/<(link|meta)[^>]+>/g,'');
                         return data;
     },                
 
-    // can pass in standard $.ajax() parameters, not including error, complete, success, and url
-    ajaxSettings: {   
+    // can pass in standard $.ajax() parameters. Callback functions, such as beforeSend, 
+    // will be queued first within the default callbacks. 
+    // The only exception is error, which overrides the default
+    ajaxSettings: {
+                      // error: function(ct, ci) { /* override default error callback */ }
+                      // beforeSend: function(ct, ci) { /* called first within default beforeSend callback }
                       dataType: 'html'
     },
     debug: false
@@ -530,7 +525,7 @@ clearTimeout(closeOnDelay);
  */
    
   var insertionType = 'appendTo', insertionElement = 'body';
-  $.cluetip = {};
+
   $.cluetip.setup = function(options) {
     if (options && options.insertionType && (options.insertionType).match(/appendTo|prependTo|insertBefore|insertAfter/)) {
       insertionType = options.insertionType;

@@ -488,7 +488,8 @@ INSERT INTO mimetypes VALUES ('', 'image/vnd.dwg', 'svf', '');
 INSERT INTO mimetypes VALUES ('', 'image/x-dwg', 'svf', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-world', 'svr', '');
 INSERT INTO mimetypes VALUES ('', 'x-world/x-svr', 'svr', '');
-INSERT INTO mimetypes VALUES ('', 'application/x-shockwave-flash', 'swf', '');
+INSERT INTO mimetypes VALUES ('', 'application/x-shockwave-flash', 'swf',
+'fsview.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-troff', 't', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-speech', 'talk', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-tar', 'tar', '');
@@ -666,3 +667,6 @@ INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'kmz',
 'browser.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'nrg',
 'cdimage.png');
+INSERT INTO mimetypes VALUES ('',
+'application/vnd.openxmlformats-officedocument.presentationml.slideshow', 
+'ppsx', 'document.png');

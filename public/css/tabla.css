@@ -7,7 +7,7 @@ table,td
 {
 	border               : 1px solid #CCC;
 	border-collapse      : collapse;
-  font                 : small/1.5 "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
+  font                 : 1em "Tahoma", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
 }
 table
 {
@@ -80,5 +80,5 @@ table a:active
 }
 
 .td_nombrefich {
-  width: 65%;
+  width: 60%;
 }

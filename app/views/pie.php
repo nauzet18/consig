@@ -1,4 +1,4 @@
-</div>
+</div> <!-- contenido -->
 
 <div id="pie">
  <a href="http://www.us.es/servicios/sic">Servicio de Inform&aacute;tica

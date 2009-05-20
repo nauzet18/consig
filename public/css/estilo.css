@@ -6,8 +6,9 @@ margin: 0px;
 padding: 0;
 background: #FFFFFF;
 background: url(../img/logos/FondoSevius.gif) #ffffff no-repeat top left ;
-font: normal small "Trebuchet MS", Arial, Helvetica, sans-serif;
+font: normal 0.8em "Trebuchet MS", Arial, Helvetica, sans-serif;
 color: #777777;
+width: 100%;
 }
 
 h1, h2, h3 {
@@ -128,7 +129,7 @@ img {
 #contenido {
 	width: 90%;
   padding: 1em 2em 0 5em;
-	margin: 0 auto;
+	margin: 0 auto 0 auto;
 }
 
 #pie {

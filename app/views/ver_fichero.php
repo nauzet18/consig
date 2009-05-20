@@ -46,7 +46,7 @@ if (empty($fichero->password)) {
 
 ?>
 
-<div id="cuadro_password_fichero">
+ <div id="cuadro_password_fichero">
 <?php 
  echo form_label('Contraseña:', 'passwd-fichero');
 
@@ -60,12 +60,12 @@ if (empty($fichero->password)) {
  echo form_password($data_passwd_fichero); 
 ?>
 	<input type="image" src="<?php echo site_url('img/interfaz/boton-descarga.png') ?>" value="Descargar" alt="Descargar">
-</div>
+ </div> <!-- cuadro_password_fichero -->
 <?php
 echo form_close(); 
 endif;
 ?>
-</div>
+</div> <!-- descarga_fichero -->
 
 
 <div class="ficha_fichero">
@@ -125,9 +125,10 @@ endif;
   <li><img src="<?php echo site_url('img/interfaz/descripcion.png')?>"
   alt="descripción" /> Descripción:
   
-  <div class="descripcion_fichero"><?php echo
-  empty($fichero->descripcion) ? 'Sin descripción' : $fichero->descripcion?></div>
+  <div class="descripcion_fichero">
+    <?php echo
+  empty($fichero->descripcion) ? 'Sin descripción' : $fichero->descripcion?>
   </div>
  </ul>
-</div>
+</div> <!-- ficha_fichero -->
 

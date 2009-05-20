@@ -35,24 +35,25 @@ foreach ($ficheros as $f) {
 	} else {
 		$clase = 'denegado';
 	}
-	echo '<tr id="fichero-'. $f->fid .'" class="'.$clase.'"
-		rel="'.site_url('ficheros/minipagina/' . $f->fid).'">';
-	echo '<td>';
+	echo '  <tr id="fichero-'. $f->fid .'" class="'.$clase.'" '
+		.' rel="'.site_url('ficheros/minipagina/' . $f->fid).'">';
+	echo "\n";
+	echo '   <td>';
     if (!$permitido) {
-        echo ' <img src="' . site_url('img/interfaz/prohibido.png') .'"
+        echo '<img src="' . site_url('img/interfaz/prohibido.png') .'"
 	  alt="acceso denegado"/>';
     } else {
-		echo '
-			<img src="' . site_url('img/tipos/32x32/' . $mimetype[1]) . '"
-			alt="' . $mimetype[0] . '"/>';
+		echo '<img src="' 
+			. site_url('img/tipos/32x32/' . $mimetype[1]) 
+			. '" alt="' . $mimetype[0] . '"/>';
 		if ($f->listar == 0) {
 			echo '<img class="icono_oculto" src="'
 				. site_url('img/interfaz/oculto.png')
 				.'" alt="fichero oculto" />';
 		}
 
-		echo '</td>';
 	}
+	echo "   </td>\n";
 
 	// Nombre del fichero
     if ($permitido) {
@@ -63,20 +64,20 @@ foreach ($ficheros as $f) {
 			$atributos_enlace['class'] = 'fichero_propio';
 		}
 
-        echo '<td class="td_nombrefich">'. anchor($f->fid, $f->nombre,
-				$atributos_enlace) . '</td>';
+        echo '   <td class="td_nombrefich">'. anchor($f->fid, $f->nombre,
+				$atributos_enlace) . "</td>\n";
     } else {
-        echo '<td class="td_nombrefich">'. $f->nombre  .'</td>';
+        echo '   <td class="td_nombrefich">'. $f->nombre  ."</td>\n";
     }
 
 	// Tamaño
-	echo '<td>' . $this->trabajoficheros->tam_fichero($f->tam) . '</td>';
+	echo '   <td>' . $this->trabajoficheros->tam_fichero($f->tam) . "</td>\n";
 
 	// Fecha de envío
-	echo '<td>' . $this->trabajoficheros->fecha_legible($f->fechaenvio) .
-		'</td>';
+	echo '   <td>' . $this->trabajoficheros->fecha_legible($f->fechaenvio) .
+		"</td>\n";
 
-	echo "</tr>\n";
+	echo "  </tr>\n";
 }
 ?>
   </tbody>

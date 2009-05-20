@@ -177,10 +177,14 @@ function fin_envio(tipo) {
 	if (tipo == 1) {
 		$("#progreso").html("100%");
 		$("#progreso").width("100%");
-		// Accedemos al resultado mediante
+		// Redirigimos al usuario
 		var mensaje = $("#iframe_upload").contents().text();
 		if (mensaje.match(/^\d+$/)) {
-			top.location.href = url_base + mensaje;
+			if (user_auth == '') {
+				top.location.href = url_base;
+			} else {
+				top.location.href = url_base + '/ficheros/propios';
+			}
 			return; // Evitamos unblockUI
 		} else {
 			$("#form_subida").before('<div class="cuadro error">' 

@@ -150,12 +150,12 @@ velocidad de envío.</p>
 <img class="centrar_ayuda" 
  src="<?php echo site_url('img/ayuda/envio-progreso.png');?>" alt="Progreso del envío" />
 
-<p>Cuando el envío concluya, si todo ha ido bien, será enviado a la ficha
-del envío con un mensaje que le informa del éxito de la operación.</p>
+<p>Cuando el envío concluya, si todo ha ido bien, será enviado al listado de
+sus propios ficheros, o al listado principal si el envío ha sido anónimo,
+mostrándose un mensaje que le informa del éxito de la operación.</p>
 
 <p>Tenga en cuenta que si ha enviado el fichero de manera anónima y su IP no
-pertenece a la Universidad de Sevilla, podrá ver la ficha únicamente en esta
-primera ocasión y no en las posteriores.</p>
+pertenece a la Universidad de Sevilla, no podrá acceder al fichero.</p>
 
 <h3>Sobre los listados</h3>
 

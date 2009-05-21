@@ -3,6 +3,7 @@ $img_si = '<img src="'.site_url('img/interfaz/vale.png').'" alt="sí" />';
 $img_no = '<img src="'.site_url('img/interfaz/cancelar.png').'" alt="no" />';
 echo form_fieldset('Previsión de permisos de acceso');
 ?>
+<p>
 El fichero que va a subir podrá ser accedido en los siguientes casos:
 </p>
 

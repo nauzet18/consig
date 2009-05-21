@@ -430,3 +430,22 @@ img.centrar_ayuda {
   width: 150px;
   padding: 10px;
 }
+
+.expiracion_mini {
+  float: right;
+  clear: both;
+  font-size: 90%;
+  color: blue;
+  padding: 1px 0px 1px 10px;
+  background: url(../img/interfaz/mini-expiracion.png) transparent center left no-repeat;
+}
+
+.tamtotal {
+  float: right;
+  clear: right;
+  font-weight: bold;
+  margin-right: 5em;
+  margin-bottom: 1em;
+  padding: 1em 1em 1em 20px;
+  background: url(../img/interfaz/disco.png) transparent center left no-repeat;
+}

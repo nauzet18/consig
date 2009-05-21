@@ -7,6 +7,13 @@ $titulo = isset($titulo) ? $titulo : "Listado de ficheros";
 if (isset($caja_busqueda) && $caja_busqueda == 1) {
 	$this->load->view('busqueda');
 }
+
+if (isset($total_ocupado)) {
+	echo '<div class="tamtotal">Tamaño total: '.
+		$this->trabajoficheros->tam_fichero($total_ocupado) 
+		.  "</div>\n";
+}
+
 ?>
  <table id="listado-ficheros">
   <thead>
@@ -32,6 +39,7 @@ foreach ($ficheros as $f) {
 	$permitido = $this->trabajoficheros->acceso_fichero($f);
 	if ($permitido === TRUE) {
 		$clase = 'permitido';
+		$es_propietario = $this->trabajoficheros->es_propietario($f);
 	} else {
 		$clase = 'denegado';
 	}
@@ -60,7 +68,7 @@ foreach ($ficheros as $f) {
 
 		// ¿Propietario?
 		$atributos_enlace = array();
-		if ($this->trabajoficheros->es_propietario($f)) {
+		if ($es_propietario) {
 			$atributos_enlace['class'] = 'fichero_propio';
 		}
 
@@ -73,9 +81,22 @@ foreach ($ficheros as $f) {
 	// Tamaño
 	echo '   <td>' . $this->trabajoficheros->tam_fichero($f->tam) . "</td>\n";
 
-	// Fecha de envío
-	echo '   <td>' . $this->trabajoficheros->fecha_legible($f->fechaenvio) .
-		"</td>\n";
+	// Fecha de envío, y expiración si es el propietario del fichero
+	$texto_fecha = $this->trabajoficheros->fecha_legible($f->fechaenvio);
+
+	if ($es_propietario) {
+		 $texp =  $f->fechaexp - time();
+		 if ($texp <= 0) {
+			 $texto_expiracion = 'a punto de caducar';
+		 } else {
+			 $texto_expiracion =
+				 $this->trabajoficheros->intervalo_tiempo($texp, 2);
+		 }
+		 $texto_fecha .= ' <div class="expiracion_mini">' .
+			 $texto_expiracion . '</div>';
+	}
+
+	echo '   <td>' . $texto_fecha .  "</td>\n";
 
 	echo "  </tr>\n";
 }

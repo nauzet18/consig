@@ -255,6 +255,7 @@ class Ficheros extends Controller {
 				'busquedas' => array(),
 				'seccion' => 'propios',
 				'titulo' => 'Sus ficheros enviados',
+				'mostrar_total_ocupado' => TRUE,
 			);
 
 			$this->_presentar_listado($opciones);
@@ -736,6 +737,14 @@ class Ficheros extends Controller {
 		// Búsqueda en la página principal
 		if (isset($opciones['caja_busqueda'])){
 			$data['caja_busqueda'] = 1;
+		}
+		// Espacio total
+		if (isset($opciones['mostrar_total_ocupado'])) {
+			$total = 0;
+			foreach ($ficheros as $f) {
+				$total += $f->tam;
+			}
+			$data['total_ocupado'] = $total;
 		}
 		$this->load->view('listado-ficheros', $data);
 		$this->load->view('pie');

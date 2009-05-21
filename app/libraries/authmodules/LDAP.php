@@ -28,8 +28,7 @@ class LDAP {
 	}
 
 	/**
-	 * Comprueba si un usuario puede autenticarse con el nombre de
-	 * usuario y la contraseña dados
+	 * Lleva a cabo la autenticación contra LDAP
 	 *
 	 * Devuelve en $id el usuario que inicialmente se usa para autenticar
 	 *

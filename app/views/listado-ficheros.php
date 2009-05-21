@@ -34,6 +34,7 @@ if (count($ficheros) == 0) {
 foreach ($ficheros as $f) {
 	// Estimación de mimetype
 	$mimetype = $this->trabajoficheros->consigue_mimetype($f->nombre);
+	$es_propietario = FALSE;
 
 	// ¿Tiene permitido el acceso?
 	$permitido = $this->trabajoficheros->acceso_fichero($f);

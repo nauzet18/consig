@@ -63,6 +63,14 @@ if (isset($js_adicionales)) {
 	}
 }
 ?>
+
+<style type="text/css">
+<?php 
+// Arreglo de PNGs en Explorer (carga de Javascript)
+echo '#menu img, #listado-ficheros img, .descarga_fichero img, .close { _behavior: url(' . site_url('js/iepngfix.htc') . '); }';
+?>
+
+</style>
 </head>
 
 <body<?php echo isset($body_onload) ? ' onload="javascript:'.$body_onload.';"' : ''?>>
@@ -91,7 +99,7 @@ if ($autenticado !== FALSE) {
  <div id="menu">
   <ul>
    <li class="first"><a href="<?php echo site_url('ayuda')?>">
-     <img src="<?php echo site_url('img/interfaz/ayuda.png')?>" alt="Ayuda" /><br />
+     <img id="pruebaimg" src="<?php echo site_url('img/interfaz/ayuda.png')?>" alt="Ayuda" /><br />
 	 Ayuda</a>
    </li>
 

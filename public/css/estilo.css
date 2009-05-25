@@ -45,6 +45,7 @@ a:hover {
 
 img {
   border: 0;
+  -ms-interpolation-mode: bicubic;
 }
 
 /* Cabecera */

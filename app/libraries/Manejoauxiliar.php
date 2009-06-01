@@ -62,6 +62,11 @@ class Manejoauxiliar {
 		$rpp = $this->CI->config->item('resultados_por_pagina');
 		$pagina_actual = $this->CI->uri->segment(5, 0);
 
+		// ¿Es númerico?
+		if (!is_numeric($pagina_actual)) {
+			$pagina_actual = 0;
+		}
+
 		return array_slice($ficheros, $pagina_actual, $rpp);
 	}
 

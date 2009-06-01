@@ -456,8 +456,8 @@ INSERT INTO mimetypes VALUES ('', 'application/x-shar', 'shar', '');
 INSERT INTO mimetypes VALUES ('', 'text/html', 'shtml', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-server-parsed-html', 'shtml', '');
 INSERT INTO mimetypes VALUES ('', 'audio/x-psid', 'sid', 'krec_fileplay.png');
-INSERT INTO mimetypes VALUES ('', 'application/x-sit', 'sit', '');
-INSERT INTO mimetypes VALUES ('', 'application/x-stuffit', 'sit', '');
+INSERT INTO mimetypes VALUES ('', 'application/x-sit', 'sit',
+'ejecutable.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-koan', 'skd', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-koan', 'skm', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-koan', 'skp', '');
@@ -670,3 +670,5 @@ INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'nrg',
 INSERT INTO mimetypes VALUES ('',
 'application/vnd.openxmlformats-officedocument.presentationml.slideshow', 
 'ppsx', 'document.png');
+INSERT INTO mimetypes VALUES ('', 'text/plain', 'sql', 'template_source.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'm4b', 'krec_fileplay.png');

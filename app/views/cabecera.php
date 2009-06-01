@@ -99,7 +99,7 @@ if ($autenticado !== FALSE) {
  <div id="menu">
   <ul>
    <li class="first"><a href="<?php echo site_url('ayuda')?>">
-     <img id="pruebaimg" src="<?php echo site_url('img/interfaz/ayuda.png')?>" alt="Ayuda" /><br />
+     <img src="<?php echo site_url('img/interfaz/ayuda.png')?>" alt="Ayuda" /><br />
 	 Ayuda</a>
    </li>
 

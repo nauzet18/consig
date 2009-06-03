@@ -52,11 +52,10 @@ INSERT INTO mimetypes VALUES ('', 'application/x-cocoa', 'cco', '');
 INSERT INTO mimetypes VALUES ('', 'application/cdf', 'cdf', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-cdf', 'cdf', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-netcdf', 'cdf', '');
-INSERT INTO mimetypes VALUES ('', 'application/pkix-cert', 'cer', '');
-INSERT INTO mimetypes VALUES ('', 'application/x-x509-ca-cert', 'cer', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-chat', 'cha', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-chat', 'chat', '');
 INSERT INTO mimetypes VALUES ('', 'application/java', 'class', 'java_jar.png');
+INSERT INTO mimetypes VALUES ('', 'application/java-archive', 'jar', 'java_jar.png');
 INSERT INTO mimetypes VALUES ('', 'text/plain', 'com', '');
 INSERT INTO mimetypes VALUES ('', 'text/plain', 'conf', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-cpio', 'cpio', '');
@@ -672,3 +671,12 @@ INSERT INTO mimetypes VALUES ('',
 'ppsx', 'document.png');
 INSERT INTO mimetypes VALUES ('', 'text/plain', 'sql', 'template_source.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'm4b', 'krec_fileplay.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'elp', 'krec_fileplay.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'ttf',
+'font_truetype.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'zipx',
+'tar.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'pst',
+'message.png');
+INSERT INTO mimetypes VALUES ('', 'application/pkix-cert ', 'cer',
+'file_locked.png');

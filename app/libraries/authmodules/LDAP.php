@@ -70,7 +70,7 @@ class LDAP {
 
 		 $atributos = array('dn');
 		 $res = @ldap_search($ds, $opciones['base'],
-				 	'uid='.$usuario, $atributos);
+				 	$opciones['uidattr'].'='.$usuario, $atributos);
 		 if ($res === FALSE) {
 			 $err = 'Nombre de usuario o contraseña erróneos';
 			 return FALSE;

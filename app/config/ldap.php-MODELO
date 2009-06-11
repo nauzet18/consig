@@ -10,7 +10,4 @@ $config['ldap']['base'] = "dc=sitio,dc=tld";
 // Atributo donde se encuentra el identificador de usuario
 // Ejemplos: uid, sAMAccountName (para Active Directory)
 $config['ldap']['uidattr'] = 'uid';
-// Atributo donde se encuentra el identificador de usuario
-// Ejemplos: uid, sAMAccountName (para Active Directory)
-$config['ldap']['uidattr'] = 'uid';
 ?>

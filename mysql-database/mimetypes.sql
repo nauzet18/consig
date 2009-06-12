@@ -95,7 +95,6 @@ INSERT INTO mimetypes VALUES ('', '('', old) dwf', 'drawing/x-dwf', '');
 INSERT INTO mimetypes VALUES ('', 'model/vnd.dwf', 'dwf', '');
 INSERT INTO mimetypes VALUES ('', 'application/acad', 'dwg', 'kfig.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', '3dm', 'kfig.png');
-INSERT INTO mimetypes VALUES ('', 'application/dxf', 'dxf', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-director', 'dxr', '');
 INSERT INTO mimetypes VALUES ('', 'text/x-script.elisp', 'el', '');
 INSERT INTO mimetypes VALUES ('', 'elisp) elc application/x-bytecode.elisp', '('', compiled', '');

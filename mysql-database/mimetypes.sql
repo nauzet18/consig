@@ -680,3 +680,7 @@ INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'pst',
 'message.png');
 INSERT INTO mimetypes VALUES ('', 'application/pkix-cert ', 'cer',
 'file_locked.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'pcap', 'binary.png');
+INSERT INTO mimetypes VALUES ('', 'application/dxf ', 'dxf', 'kfig.png');
+INSERT INTO mimetypes VALUES ('', 'video/x-flv', 'flv', 'video.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'mmp', 'vcalendar.png');

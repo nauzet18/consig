@@ -68,7 +68,7 @@ class LDAP {
 			return FALSE;
 		}
 
-		 $atributos = array('dn');
+		 $atributos = array('dn' , 'sn', 'givenName', 'mail');
 		 $res = @ldap_search($ds, $opciones['base'],
 				 	$opciones['uidattr'].'='.$usuario, $atributos);
 		 if ($res === FALSE) {
@@ -79,6 +79,13 @@ class LDAP {
 
 		 if ($info['count'] == 0) {
 			 $err = 'Nombre de usuario o contraseña erróneos';
+			 return FALSE;
+		 }
+
+		 // Comprobamos que tenga todos los datos
+		 if ($info[0]['count'] < 3) {
+			 $err = 'Sus datos de usuario están incompletos. Por favor, '
+				 .'póngase en contacto con su administrador';
 			 return FALSE;
 		 }
 

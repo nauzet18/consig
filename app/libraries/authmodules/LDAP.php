@@ -85,7 +85,8 @@ class LDAP {
 		 // Comprobamos que tenga todos los datos
 		 if ($info[0]['count'] < 3) {
 			 $err = 'Sus datos de usuario están incompletos. Por favor, '
-				 .'póngase en contacto con su administrador';
+				 .'póngase en contacto con '
+				 . $this->CI->config->item('texto_contacto');
 			 return FALSE;
 		 }
 

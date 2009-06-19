@@ -562,7 +562,8 @@ class Ficheros extends Controller {
 					} else {
 						$data_form['error'] = '<p>Hay problemas para enviar
 							(código <tt>'.$fichero['error'].'</tt>). 
-							Póngase en contacto con el administrador</p>';
+							Póngase en contacto con '
+							.$this->config->item('texto_contacto').'</p>';
 					}
 
 					return PROCESADO_ERR_ESCRITURA;
@@ -584,8 +585,10 @@ class Ficheros extends Controller {
 				$fid = $this->input->post('fid', TRUE);
 				if ($fid === FALSE) {
 					$data_form['error'] = '<p>Hay algún problema con el
-						formulario de edición. Por favor, comuníquelo al administrador
-						de la página.</p>';
+						formulario de edición. Por favor, póngase en '
+						.'contacto con ' 
+						.  $this->config->item('texto_contacto')
+						.'.</p>';
 					return PROCESADO_ERR_FORMULARIO;
 				}
 
@@ -665,8 +668,10 @@ class Ficheros extends Controller {
 					// Borrado de la BD
 					$this->trabajoficheros->elimina_bd($fid);
 					$data_form['error'] = '<p>Hay problemas con la copia
-						de ficheros. Por favor, comuníquelo al administrador
-						de la página.</p>';
+						de ficheros. Por favor, póngase en '
+						.'contacto con '
+						. $this->config->item('texto_contacto')
+						.'.</p>';
 					return PROCESADO_ERR_ESCRITURA;
 				}
 

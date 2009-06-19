@@ -418,5 +418,16 @@ $config['privilegiados'] = array(
 		'admin',
 );
 
+/* 
+ * Texto descriptivo para contacto con el administrador
+ * 
+ * Aparecerá en todos los mensajes precedido por la preposición 'con'
+ * Ejemplos: 
+ *   "Antonio García, <agarcia@miempresa.tld>"
+ *   "el Servicio de Informática, 95555555"
+ */
+
+$config['texto_contacto'] = 'el administrador';
+
 /* End of file config.php */
 /* Location: ./system/application/config/config.php */

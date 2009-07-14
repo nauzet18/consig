@@ -46,10 +46,10 @@ class LDAP {
 			return FALSE;
 		 }
 
-		 // Recogida de valores (cuidado con XSS) y comprobación de
+		 // Recogida de valores y comprobación de
 		 // validez
-		 $usuario = $this->CI->input->post('usuario', TRUE);
-		 $passwd = $this->CI->input->post('passwd', TRUE);
+		 $usuario = $this->CI->input->post('usuario');
+		 $passwd = $this->CI->input->post('passwd');
 
 		 // Quitamos @ del usuario
 		 $usuario = preg_replace('/@.*$/', '', $usuario);

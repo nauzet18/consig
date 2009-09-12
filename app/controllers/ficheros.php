@@ -180,7 +180,7 @@ class Ficheros extends Controller {
 
         if ($fichero === FALSE) {
 			show_error('El fichero indicado no existe. Es posible que '
-					.'existiera y haya caducado.');
+					.'existiera y haya caducado.', 404);
             return;
         }
 		
@@ -244,7 +244,7 @@ class Ficheros extends Controller {
 		$this->load->library('manejoauxiliar');
 
 		if (!$this->autenticado) {
-            show_error('Debe autenticarse para poder ver sus ficheros.');
+            show_error('Debe autenticarse para poder ver sus ficheros.', 403);
 		} else {
 			$opciones = array(
 				'atr_orden' => $atr_orden,
@@ -271,13 +271,13 @@ class Ficheros extends Controller {
         $fichero = $this->trabajoficheros->extrae_bd(array('fid' => $fid));
 
         if ($fichero === FALSE) {
-            show_error('El fichero indicado no existe.');
+            show_error('El fichero indicado no existe.', 404);
             return;
         }
 
 		if (!$this->trabajoficheros->es_propietario($fichero) &&
 				!$this->trabajoficheros->es_privilegiado()) {
-			show_error('No tiene permiso para modificar el fichero.');
+			show_error('No tiene permiso para modificar el fichero.', 403);
 			return;
 		} else {
 			$this->load->helper('form');
@@ -321,11 +321,11 @@ class Ficheros extends Controller {
 		$fichero = $this->trabajoficheros->extrae_bd(array('fid' => $fid));
 
         if ($fichero === FALSE) {
-            show_error('El fichero indicado no existe.');
+            show_error('El fichero indicado no existe.', 404);
             return;
 		} elseif (!$this->trabajoficheros->es_propietario($fichero)
 				&& !$this->trabajoficheros->es_privilegiado()) {
-			show_error('No tiene permiso para borrar el fichero.');
+			show_error('No tiene permiso para borrar el fichero.', 403);
 			return;
 		} else {
 			// ¿Confirmación?

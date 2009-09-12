@@ -423,7 +423,7 @@ class TrabajoFicheros extends Model {
 			$this->logdetalles('error', 
 				'Inconsistencia BD-FS. En FS no existe', $fid);
 			show_error('Existe un problema con la base de datos. Por favor, '
-				.'pruebe más tarde');
+				.'pruebe más tarde', 500);
 			die();
 		}
 

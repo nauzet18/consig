@@ -131,6 +131,26 @@ class Manejoauxiliar {
 
 		return $resultado;
 	}
+
+	/**
+	 * Acorta una cadena (nombre de fichero, usuario, etc) si fuera
+	 * necesario. 
+	 * Ej: "fichero con nombre muy largo.pdf" -> "fichero con....pdf"
+	 *
+	 * Delante de los puntos suspensivos introduce $longitud - 7 (4 del
+	 * final + 3 de los puntos suspensivos) caracteres.
+	 */
+
+	function abrevia($cadena, $longitud = 50) {
+		$resultado = $cadena;
+
+		if (strlen($cadena) > $longitud) {
+			$resultado = substr($cadena, 0, $longitud - 7) . '...' 
+				. substr($cadena, -4); 
+		}
+
+		return $resultado;
+	}
 }
 
 ?>

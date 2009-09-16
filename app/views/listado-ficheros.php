@@ -4,6 +4,7 @@ $titulo = isset($titulo) ? $titulo : "Listado de ficheros";
 <h1><?php echo $titulo; ?></h1>
 
 <?php
+$this->load->library('manejoauxiliar');
 if (isset($caja_busqueda) && $caja_busqueda == 1) {
 	$this->load->view('busqueda');
 }
@@ -65,6 +66,8 @@ foreach ($ficheros as $f) {
 	echo "   </td>\n";
 
 	// Nombre del fichero
+	$f->nombre = $this->manejoauxiliar->abrevia($f->nombre);
+
     if ($permitido) {
 
 		// ¿Propietario?

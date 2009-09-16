@@ -110,11 +110,14 @@ img {
   text-transform: lowercase;
 }
 
-#menu a {
-	display: block;
-	float: left;
-	height: 17px;
+#menu div {
+  display: block;
+  float: left;
+  height: 17px;
 	padding: 0 17px 0 19px;
+}
+
+#menu a {
 	text-decoration: none;
 	color: #A32638;
 }
@@ -449,4 +452,13 @@ img.centrar_ayuda {
   margin-bottom: 1em;
   padding: 1em 1em 1em 20px;
   background: url(../img/interfaz/disco.png) transparent center left no-repeat;
+}
+
+#cond_uso {
+  font-family: Tahoma;
+  font-size: 80%;
+}
+
+#cond_uso a {
+  font-style: italic;
 }

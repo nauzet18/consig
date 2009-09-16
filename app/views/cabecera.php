@@ -98,14 +98,18 @@ if ($autenticado !== FALSE) {
 
  <div id="menu">
   <ul>
-   <li class="first"><a href="<?php echo site_url('ayuda')?>">
+   <li class="first">
+   <div><a href="<?php echo site_url('ayuda')?>">
      <img src="<?php echo site_url('img/interfaz/ayuda.png')?>" alt="Ayuda" /><br />
 	 Ayuda</a>
+	 <br /><span id="cond_uso">[<a rel="#cond_usoOverlay" href="<?php echo
+	 site_url('ayuda/legal')?>">condiciones de uso</a>]</span>
+	 </div>
    </li>
 
-   <li><a href="<?php echo site_url('ficheros/nuevo')?>">
+   <li><div><a href="<?php echo site_url('ficheros/nuevo')?>">
      <img src="<?php echo site_url('img/interfaz/nuevo.png')?>" alt="Nuevo" /><br />
-	 Nuevo</a>
+	 Nuevo</a></div>
    </li>
    <?php
    if ($autenticado === FALSE && !isset($no_mostrar_login)):
@@ -119,21 +123,21 @@ if ($autenticado !== FALSE) {
 	// Módulo de autenticación con formulario?
 	$has_form = $this->auth->has_form();
    ?>
-   <li><a <?php echo ($has_form ? 'rel="#loginOverlay"' : '')?> href="<?php echo $url_login; ?>"> 
+   <li><div><a <?php echo ($has_form ? 'rel="#loginOverlay"' : '')?> href="<?php echo $url_login; ?>"> 
      <img src="<?php echo site_url('img/interfaz/login.png')?>" alt="login" /><br />
-	 Autenticaci&oacute;n</a>
+	 Autenticaci&oacute;n</a></div>
    </li>
    <?php
    endif;
    if ($autenticado):
    ?>
-   <li><a href="<?php echo site_url('ficheros/propios'); ?>">
+   <li><div><a href="<?php echo site_url('ficheros/propios'); ?>">
      <img src="<?php echo site_url('img/interfaz/misficheros.png')?>" alt="mis ficheros" /><br />
-	 Mis ficheros</a>
+	 Mis ficheros</a></div>
    </li>
-   <li><a href="<?php echo site_url('usuario/salir'); ?>">
+   <li><div><a href="<?php echo site_url('usuario/salir'); ?>">
      <img src="<?php echo site_url('img/interfaz/salir.png')?>" alt="salir" /><br />
-	 Salir</a>
+	 Salir</a></div>
    </li>
    <?php
    endif;
@@ -176,3 +180,11 @@ if ($autenticado !== FALSE) {
 	echo '<div class="cuadro ok">' . $msj . '</div>';
  }
  ?>
+
+ <div id="cond_usoOverlay">
+  <div>
+ <?php
+ 	$this->load->view('condiciones_uso');
+ ?>
+  </div>
+ </div>

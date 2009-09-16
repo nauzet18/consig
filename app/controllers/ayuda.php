@@ -35,6 +35,18 @@ class Ayuda extends Controller {
 
 		$this->load->view('pie');
 	}
+
+	function legal() {
+		$data = array(
+				'no_mostrar_aviso' => 1,
+				'subtitulo' => 'condiciones de uso',
+		);
+		$this->load->view('cabecera', $data);
+
+		$this->load->view('condiciones_uso');
+
+		$this->load->view('pie');
+	}
 }
 
 ?>

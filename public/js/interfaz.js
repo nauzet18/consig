@@ -15,6 +15,16 @@ $(document).ready(function() {
 		}
 	});
 
+	$("a[rel=#cond_usoOverlay]").overlay({
+		onBeforeLoad: function() { 
+		},                 
+		onLoad: function(content, link) {
+		},
+
+		onClose: function(content) {
+		}
+	});
+
 	// Comodidad en la interfaz
 	$(".opciones_radio .opcion").click(function() {
 		$(this).find("input").attr("checked", "checked");

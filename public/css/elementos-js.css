@@ -10,7 +10,8 @@
   width: 300px !important;
 }
 
-#loginOverlay div.close {
+#loginOverlay div.close,
+#cond_usoOverlay div.close {
   background: url(../img/interfaz/close.png) no-repeat;
   position: absolute;
   top: 2px;
@@ -69,5 +70,23 @@
 .envoltura_minipagina {
   width: 290px;
   overflow: hidden;
+}
+
+#cond_usoOverlay {
+  display: none;
+  padding: 40px;
+  font-size: 80%;
+  background-image: url(../img/fondos/white.png);
+  width: 420px;
+  height: 310px;
+}
+
+#cond_usoOverlay div {
+  overflow-y: auto;
+  height: 300px;
+}
+
+#cond_usoOverlay p {
+  width: 400px !important;
 }
 

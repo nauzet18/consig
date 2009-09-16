@@ -12,6 +12,8 @@
 	 <li><a href="#borrado">2.4. Borrado de un fichero</a></li>
  </ul>
  <li><a href="#busqueda">3. Búsqueda de ficheros</a></li>
+ <li><a href="<?php echo site_url('ayuda/legal')?>">I. Condiciones de
+ uso</a></li>
 </ul>
 
 

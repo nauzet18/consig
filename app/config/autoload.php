@@ -39,7 +39,8 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('session', 'auth', 'log', 'database');
+$autoload['libraries'] = array('session', 'auth', 'log', 'database',
+		'gestionpermisos');
 
 
 /*

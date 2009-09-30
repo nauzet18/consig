@@ -311,47 +311,6 @@ class TrabajoFicheros extends Model {
 	}
 
 	/**
-	 * Indica si un usuario tiene acceso a un determinado fichero, dado como
-	 * su objeto proveniente de la base de datos.
-	 *
-	 * Acceso permitido en los siguientes casos:
-	 *
-	 *  1. Usuario autenticado
-	 *  2. Fichero con acceso universal
-	 *  3. Usuario conectado desde una IP de las contenidas en el fichero de
-	 *     subredes
-	 *  4. Fichero subido desde una IP interna
-	 *  5. Fichero subido por un usuario autenticado
-	 *
-	 *  @param	objeto fichero sobre el que se quiere hacer la comprobación
-	 *	@return si el usuario actual tiene acceso al fichero
-	 */
-
-	function acceso_fichero($fichero) {
-		if ($this->session->userdata('autenticado') 
-				|| $fichero->tipoacceso == 1) {
-			return TRUE;
-		} else {
-			/*
-			 * Buscamos IP del usuario que accede,
-			 * y si no hay éxito comprobamos la del remitente.
-			 *
-			 * Realmente tipoacceso debe ser 1 para IPs internas (se hace
-			 * así al enviar un fichero), pero puede que hayamos modificado
-			 * el fichero de subredes después de que el usuario enviara el
-			 * fichero.
-			 */
-
-			$ip_remitente = $fichero->ip;
-			$ip_usuario = $this->input->ip_address();
-
-			$ips = array($ip_remitente, $ip_usuario);
-
-			return $this->trabajoficheros->busqueda_ips($ips);
-		}
-	}
-
-	/**
 	 * Búsqueda de una o más IPs en la lista de IPs internas
 	 */
 
@@ -448,24 +407,9 @@ class TrabajoFicheros extends Model {
 		readfile($ruta);
 	}
 
-	/**
-	 * Determina si el usuario actual tiene permiso para modificar los datos
-	 * de un fichero.
-	 *
-	 */
-	function permiso_modificacion($fichero) {
-		$autenticado = $this->session->userdata('autenticado');
-		if (!$autenticado) {
-			return FALSE;
-		} else {
-			$usuario= $this->session->userdata('id');
-			// XXX ¿administradores?
-			return $usuario == $fichero->remitente;
-		}
-	}
 
 	/**
-	 * Determina si un fichero posee a un determinado usuario.
+	 * Determina si un fichero pertenece a un determinado usuario.
 	 *
 	 * @param fichero
 	 * @param string usuario, opcional. Si no se indica, se supone que se
@@ -537,40 +481,5 @@ class TrabajoFicheros extends Model {
 		// Guardamos log
 		log_message($nivel, $msj);
 	}
-
-	/**
-	 * Comprueba si un usuario es privilegiado
-	 *
-	 * @param	identificador del usuario, opcional. Si no, se busca en la
-	 *          sesión actual
-	 * @return	TRUE si lo es, FALSE en otro caso
-	 */
-
-	function es_privilegiado($id = FALSE) {
-
-		// Paso sin parámetros
-		if ($id === FALSE) {
-			if ($this->session->userdata('autenticado')) {
-				$id = $this->session->userdata('id');
-			} else {
-				$id = '';
-			}
-		}
-
-		// Usuario anónimo
-		if (empty($id)) {
-			return FALSE;
-		}
-
-		$privilegiados = $this->config->item('privilegiados');
-		for($i=0;$i<count($privilegiados);$i++) {
-			if ($privilegiados[$i] == $id) {
-				return TRUE;
-			}
-		}
-
-		return FALSE;
-	}
-
 }
 ?>

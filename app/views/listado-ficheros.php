@@ -38,7 +38,7 @@ foreach ($ficheros as $f) {
 	$es_propietario = FALSE;
 
 	// ¿Tiene permitido el acceso?
-	$permitido = $this->trabajoficheros->acceso_fichero($f);
+	$permitido = $this->gestionpermisos->acceso_fichero($f);
 	if ($permitido === TRUE) {
 		$clase = 'permitido';
 		$es_propietario = $this->trabajoficheros->es_propietario($f);

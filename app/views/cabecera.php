@@ -112,6 +112,12 @@ if ($autenticado !== FALSE) {
 	 Nuevo</a></div>
    </li>
    <?php
+   // Seguir las indicaciones de no_mostrar_login, y ocultarlo
+   // en el caso de no usar autenticación
+   if ($this->config->item('authmodule') == "") {
+		   $no_mostrar_login = TRUE;
+   }
+
    if ($autenticado === FALSE && !isset($no_mostrar_login)):
    	if ($this->config->item('https_para_login') == TRUE) {
 		$url_login = preg_replace('/^http:/', 'https:',

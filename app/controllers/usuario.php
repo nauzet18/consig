@@ -27,6 +27,12 @@ class Usuario extends Controller {
 	{
 		parent::Controller();
 		$this->autenticado = $this->session->userdata('autenticado');
+
+		// Si no hay módulo de autenticación, devolver un error
+		if ($this->config->item('authmodule') == "") {
+			show_error('La autenticación está desactivada', 404);
+			return;
+		}
 	}
 	
 	function index()

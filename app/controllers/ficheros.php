@@ -189,7 +189,7 @@ class Ficheros extends Controller {
 				'no_mostrar_aviso' => 1
 		);
 
-		$permiso = $this->trabajoficheros->acceso_fichero($fichero);
+		$permiso = $this->gestionpermisos->acceso_fichero($fichero);
 
 		$pide_descarga = $descargar == 'descarga';
 
@@ -214,8 +214,7 @@ class Ficheros extends Controller {
 				}
 
 			} // pide_descarga
-			if ($this->trabajoficheros->permiso_modificacion($fichero) 
-					|| $this->trabajoficheros->es_privilegiado()) {
+			if ($this->gestionpermisos->permiso_modificacion($fichero)) {
 				$data_fichero['permiso_modificacion'] = 1;
 			}
 				
@@ -275,8 +274,7 @@ class Ficheros extends Controller {
             return;
         }
 
-		if (!$this->trabajoficheros->es_propietario($fichero) &&
-				!$this->trabajoficheros->es_privilegiado()) {
+		if (!$this->gestionpermisos->permiso_modificacion($fichero)) {
 			show_error('No tiene permiso para modificar el fichero.', 403);
 			return;
 		} else {
@@ -323,8 +321,7 @@ class Ficheros extends Controller {
         if ($fichero === FALSE) {
             show_error('El fichero indicado no existe.', 404);
             return;
-		} elseif (!$this->trabajoficheros->es_propietario($fichero)
-				&& !$this->trabajoficheros->es_privilegiado()) {
+		} elseif (!$this->gestionpermisos->permiso_modificacion($fichero)) {
 			show_error('No tiene permiso para borrar el fichero.', 403);
 			return;
 		} else {
@@ -402,7 +399,7 @@ class Ficheros extends Controller {
         if ($fichero === FALSE) {
 			echo "Fichero inexistente o caducado";
         } else {
-			$permitido = $this->trabajoficheros->acceso_fichero($fichero);
+			$permitido = $this->gestionpermisos->acceso_fichero($fichero);
 
 			if ($permitido === FALSE) {
 				echo "Prohibido";

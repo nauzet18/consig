@@ -91,13 +91,14 @@ class Auth {
 	 */
 
 	function get_user_data($id, $force_reload = FALSE) {
+		$this->CI->db->query("LOCK TABLES usercache WRITE");
 		if (!$force_reload) {
 			$this->CI->db->where('id', $id);
 			$this->CI->db->from('usercache');
-			if ($this->CI->db->count_all_results() != 0) {
-				$this->CI->db->where('id', $id);
-				$q = $this->CI->db->get('usercache');
-				$res = $q->result_array();
+			$q = $this->CI->db->get();
+			$res = $q->result_array();
+			if (count($res) != 0) {
+				$this->CI->db->query("UNLOCK TABLES");
 				return $res[0];
 			}
 		}
@@ -110,6 +111,8 @@ class Auth {
 			$this->CI->db->delete('usercache'); 
 			$this->CI->db->insert('usercache', $data);
 		}
+
+		$this->CI->db->query("UNLOCK TABLES");
 
 		return $data;
 	}

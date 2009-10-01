@@ -254,7 +254,7 @@ class TrabajoFicheros extends Model {
 		$mimetype = $this->config->item('mimetype_defecto');
 		$icono = $this->config->item('mimetype_icono_defecto');
 		if (strpos($nombre, ".") !== FALSE) {
-			$partes = split("\.", $nombre);
+			$partes = preg_split("/\./", $nombre);
 			$extension = $partes[count($partes) - 1];
 			$q = $this->db->get_where('mimetypes', 
 					array('extension' => $extension),

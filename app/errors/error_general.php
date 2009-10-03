@@ -6,7 +6,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 
 <head>
-<title>Consigna | página no encontrada</title>
+<title>Consigna | algo fue mal</title>
 <link rel="stylesheet" href="/css/estilo.css" type="text/css" media="screen"
 />
 

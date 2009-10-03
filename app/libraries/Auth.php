@@ -29,10 +29,8 @@ class Auth {
 		// Carga del módulo de autenticación correspondiente
 		$authmod = $this->CI->config->item('authmodule');
 
-		if ($authmod === FALSE || empty($authmod)) {
-			log_message('error', 'El módulo de autenticación está vacío');
-			return FALSE;
-		} else {
+		// TODO: caso vacío
+		if ($authmod !== FALSE && !empty($authmod)) {
 			$this->authmod = $authmod;
 			// Cargamos en '$this->authmod'
 			$this->CI->load->library('authmodules/' . $authmod,
@@ -87,7 +85,10 @@ class Auth {
 
 
 	/**
-	 * Optional cached query
+	 * Consulta de los datos de usuario
+	 *
+	 * @param string	Identificador de usuario
+	 * @param boolean	Forzar el refresco de caché
 	 */
 
 	function get_user_data($id, $force_reload = FALSE) {
@@ -115,6 +116,60 @@ class Auth {
 		$this->CI->db->query("UNLOCK TABLES");
 
 		return $data;
+	}
+
+	/**
+	 * Muestra el formulario de login
+	 *
+	 * @param array	Parámetros de configuración del formulario en forma de
+	 * array asociativo. Parámetros posibles:
+	 *
+	 *   'devolver_a': URL a la que devolver al usuario
+	 *   'error': Errores a mostrar del intento de autenticación anterior
+	 */
+	function show_form($data_form) {
+			$this->CI->load->helper('form');
+			$data_cabecera = array(
+					'subtitulo' => 'autenticación',
+					'no_mostrar_aviso' => TRUE,
+					'no_mostrar_login' => TRUE,
+					'body_onload' => 'pagina_login()',
+					);
+			$data_pie = array();
+
+			$this->CI->load->view('cabecera', $data_cabecera);
+			if ($this->CI->config->item('https_para_login') == TRUE) {
+				$url_login = preg_replace('/^http:/', 'https:',
+						site_url('usuario/login')); 
+			} else {
+				$url_login = site_url('usuario/login');
+			}
+
+			$data_form['url_login'] = $url_login;
+
+			$this->CI->load->view('form-login', $data_form);
+			$this->CI->load->view('pie', $data_pie);
+	}
+
+	/**
+	 * Guarda la sesión del usuario en forma de cookie
+	 *
+	 * @param string	Identificador de usuario
+	 */
+
+	function store_session($id) {
+		if (empty($id)) {
+			show_error('Hay problemas con la autenticación. Póngase en '
+					.'contacto con ' .
+					$this->CI->config->item('texto_contacto'), 500);
+			log_message('error', 'Se intenta guardar sesión sin id');
+			exit;
+		}
+
+		// Recogemos los datos del usuario
+		$data = $this->get_user_data($id, TRUE);
+		$data['autenticado'] = TRUE;
+		$this->CI->session->set_userdata($data);
 	}
 }
 

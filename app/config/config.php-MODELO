@@ -397,6 +397,9 @@ $config['mimetype_icono_defecto'] = 'mime.png';
 $config['authmodule'] = 'LDAP';
 $config['https_para_login'] = TRUE;
 
+// Forzar autenticación: 0 = no, 1 = sí, 2 = comprobar pero no forzar
+$config['forzar_autenticacion'] = 0;
+
 /**
  * Opciones propias de envío de correo
  */

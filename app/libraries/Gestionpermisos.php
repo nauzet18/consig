@@ -28,6 +28,47 @@ class Gestionpermisos {
 	}
 
 	/**
+	 * Comprueba si el usuario está autenticado y en función del valor de
+	 * configuración 'forzar_autenticacion' obliga al usuario a autenticarse
+	 * o no.
+	 */
+
+	function checkLogin() {
+
+		// Si no hay módulo, salir
+		if ($this->CI->config->item('authmodule') == "") {
+			return;
+		}
+		
+		$forzar = $this->CI->config->item('forzar_autenticacion');
+		$autenticado = $this->CI->session->userdata('autenticado');
+
+		if ($autenticado) {
+			return;
+		}
+
+		// Posibilidades
+		if ($forzar == 1) {
+			// El usuario debe estar autenticado
+			if ($this->CI->auth->has_form()) {
+				$this->CI->session->set_flashdata('login_devolver_a',
+						uri_string());
+				redirect('usuario/login');
+			} else {
+				$id = $this->CI->auth->login_action($err);
+				if ($id === FALSE) {
+					show_error('El sitio requiere autenticación', 403);
+					exit;
+				} else {
+					$this->CI->auth->store_session($id);
+				}
+			}
+		} elseif ($forzar == 2) {
+			// TODO
+		}
+	}
+
+	/**
 	 * Indica si un usuario tiene acceso a un determinado fichero, dado como
 	 * su objeto proveniente de la base de datos.
 	 *

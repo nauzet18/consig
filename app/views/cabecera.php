@@ -141,11 +141,15 @@ if ($autenticado !== FALSE) {
      <img src="<?php echo site_url('img/interfaz/misficheros.png')?>" alt="mis ficheros" /><br />
 	 Mis ficheros</a></div>
    </li>
+   <?php
+     if ($this->config->item('forzar_autenticacion') != 1):
+	?>
    <li><div><a href="<?php echo site_url('usuario/salir'); ?>">
      <img src="<?php echo site_url('img/interfaz/salir.png')?>" alt="salir" /><br />
 	 Salir</a></div>
    </li>
    <?php
+    endif; // forzar_autenticacion
    endif;
    ?>
   </ul>

@@ -119,6 +119,14 @@ class Auth {
 	}
 
 	/**
+	 * Comprueba condiciones de autenticación en módulos sin formulario
+	 */
+
+	function check_conditions() {
+		return $this->CI->authmod->check_conditions();
+	}
+
+	/**
 	 * Muestra el formulario de login
 	 *
 	 * @param array	Parámetros de configuración del formulario en forma de

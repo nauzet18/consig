@@ -63,8 +63,19 @@ class Gestionpermisos {
 					$this->CI->auth->store_session($id);
 				}
 			}
-		} elseif ($forzar == 2) {
-			// TODO
+		} elseif ($forzar == 2 && !$this->CI->authmod->has_form()) {
+			// No tiene sentido un módulo con formulario con este tipo
+			// de forzado de autenticación
+
+			if ($this->CI->authmod->check_conditions()) {
+				$id = $this->CI->auth->login_action($err);
+				if ($id === FALSE) {
+					show_error('El sitio requiere autenticación', 403);
+					exit;
+				} else {
+					$this->CI->auth->store_session($id);
+				}
+			}
 		}
 	}
 

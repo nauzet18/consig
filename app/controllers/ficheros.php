@@ -34,8 +34,8 @@ class Ficheros extends Controller {
 	{
 		parent::Controller();	
 		$this->autenticado = $this->session->userdata('autenticado');
-		$this->load->config('subredes');
 		$this->gestionpermisos->checkLogin();
+		$this->load->config('subredes');
 	}
 	
 	function index($atr_orden = 'fechaenvio', $orden = 'desc')

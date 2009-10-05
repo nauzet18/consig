@@ -92,28 +92,34 @@ class Auth {
 	 */
 
 	function get_user_data($id, $force_reload = FALSE) {
-		$this->CI->db->query("LOCK TABLES usercache WRITE");
 		if (!$force_reload) {
 			$this->CI->db->where('id', $id);
 			$this->CI->db->from('usercache');
 			$q = $this->CI->db->get();
 			$res = $q->result_array();
 			if (count($res) != 0) {
-				$this->CI->db->query("UNLOCK TABLES");
 				return $res[0];
 			}
 		}
 
 		$data = $this->CI->authmod->get_user_data($id);
 
+		// Si el módulo devuelve información del usuario...
 		if ($data !== FALSE) {
 			// Actualizamos en la BD
-			$this->CI->db->where('id', $id);
-			$this->CI->db->delete('usercache'); 
-			$this->CI->db->insert('usercache', $data);
+			$this->CI->db->query("LOCK TABLES usercache WRITE");
+			$this->CI->db->update('usercache', $data, 
+					array('id' => $id)
+			); 
+			$afectadas = $this->CI->db->affected_rows();
+			log_message('INFO', 'Query: ' . $this->CI->db->last_query());
+			log_message('INFO', 'Afectadas: ' . $afectadas);
+			if ($afectadas == 0) {
+				$this->CI->db->insert('usercache', $data);
+			}
+			$this->CI->db->query("UNLOCK TABLES");
 		}
 
-		$this->CI->db->query("UNLOCK TABLES");
 
 		return $data;
 	}

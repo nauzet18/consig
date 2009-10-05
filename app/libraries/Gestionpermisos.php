@@ -50,31 +50,17 @@ class Gestionpermisos {
 		// Posibilidades
 		if ($forzar == 1) {
 			// El usuario debe estar autenticado
-			if ($this->CI->auth->has_form()) {
+			$this->CI->session->set_flashdata('login_devolver_a',
+					uri_string());
+			redirect('usuario/login');
+		} elseif ($forzar == 2 && !$this->CI->authmod->has_form()) {
+			$this->CI->session->set_flashdata('login_devolver_a',
+					uri_string());
+
+			if ($this->CI->authmod->check_conditions()) {
 				$this->CI->session->set_flashdata('login_devolver_a',
 						uri_string());
 				redirect('usuario/login');
-			} else {
-				$id = $this->CI->auth->login_action($err);
-				if ($id === FALSE) {
-					show_error('El sitio requiere autenticación', 403);
-					exit;
-				} else {
-					$this->CI->auth->store_session($id);
-				}
-			}
-		} elseif ($forzar == 2 && !$this->CI->authmod->has_form()) {
-			// No tiene sentido un módulo con formulario con este tipo
-			// de forzado de autenticación
-
-			if ($this->CI->authmod->check_conditions()) {
-				$id = $this->CI->auth->login_action($err);
-				if ($id === FALSE) {
-					show_error('El sitio requiere autenticación', 403);
-					exit;
-				} else {
-					$this->CI->auth->store_session($id);
-				}
 			}
 		}
 	}

@@ -10,7 +10,7 @@ $descripcion = isset($fichero) ? $fichero->descripcion : '';
 // XXX: pensar en las posibilidades de cambiar la fecha de expiración (lo de
 // abajo es erróneo)
 //$expiracion = isset($fichero) ? $fichero->expiracion : '2sem';
-$expiracion = '2sem';
+$expiracion = $this->config->item('expiracion_defecto');
 $listar = array(
 		(isset($fichero) ? ($fichero->listar == 0) : FALSE),
 		(isset($fichero) ? ($fichero->listar == 1) : TRUE));

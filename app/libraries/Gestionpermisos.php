@@ -40,12 +40,13 @@ class Gestionpermisos {
 			return;
 		}
 		
-		$forzar = $this->CI->config->item('forzar_autenticacion');
 		$autenticado = $this->CI->session->userdata('autenticado');
 
 		if ($autenticado) {
 			return;
 		}
+
+		$forzar = $this->CI->config->item('forzar_autenticacion');
 
 		// Posibilidades
 		if ($forzar == 1) {
@@ -54,9 +55,6 @@ class Gestionpermisos {
 					uri_string());
 			redirect('usuario/login');
 		} elseif ($forzar == 2 && !$this->CI->authmod->has_form()) {
-			$this->CI->session->set_flashdata('login_devolver_a',
-					uri_string());
-
 			if ($this->CI->authmod->check_conditions()) {
 				$this->CI->session->set_flashdata('login_devolver_a',
 						uri_string());

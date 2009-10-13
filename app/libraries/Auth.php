@@ -112,8 +112,8 @@ class Auth {
 					array('id' => $id)
 			); 
 			$afectadas = $this->CI->db->affected_rows();
-			log_message('INFO', 'Query: ' . $this->CI->db->last_query());
-			log_message('INFO', 'Afectadas: ' . $afectadas);
+			log_message('DEBUG', 'Query: ' . $this->CI->db->last_query());
+			log_message('DEBUG', 'Afectadas: ' . $afectadas);
 			if ($afectadas == 0) {
 				$this->CI->db->insert('usercache', $data);
 			}

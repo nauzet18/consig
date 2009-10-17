@@ -43,15 +43,15 @@ class Auth {
 		return $this->CI->authmod->has_form();
 	}
 
-	function login_action(&$err) {
+	function login_action(&$err, &$id) {
 		$id = '';
 		$ret = $this->CI->authmod->login_action($err, $id);
 
-		if ($ret === FALSE) {
+		if ($ret == -1) {
 			log_message('info', 'Intento de login fallido. id=' . $id
 					.', IP: ' . $this->CI->input->ip_address());
-		} else {
-			log_message('info', 'Login correcto. id=' . $ret
+		} elseif ($ret == 1) {
+			log_message('info', 'Login correcto. id=' . $id
 					.', IP: ' . $this->CI->input->ip_address());
 		}
 

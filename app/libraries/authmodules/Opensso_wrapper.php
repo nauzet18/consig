@@ -19,11 +19,15 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class OpenSSO {
-	var $CI;
+require_once 'libopensso-php/OpenSSO.php';
 
-	function OpenSSO() {
+class Opensso_wrapper {
+	var $CI;
+	private $o;
+
+	function Opensso_wrapper() {
 		$this->CI =& get_instance();
+		$this->o = new OpenSSO();
 	}
 
 	/**
@@ -35,17 +39,14 @@ class OpenSSO {
 	 */
 	function login_action(&$err, &$id) {
 		// Leemos las cabeceras de OpenSSO
-		if (isset($_SERVER['REMOTE_USER'])) {
-			$id = $_SERVER['REMOTE_USER'];
-		} elseif (isset($_SERVER['REDIRECT_REMOTE_USER'])) {
-			$id = $_SERVER['REDIRECT_REMOTE_USER'];
+		$res = $this->o->check_and_force_sso();
+		if ($res === FALSE) {
+			// De esta manera se permite la redirección
+			return 0;
 		} else {
-			$err = "Hay algún problema interno de autenticación. Contacte "
-				."con ". $this->CI->config->item('texto_contacto');
-			return -1;
+			$id = $this->o->attribute('uid');
+			return 1;
 		}
-
-		return 1;
 
 	}
 
@@ -60,12 +61,9 @@ class OpenSSO {
 
 		// Lectura de cabeceras
 		$datos = array(
-				'id' => $id,
-				'name' => isset($_SERVER['HTTP_CN']) ?
-					ucwords(strtolower($_SERVER['HTTP_CN'])) :
-					$_SERVER['REMOTE_USER'],
-				'mail' => isset($_SERVER['HTTP_MAIL']) ?
-				$_SERVER['HTTP_MAIL'] : "",
+				'id' => $this->o->attribute('uid'),
+				'name' => ucwords(strtolower($this->o->attribute('cn'))),
+				'mail' => $this->o->attribute('mail'),
 				'timestamp' => time(),
 		);
 
@@ -91,8 +89,7 @@ class OpenSSO {
 	 * Logout
 	 */
 	function logout() {
-		// TODO: reenviar a opensso-logout
-		redirect('https://opensso-pre.us.es/opensso/UI/Logout');
+		$this->o->logout(FALSE);
 	}
 
 	/**
@@ -100,9 +97,7 @@ class OpenSSO {
 	 */
 
 	function check_conditions() {
-		// TODO: con los servicios web podré hacer algo?
-		return isset($_COOKIE['amlbcookie'])  &&
-			isset($_COOKIE['iPlanetDirectoryPro']);
+		return $this->o->check_sso();
 	}
 }
 

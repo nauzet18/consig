@@ -51,7 +51,8 @@ class Usuario extends Controller {
 	 */
 
 	function login() {
-		$final_id = FALSE;
+		$final_id = '';
+		$ret_action = -1;
 		$has_form = $this->auth->has_form();
 		$err = '';
 
@@ -63,7 +64,7 @@ class Usuario extends Controller {
 		}
 
 		if ($has_form === FALSE) {
-			$final_id = $this->auth->login_action($err);
+			$ret_action = $this->auth->login_action($err, $final_id);
 		} else {
 			// Formulario
 			$this->load->helper('form');
@@ -78,15 +79,14 @@ class Usuario extends Controller {
 			// ¿Envío de formulario?
 			if ($this->input->post('login') 
 					&& $this->form_validation->run() !== FALSE) {
-				$final_id = $this->auth->login_action($err);
+				$ret_action = $this->auth->login_action($err, $final_id);
 			}
 		} // has_form
 
-		if ($final_id !== FALSE) {
+		if ($ret_action == 1) {
 			$this->auth->store_session($final_id);
 			redirect($devolver_a);
-		} else {
-
+		} elseif ($ret_action == -1) {
 			if ($has_form) {
 				// Muestra del formulario
 				$data_form = array(
@@ -102,6 +102,9 @@ class Usuario extends Controller {
 			} else {
 				show_error($err);
 			}
+		} else {
+			// Resto de códigos de login_action disponibles para hacer
+			// redirecciones
 		}
 	}
 

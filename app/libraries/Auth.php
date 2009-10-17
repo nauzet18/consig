@@ -29,10 +29,8 @@ class Auth {
 		// Carga del módulo de autenticación correspondiente
 		$authmod = $this->CI->config->item('authmodule');
 
-		if ($authmod === FALSE || empty($authmod)) {
-			log_message('error', 'El módulo de autenticación está vacío');
-			return FALSE;
-		} else {
+		// TODO: caso vacío
+		if ($authmod !== FALSE && !empty($authmod)) {
 			$this->authmod = $authmod;
 			// Cargamos en '$this->authmod'
 			$this->CI->load->library('authmodules/' . $authmod,
@@ -45,15 +43,15 @@ class Auth {
 		return $this->CI->authmod->has_form();
 	}
 
-	function login_action(&$err) {
+	function login_action(&$err, &$id) {
 		$id = '';
 		$ret = $this->CI->authmod->login_action($err, $id);
 
-		if ($ret === FALSE) {
+		if ($ret == -1) {
 			log_message('info', 'Intento de login fallido. id=' . $id
 					.', IP: ' . $this->CI->input->ip_address());
-		} else {
-			log_message('info', 'Login correcto. id=' . $ret
+		} elseif ($ret == 1) {
+			log_message('info', 'Login correcto. id=' . $id
 					.', IP: ' . $this->CI->input->ip_address());
 		}
 
@@ -69,6 +67,9 @@ class Auth {
 			log_message('info', 'Logout. id=' .
 					$this->CI->session->userdata('id')
 					.', IP: ' . $this->CI->input->ip_address());
+
+			$this->CI->authmod->logout();
+
 			// Posible bug en CI 1.7.0 con sess_destroy()
 			// Eliminamos los valores
 			$data = array(
@@ -81,37 +82,103 @@ class Auth {
 			$this->CI->session->sess_destroy();
 		}
 
-		$this->CI->authmod->logout();
 	}
 
 
 
 	/**
-	 * Optional cached query
+	 * Consulta de los datos de usuario
+	 *
+	 * @param string	Identificador de usuario
+	 * @param boolean	Forzar el refresco de caché
 	 */
 
 	function get_user_data($id, $force_reload = FALSE) {
 		if (!$force_reload) {
 			$this->CI->db->where('id', $id);
 			$this->CI->db->from('usercache');
-			if ($this->CI->db->count_all_results() != 0) {
-				$this->CI->db->where('id', $id);
-				$q = $this->CI->db->get('usercache');
-				$res = $q->result_array();
+			$q = $this->CI->db->get();
+			$res = $q->result_array();
+			if (count($res) != 0) {
 				return $res[0];
 			}
 		}
 
 		$data = $this->CI->authmod->get_user_data($id);
 
+		// Si el módulo devuelve información del usuario...
 		if ($data !== FALSE) {
 			// Actualizamos en la BD
-			$this->CI->db->where('id', $id);
-			$this->CI->db->delete('usercache'); 
+			$this->CI->db->query("LOCK TABLES usercache WRITE");
+			$this->CI->db->delete('usercache', array('id' => $id));
 			$this->CI->db->insert('usercache', $data);
+			$this->CI->db->query("UNLOCK TABLES");
 		}
 
+
 		return $data;
+	}
+
+	/**
+	 * Comprueba condiciones de autenticación en módulos sin formulario
+	 */
+
+	function check_conditions() {
+		return $this->CI->authmod->check_conditions();
+	}
+
+	/**
+	 * Muestra el formulario de login
+	 *
+	 * @param array	Parámetros de configuración del formulario en forma de
+	 * array asociativo. Parámetros posibles:
+	 *
+	 *   'devolver_a': URL a la que devolver al usuario
+	 *   'error': Errores a mostrar del intento de autenticación anterior
+	 */
+	function show_form($data_form) {
+			$this->CI->load->helper('form');
+			$data_cabecera = array(
+					'subtitulo' => 'autenticación',
+					'no_mostrar_aviso' => TRUE,
+					'no_mostrar_login' => TRUE,
+					'body_onload' => 'pagina_login()',
+					);
+			$data_pie = array();
+
+			$this->CI->load->view('cabecera', $data_cabecera);
+			if ($this->CI->config->item('https_para_login') == TRUE) {
+				$url_login = preg_replace('/^http:/', 'https:',
+						site_url('usuario/login')); 
+			} else {
+				$url_login = site_url('usuario/login');
+			}
+
+			$data_form['url_login'] = $url_login;
+
+			$this->CI->load->view('form-login', $data_form);
+			$this->CI->load->view('pie', $data_pie);
+	}
+
+	/**
+	 * Guarda la sesión del usuario en forma de cookie
+	 *
+	 * @param string	Identificador de usuario
+	 */
+
+	function store_session($id) {
+		if (empty($id)) {
+			show_error('Hay problemas con la autenticación. Póngase en '
+					.'contacto con ' .
+					$this->CI->config->item('texto_contacto'), 500);
+			log_message('error', 'Se intenta guardar sesión sin id');
+			exit;
+		}
+
+		// Recogemos los datos del usuario
+		$data = $this->get_user_data($id, TRUE);
+		$data['autenticado'] = TRUE;
+		$this->CI->session->set_userdata($data);
 	}
 }
 

@@ -27,6 +27,12 @@ class Usuario extends Controller {
 	{
 		parent::Controller();
 		$this->autenticado = $this->session->userdata('autenticado');
+
+		// Si no hay módulo de autenticación, devolver un error
+		if ($this->config->item('authmodule') == "") {
+			show_error('La autenticación está desactivada', 404);
+			return;
+		}
 	}
 	
 	function index()
@@ -38,27 +44,31 @@ class Usuario extends Controller {
 		}
 	}
 
-	// Sección de autenticación
+
+	/**
+	 * Presenta la página de login si el módulo actual tiene definido un
+	 * formulario, o intenta la validación en caso contrario
+	 */
+
 	function login() {
-		$final_id = FALSE;
+		$final_id = '';
+		$ret_action = -1;
 		$has_form = $this->auth->has_form();
 		$err = '';
 
+		// Página de vuelta
+		// Quizás tengamos una URL de vuelta en forma de cookie
+		$devolver_a = $this->session->flashdata('login_devolver_a');
+		if ($devolver_a === FALSE) {
+			$devolver_a = $this->input->post('devolver');
+		}
+
 		if ($has_form === FALSE) {
-			$final_id = $this->auth->login_action($err);
+			$ret_action = $this->auth->login_action($err, $final_id);
 		} else {
 			// Formulario
 			$this->load->helper('form');
 			$this->load->library('form_validation');
-
-			$data_cabecera = array(
-					'subtitulo' => 'autenticación',
-					'no_mostrar_aviso' => TRUE,
-					'no_mostrar_login' => TRUE,
-					'body_onload' => 'pagina_login()',
-					);
-			$data_form = array();
-			$data_pie = array();
 
 			// Reglas para el formulario
 			$this->form_validation->set_rules('usuario', 'Usuario',
@@ -69,42 +79,32 @@ class Usuario extends Controller {
 			// ¿Envío de formulario?
 			if ($this->input->post('login') 
 					&& $this->form_validation->run() !== FALSE) {
-				$final_id = $this->auth->login_action($err);
+				$ret_action = $this->auth->login_action($err, $final_id);
 			}
 		} // has_form
 
-		if ($final_id !== FALSE) {
-			$data = $this->auth->get_user_data($final_id, TRUE);
-			$data['autenticado'] = TRUE;
-
-			$this->session->set_userdata($data);
-
-			redirect($this->input->post('devolver'));
-		} else {
-
+		if ($ret_action == 1) {
+			$this->auth->store_session($final_id);
+			redirect($devolver_a);
+		} elseif ($ret_action == -1) {
 			if ($has_form) {
 				// Muestra del formulario
-				$this->load->view('cabecera', $data_cabecera);
-				if ($this->config->item('https_para_login') == TRUE) {
-					$url_login = preg_replace('/^http:/', 'https:',
-							site_url('usuario/login')); 
-				} else {
-					$url_login = site_url('usuario/login');
-				}
-
-				$data_form['url_login'] = $url_login;
+				$data_form = array(
+						'devolver_a' => $devolver_a
+				);
 
 				// ¿Hubo errores?
 				if (!empty($err)) {
 					$data_form['error'] = $err;
 				}
 
-
-				$this->load->view('form-login', $data_form);
-				$this->load->view('pie', $data_pie);
+				$this->auth->show_form($data_form);
 			} else {
 				show_error($err);
 			}
+		} else {
+			// Resto de códigos de login_action disponibles para hacer
+			// redirecciones
 		}
 	}
 

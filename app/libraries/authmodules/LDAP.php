@@ -30,10 +30,8 @@ class LDAP {
 	/**
 	 * Lleva a cabo la autenticación contra LDAP
 	 *
-	 * Devuelve en $id el usuario que inicialmente se usa para autenticar
-	 *
-	 * @return	FALSE si falla, o el identificador de usuario final si todo
-	 *          es correcto
+	 * @return	-1 si falla, 1 si es correcto. El identificador de usuario
+	 * final se envía en $id
 	 */
 	function login_action(&$err, &$id) {
 		$opciones = $this->CI->config->item('ldap');
@@ -43,7 +41,7 @@ class LDAP {
 			log_message('error', 'No se puede conectar a LDAP');
 			$err = 'Existe un problema temporal con la autenticación. '
 				 .'Por favor, pruebe más tarde.';
-			return FALSE;
+			return -1;
 		 }
 
 		 // Recogida de valores y comprobación de
@@ -54,7 +52,6 @@ class LDAP {
 		 // Quitamos @ del usuario
 		 $usuario = preg_replace('/@.*$/', '', $usuario);
 
-		 // Para el mensaje de log
 		 $id = $usuario;
 
 
@@ -65,7 +62,7 @@ class LDAP {
 			log_message('error', 'No se pudo hacer bind. Revise la configuración');
 			$err = 'Existe un problema temporal con la autenticación. '
 				 .'Por favor, pruebe más tarde.';
-			return FALSE;
+			return -1;
 		}
 
 		 $atributos = array('dn' , 'sn', 'givenName', 'mail');
@@ -73,13 +70,13 @@ class LDAP {
 				 	$opciones['uidattr'].'='.$usuario, $atributos);
 		 if ($res === FALSE) {
 			 $err = 'Nombre de usuario o contraseña erróneos';
-			 return FALSE;
+			 return -1;
 		 }
 		 $info = @ldap_get_entries($ds, $res);
 
 		 if ($info['count'] == 0) {
 			 $err = 'Nombre de usuario o contraseña erróneos';
-			 return FALSE;
+			 return -1;
 		 }
 
 		 // Comprobamos que tenga todos los datos
@@ -87,20 +84,21 @@ class LDAP {
 			 $err = 'Sus datos de usuario están incompletos. Por favor, '
 				 .'póngase en contacto con '
 				 . $this->CI->config->item('texto_contacto');
-			 return FALSE;
+			 return -1;
 		 }
 
 		 // Una vez conocido el DN, intentamos hacer bind de nuevo
 		 $dn_usuario = $info[0]['dn'];
+		 $id = $dn_usuario;
 
 		 $ret = @ldap_bind($ds, $dn_usuario, $passwd);
 		 @ldap_unbind($ds);
 
 		 if ($ret !== FALSE) {
-			 return $dn_usuario;
+			 return 1;
 		 } else {
 			 $err = 'Nombre de usuario o contraseña erróneos';
-			 return FALSE;
+			 return -1;
 		 }
 	}
 

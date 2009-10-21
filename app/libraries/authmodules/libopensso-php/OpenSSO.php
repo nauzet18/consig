@@ -262,7 +262,7 @@ class OpenSSO {
 			header("Location: " . OPENSSO_LOGOUT_URL . "?goto=" 
 					. urlencode($gotourl));
 		} else {
-			$this->identity_query(OPENSSO_LOGOUT_SERVICE, 'tokenid=' .
+			$this->identity_query(OPENSSO_LOGOUT_SERVICE, 'subjectid=' .
 					urlencode($this->token));
 			// Borrado de cookie
 			unset($_COOKIE[$this->cookiename]);

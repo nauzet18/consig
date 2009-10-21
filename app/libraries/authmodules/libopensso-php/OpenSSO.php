@@ -31,6 +31,16 @@ class OpenSSO {
 		} else {
 			$this->cookiename = OPENSSO_COOKIE_NAME;
 		}
+
+		// Get user token
+		if (!isset($_COOKIE[$this->cookiename])) {
+			$this->error = "No cookie name";
+			return FALSE;
+		} else {
+			// Incorrect encoding of + to " "
+			$this->token = preg_replace('/ /', '+',
+					$_COOKIE[$this->cookiename]);
+		}
 	}
 
 	/**
@@ -77,33 +87,25 @@ class OpenSSO {
 	 */
 
 	function check_sso() {
-		if (!isset($_COOKIE[$this->cookiename])) {
+		// Check for valid session
+		$res = $this->identity_query(OPENSSO_IS_TOKEN_VALID, 'GET',
+				'tokenid=' . urlencode($this->token));
+		if (isset($res->error) || $res->code != '200') {
+			if (!isset($res->error)) {
+				$this->error = 'HTTP result = ' . $res->code;
+			} else {
+				$this->error = $res->error;
+			}
+			$this->token = '';
 			return FALSE;
 		} else {
-			// Incorrect encoding of + to " "
-			$this->token = preg_replace('/ /', '+',
-					$_COOKIE[$this->cookiename]);
-
-			// Check for valid session
-			$res = $this->identity_query(OPENSSO_IS_TOKEN_VALID, 'GET',
-					'tokenid=' . urlencode($this->token));
-			if (isset($res->error) || $res->code != '200') {
-				if (!isset($res->error)) {
-					$this->error = 'HTTP result = ' . $res->code;
-				} else {
-					$this->error = $res->error;
-				}
+			if (preg_match('/true/', $res->data)) {
+				// SSO token is valid
+				$this->fetch_attributes();
+				return TRUE;
+			} else {
 				$this->token = '';
 				return FALSE;
-			} else {
-				if (preg_match('/true/', $res->data)) {
-					// SSO token is valid
-					$this->fetch_attributes();
-					return TRUE;
-				} else {
-					$this->token = '';
-					return FALSE;
-				}
 			}
 		}
 	}
@@ -262,7 +264,7 @@ class OpenSSO {
 			header("Location: " . OPENSSO_LOGOUT_URL . "?goto=" 
 					. urlencode($gotourl));
 		} else {
-			$this->identity_query(OPENSSO_LOGOUT_SERVICE, 'subjectid=' .
+			$this->identity_query(OPENSSO_LOGOUT_SERVICE, 'GET', 'subjectid=' .
 					urlencode($this->token));
 			// Borrado de cookie
 			unset($_COOKIE[$this->cookiename]);

@@ -33,10 +33,7 @@ class OpenSSO {
 		}
 
 		// Get user token
-		if (!isset($_COOKIE[$this->cookiename])) {
-			$this->error = "No cookie name";
-			return FALSE;
-		} else {
+		if (isset($_COOKIE[$this->cookiename])) {
 			// Incorrect encoding of + to " "
 			$this->token = preg_replace('/ /', '+',
 					$_COOKIE[$this->cookiename]);
@@ -87,6 +84,10 @@ class OpenSSO {
 	 */
 
 	function check_sso() {
+		if (empty($this->token)) {
+			return FALSE;
+		}
+
 		// Check for valid session
 		$res = $this->identity_query(OPENSSO_IS_TOKEN_VALID, 'GET',
 				'tokenid=' . urlencode($this->token));

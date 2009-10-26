@@ -128,6 +128,9 @@ if ($autenticado !== FALSE) {
 	
 	// Módulo de autenticación con formulario?
 	$has_form = $this->auth->has_form();
+	if (!$has_form) {
+		$url_login .= '?devolver=' . urlencode($this->uri->uri_string());
+	}
    ?>
    <li><div><a <?php echo ($has_form ? 'rel="#loginOverlay"' : '')?> href="<?php echo $url_login; ?>"> 
      <img src="<?php echo site_url('img/interfaz/login.png')?>" alt="login" /><br />

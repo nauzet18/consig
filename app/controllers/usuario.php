@@ -56,11 +56,21 @@ class Usuario extends Controller {
 		$has_form = $this->auth->has_form();
 		$err = '';
 
-		// Página de vuelta
-		// Quizás tengamos una URL de vuelta en forma de cookie
+		/*
+		 * Página de vuelta
+		 *
+		 * Prioridades:
+		 *
+		 * login_devolver_a > POST > GET
+		 */
+		
 		$devolver_a = $this->session->flashdata('login_devolver_a');
 		if ($devolver_a === FALSE) {
 			$devolver_a = $this->input->post('devolver');
+			if ($devolver_a === FALSE) {
+				parse_str($_SERVER['QUERY_STRING'], $_GET); 
+				$devolver_a = $this->input->get('devolver');
+			}
 		}
 
 		if ($has_form === FALSE) {

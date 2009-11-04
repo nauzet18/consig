@@ -30,9 +30,9 @@ uploadprogress
 	# mysql -uroot -p
 	Enter password: (el de root)
 	mysql> GRANT ALL PRIVILEGES ON consigna.* TO consigna@localhost
-	       IDENTIFIED BY 'password-de-consigna'
+	       IDENTIFIED BY 'password-de-consigna';
 	mysql> CREATE DATABASE consigna;
-	mysql> FLUSH PRIVILEGES
+	mysql> FLUSH PRIVILEGES;
 
 4. Creación de las tablas de consigna
 	# mysql -uconsigna -p consigna < mysql-database/bloque.sql

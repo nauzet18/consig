@@ -345,9 +345,8 @@ INSERT INTO mimetypes VALUES ('', 'application/x-pagemaker', 'pm4', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-pagemaker', 'pm5', '');
 INSERT INTO mimetypes VALUES ('', 'image/png', 'png', 'image.png');
 INSERT INTO mimetypes VALUES ('', 'application/x-portable-anymap', 'pnm', '');
-INSERT INTO mimetypes VALUES ('', 'image/x-portable-anymap', 'pnm', '');
-INSERT INTO mimetypes VALUES ('', 'application/mspowerpoint', 'pot', '');
-INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-powerpoint', 'pot', '');
+INSERT INTO mimetypes VALUES ('', 'application/mspowerpoint', 'pot',
+'document.png');
 INSERT INTO mimetypes VALUES ('', 'model/x-pov', 'pov', '');
 INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-powerpoint', 'ppa', '');
 INSERT INTO mimetypes VALUES ('', 'image/x-portable-pixmap', 'ppm', 
@@ -608,7 +607,7 @@ INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'iso',
 'cdimage.png');
 INSERT INTO mimetypes VALUES ('', 'application/vnd.ms-excel', 'xlw', '');
 INSERT INTO mimetypes VALUES ('', 'audio/xm', 'xm', 'krec_fileplay.png');
-INSERT INTO mimetypes VALUES ('', 'application/xml', 'xml', '');
+INSERT INTO mimetypes VALUES ('', 'application/xml', 'xml', 'binary.png');
 INSERT INTO mimetypes VALUES ('', 'xgl/movie', 'xmz', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-vnd.ls-xpix', 'xpix', '');
 INSERT INTO mimetypes VALUES ('', 'image/x-xpixmap', 'xpm', '');
@@ -684,3 +683,5 @@ INSERT INTO mimetypes VALUES ('', 'video/x-flv', 'flv', 'video.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'mmp', 'vcalendar.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'pxp', 'kfig.png');
 INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'rz', 'tar.png');
+INSERT INTO mimetypes VALUES ('', 'application/octet-stream', 'eap',
+'khexedit.png');

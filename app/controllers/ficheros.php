@@ -184,6 +184,7 @@ class Ficheros extends Controller {
 					.'existiera y haya caducado.', 404);
             return;
         }
+		$this->load->library('manejoauxiliar');
 		
 		// Para decidir las acciones
 		$data_cabecera = array(

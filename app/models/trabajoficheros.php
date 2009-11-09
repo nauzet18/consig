@@ -289,26 +289,6 @@ class TrabajoFicheros extends Model {
 		return strftime("%d de %B de %Y, %H:%Mh", $nuevo_t);
 	}
 
-	/*
-	 * Devuelve un usuario formateado convenientemente en HTML
-	 */
-	function usuario_html($usuario, $mostrar_autor = 1) {
-
-		$cadena = '';
-
-		if (empty($usuario)) {
-			$cadena = 'Anónimo';
-		} elseif (!$mostrar_autor) {
-			$cadena = 'Anónimo *';
-		} else {
-			$ci =& get_instance();
-			$datos = $ci->auth->get_user_data($usuario);
-			$cadena = ($datos === FALSE) 
-				? 'Desconocido' : $datos['name'];
-		}
-
-		return '<span class="usuario">' . $cadena .  '</span>';
-	}
 
 	/**
 	 * Búsqueda de una o más IPs en la lista de IPs internas

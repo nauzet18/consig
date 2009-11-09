@@ -110,8 +110,7 @@ endif;
   $this->trabajoficheros->fecha_legible($fichero->fechaenvio);?> 
 	  (<?php echo $texto_expiracion; ?>)</li>
 
-  <li><?php echo $this->trabajoficheros->usuario_html($fichero->remitente,
-		  $fichero->mostrar_autor)?></li>
+  <li><?php echo $this->manejoauxiliar->remitente_de($fichero) ?></li>
 <?php
   	if ($fichero->listar == 0):
 ?>

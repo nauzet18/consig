@@ -151,6 +151,55 @@ class Manejoauxiliar {
 
 		return $resultado;
 	}
+
+
+	/**
+	 * Devuelve un usuario formateado convenientemente en HTML.
+	 * Los administradores verán más información (IP, etc)
+	 *
+	 * @param object	Fichero cargado de la base de datos
+	 */
+	function remitente_de($fichero) {
+
+		$cadena = '';
+		$usuario = $fichero->remitente;
+		$ip = $fichero->ip;
+		$privilegiado = $this->CI->gestionpermisos->es_privilegiado();
+
+		// Carga de datos
+		$datos = FALSE;
+		if (!empty($usuario) && ($privilegiado === TRUE ||
+					$fichero->mostrar_autor)) {
+			$datos = $this->CI->auth->get_user_data($usuario);
+		}
+
+		if (empty($usuario)) {
+			$cadena = 'Anónimo';
+		} else {
+			if (!$fichero->mostrar_autor) {
+				$cadena = 'Anónimo *';
+			} else {
+				$cadena = ($datos === FALSE) 
+						? 'Desconocido' : $datos['name'];
+			}
+		}
+
+		// Caso privilegiado
+		if ($privilegiado) {
+			$cadena .= ' (IP: ' . $fichero->ip;
+			if ($datos !== FALSE) {
+				if (!$fichero->mostrar_autor) {
+					$cadena .= ', ' . $datos['name'];
+				}
+
+				$cadena .= ', <a href="mailto:'.$datos['mail']
+					.'">'.$datos['mail'].'</a>';
+			}
+			$cadena .= ')';
+		}
+
+		return '<span class="usuario">' . $cadena .  '</span>';
+	}
 }
 
 ?>

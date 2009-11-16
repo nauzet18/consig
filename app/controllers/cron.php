@@ -38,8 +38,7 @@ class Cron extends Controller {
 				// Envío de correo al usuario, si es un fichero con
 				// propietario
 				if ($this->config->item('correo_caducado') && !empty($f->remitente)) {
-					$usuario = $this->auth->get_user_data($f->remitente,
-							TRUE);
+					$usuario = $this->auth->get_user_data($f->remitente);
 					
 					if (!empty($usuario['mail'])) {
 						$correo_auto =

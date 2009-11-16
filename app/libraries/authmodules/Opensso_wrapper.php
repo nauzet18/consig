@@ -45,7 +45,13 @@ class Opensso_wrapper {
 			return 0;
 		} else {
 			$id = $this->o->attribute('uid');
-			return 1;
+			if (empty($id)) {
+				$err = "Falta de atributos para su usuario. "
+					."¿Estás como amadmin?";
+				return -1;
+			} else {
+				return 1;
+			}
 		}
 
 	}

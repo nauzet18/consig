@@ -32,30 +32,7 @@ class OpenSSO {
 			$this->cookiename = OPENSSO_COOKIE_NAME;
 		}
 
-		/*
-		 * Get user token
-		 *
-		 * Important! Internet Explorer has a BUG (Microsoft thinks it's a
-		 * feature) that makes it ignore every cookie for domains with two
-		 * letters (i.e xx.yy). Let's check GET parameter
-		 * iPlanetDirectoryPro
-		 */
-
-		// Forzamos carga de parámetros _GET (para IE)
-		parse_str($_SERVER['QUERY_STRING'], $_GET); 
-
-		if (!isset($_COOKIE[$this->cookiename]) &&
-				isset($_GET[$this->cookiename])) {
-			// Fake OpenSSO cookie...
-			$this_hostname = $_SERVER['SERVER_NAME'];
-			setcookie($this->cookiename, $_GET[$this->cookiename],
-					0, "/", $this_hostname);
-
-			// Incorrect encoding of + to " "
-			$this->token = preg_replace('/ /', '+',
-					$_GET[$this->cookiename]);
-
-		} elseif (isset($_COOKIE[$this->cookiename])) {
+		if (isset($_COOKIE[$this->cookiename])) {
 			// Incorrect encoding of + to " "
 			$this->token = preg_replace('/ /', '+',
 					$_COOKIE[$this->cookiename]);

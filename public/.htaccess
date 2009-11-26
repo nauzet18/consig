@@ -5,3 +5,8 @@ RewriteBase /consigna
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
+
+# Opciones para php
+php_value short_open_tag        0
+php_value register_globals      0
+

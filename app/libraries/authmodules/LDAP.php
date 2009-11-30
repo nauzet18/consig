@@ -49,9 +49,6 @@ class LDAP {
 		 $usuario = $this->CI->input->post('usuario');
 		 $passwd = $this->CI->input->post('passwd');
 
-		 // Quitamos @ del usuario
-		 $usuario = preg_replace('/@.*$/', '', $usuario);
-
 		 $id = $usuario;
 
 

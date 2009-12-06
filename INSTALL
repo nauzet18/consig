@@ -74,6 +74,10 @@ editarlos uno a uno:
  * subredes.php
  * ldap.php (si se va a usar el módulo de autenticación con PHP)
 
+El fichero avanzadas.php dentro de config/ contiene una serie de opciones
+avanzadas que pueden usarse por defecto, aunque es posible modificarlas si
+se desea.
+
 6. Hacer que la consigna sea accesible desde Apache
 
 Para acceder a consigna, el servidor web debe tener como DocumentRoot el

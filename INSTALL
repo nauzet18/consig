@@ -1,66 +1,110 @@
-1. Instalación de Apache (normal y SSL), PHP 5.2, PHP PEAR, MySQL y
-uploadprogress
+Los requisitos software de consigna son los siguientes:
 
-	# pear install uploadprogress-xxx.tar.gz
+ * Apache (u otro servidor web)
+ * PHP >= 5.2
+ * PHP PEAR/PECL 
+ * MySQL
+ * Integración de PHP y MySQL
+ * Otros módulos para PHP (php-ldap si se va a usar módulo de LDAP, por
+   ejemplo)
+
+Pasos de instalación:
+--------------------
+
+1. Instalación del módulo uploadprogress para PHP. Su instalación se puede
+llevar a cabo mediante la siguiente orden:
+
+ # pecl install uploadprogress
+
+Otra posibilidad consiste en descargar de la web del módulo
+(http://pecl.php.net/package/uploadprogress) la última versión en tar.gz y
+ejecutar la siguiente orden:
+
+ # pear install uploadprogress-xxx.tar.gz
+
+Una vez instalado, hay que activar su carga en el fichero php.ini. Para ello
+habrá que añadir la siguiente línea:
    
-   Añadir en php.ini:
+ extension=uploadprogress.so
 
-   	extension=uploadprogress.so
+También habrá que habilitar en el mismo el envío de ficheros junto con
+algunos parámetros relacionados. Modificaremos los valores existentes de
+acuerdo a lo siguiente:
 
+ file_uploads = On ; Habilitamos el envío
+ upload_max_filesize = 1000M ; 1GB de tamaño máximo
+ post_max_size = 1008M ; Tamaño máximo de POST > upload_max_filesize
+ max_execution_time = 300     ; Tiempo de ejecución máximo del script 
+ max_input_time = 400    ; Tiempo máximo de lectura de entrada de un script
 
-   Y habilitar la subida de ficheros, junto con algunos parámetros
-   relacionados:
+Si se utiliza PHP 5.3.x o PHP 5.2 con algún parche que haga 'backport' de
+funcionalidades de PHP 5.3.x, habrá que configurar la zona horaria:
 
-   	file_uploads = On
-	upload_max_filesize = 1000M
-	post_max_size = 1008M
-	max_execution_time = 300     ; Maximum execution time of each
-	script, in seconds
-	max_input_time = 400    ; Maximum amount of time each script may
-	spend parsing request data
+ date.timezone = "Europe/Madrid"
 
+2. Descarga de consigna
 
-2. Descompresión de consigna
-
-	# tar xzf consigna-1.x.tar.gz
-	# cd consigna-1.x/
+Para descargar consigna se utilizará o bien el árbol subversion de
+desarrollo, o la versión en tar.gz que haya disponible. En
+https://labs.us.es/wiki/consigna/Descarga se puede encontrar información
+sobre la descarga.
 
 3. Creación del usuario en MySQL para consigna
 
-	# mysql -uroot -p
-	Enter password: (el de root)
-	mysql> GRANT ALL PRIVILEGES ON consigna.* TO consigna@localhost
-	       IDENTIFIED BY 'password-de-consigna';
-	mysql> CREATE DATABASE consigna;
-	mysql> FLUSH PRIVILEGES;
+ # mysql -uroot -p
+ Enter password: (el de root)
+ mysql> GRANT ALL PRIVILEGES ON consigna.* TO consigna@localhost
+        IDENTIFIED BY 'password-de-consigna';
+ mysql> CREATE DATABASE consigna;
+ mysql> FLUSH PRIVILEGES;
 
 4. Creación de las tablas de consigna
-	# mysql -uconsigna -p consigna < mysql-database/bloque.sql
-	# mysql -uconsigna -p consigna < mysql-database/mimetypes.sql
 
-5. Configurar la aplicación. Para ello hay que copiar los ficheros
-*-MODELO con el mismo nombre sin ese sufijo y editarlos uno a uno. Fichero
-de subredes
+ # mysql -uconsigna -p consigna < mysql-database/bloque.sql
+ # mysql -uconsigna -p consigna < mysql-database/mimetypes.sql
 
-6. Crear la disposición de directorios en el directorio de documentos de
-Apache, y hacer que el el directorio public/ sea accesible desde Apache, a
-ser posible como DocumentRoot:
-	# cp -R consigna-1.x/ /var/www
+5. Configuración la aplicación
 
-	...
+Para ello hay que editar varios ficheros en el directorio config/. Será
+necesario copiar los ficheros *-MODELO con el mismo nombre sin ese sufijo y
+editarlos uno a uno:
 
-	@httpd.conf:
-	DocumentRoot /var/www/consigna-1.x/public
+ * config.php
+ * database.php
+ * subredes.php
+ * ldap.php (si se va a usar el módulo de autenticación con PHP)
 
-	Activar en el módulo mod_rewrite, y permitir el uso de ficheros
-	.htaccess con "AllowOverride All" en el contexto que corresponda.
+6. Hacer que la consigna sea accesible desde Apache
 
-Hay que editar además el fichero public/.htaccess y cambiar (o eliminar) el
-RewriteBase de acuerdo a la instalación
+Para acceder a consigna, el servidor web debe tener como DocumentRoot el
+subdirectorio public/ del árbol de directorios de consigna.
+
+Además debe habilitarse el uso de ficheros htaccess dentro del directorio
+que aloja la consigna. Por ejemplo, suponiendo que consigna está en
+/var/www/consigna, serán necesarios los siguientes fragmentos de
+configuración para Apache:
+
+ DocumentRoot /var/www/consigna/public
+ <Location /var/www/consigna>
+  AllowOverride All
+ </Location>
+
+No es necesario dedicar un VirtualHost exclusivamente a consigna, se puede
+definir un Alias apuntando al directorio public/. No hay que olvidar que si
+deseamos usar https para la autenticación (véase fichero config.php-MODELO)
+también habrá que configurar las opciones para https del servidor web.
+
+Por último, hay que editar el fichero public/.htaccess y cambiar (o
+eliminar) el parámetro RewriteBase de acuerdo a la instalación. Si se ha
+colocado la consigna en un VirtualHost independiente, bastará con
+eliminarlo. Si se ha utilizado la opción de un Alias, habrá que modificar la
+ruta relativa hasta consigna.
 
 7. Crear directorios de logs y ficheros enviados de acuerdo a lo configurado
+en el fichero config.php
 
-8. Añadir el siguiente trabajo en crontab para las tareas periódicas
+8. Añadir el siguiente trabajo en crontab para las tareas periódicas, tales
+como la expiración de ficheros o la limpieza de caché de los datos de usuario
 
-  */15 *    *   *   *   wget -O - -t 1 -q http://url/cron
+  */15 *    *   *   *   wget -O - -t 1 -q http://url-de-consigna/cron
 

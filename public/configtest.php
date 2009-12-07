@@ -37,10 +37,10 @@ $tests = array();
 $continuar = TRUE;
 
 // Versión de PHP
-$comparacion = version_compare(PHP_VERSION, '5.2.0');
+$comparacion = version_compare(phpversion(), '5.2.0');
 
 if ($comparacion >= 0) {
-	$tests[] = array('Versión de PHP', PHP_VERSION, 'OK');
+	$tests[] = array('Versión de PHP', phpversion(), 'OK');
 } else {
 	$tests[] = array('Versión de PHP', PHP_VERSION, 
 			'Es muy recomendable usar PHP &gt;= 5.2.0');

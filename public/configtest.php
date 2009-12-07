@@ -34,6 +34,7 @@
  */
 
 $tests = array();
+$continuar = TRUE;
 
 // Versión de PHP
 $comparacion = version_compare(PHP_VERSION, '5.2.0');
@@ -94,22 +95,22 @@ if (!file_exists($dirconfig . '/config.php')) {
 			'No existe o Apache no tiene acceso a él', 
 			'Créalo usando la plantilla <tt>config.php-MODELO</tt>');
 
-	// Perdón, perdón, perdón
-	goto muestrahtml;
+	$continuar = FALSE;
 } else {
 	$tests[] = array('Fichero <tt>config.php</tt>', 'Existe', 'OK');
 }
 
-if (!file_exists($dirconfig . '/database.php')) {
+if ($continuar && !file_exists($dirconfig . '/database.php')) {
 	$tests[] = array('Fichero <tt>database.php</tt>', 
 			'No existe o Apache no tiene acceso a él', 
 			'Créalo usando la plantilla <tt>database.php-MODELO</tt>');
+	$continuar = FALSE;
 
-	// Perdón, perdón, perdón
-	goto muestrahtml;
-} else {
+} elseif ($continuar) {
 	$tests[] = array('Fichero <tt>database.php</tt>', 'Existe', 'OK');
 }
+
+if ($continuar) {
 
 // Engañamos a los ficheros de configuración
 define('BASEPATH', '/tmp');
@@ -205,8 +206,8 @@ if (isset($config['authmodule']) && $config['authmodule'] == 'LDAP') {
 
 
 // ---- Fin tests -----
+} // $continuar
 
-muestrahtml:
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

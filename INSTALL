@@ -112,3 +112,9 @@ como la expiración de ficheros o la limpieza de caché de los datos de usuario
 
   */15 *    *   *   *   wget -O - -t 1 -q http://url-de-consigna/cron
 
+9. Compruebe accediendo a http://url-de-consigna/configtest.php que la
+configuración sea correcta. Corrija los problemas que pueda encontrarse.
+
+Es recomendable que una vez comprobado, restrinja el acceso al fichero
+mediante el servidor web para que nadie pueda hacer mal uso de la
+información que en él se da.

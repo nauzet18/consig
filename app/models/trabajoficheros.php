@@ -384,6 +384,13 @@ class TrabajoFicheros extends Model {
 			. $fichero->nombre ."\";" );
 		header("Content-Transfer-Encoding: binary");
 		header("Content-Length: ". $fichero->tam);
+
+		// Evitamos cargar en memoria el fichero desactivando
+		// la salida con buffer
+		while (ob_get_level() > 0) {
+			ob_end_flush();
+		}
+
 		readfile($ruta);
 	}
 

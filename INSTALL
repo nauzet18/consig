@@ -34,11 +34,16 @@ acuerdo a lo siguiente:
  file_uploads = On ; Habilitamos el envío
  upload_max_filesize = 1000M ; 1GB de tamaño máximo
  post_max_size = 1008M ; Tamaño máximo de POST > upload_max_filesize
- max_execution_time = 300     ; Tiempo de ejecución máximo del script 
- max_input_time = 400    ; Tiempo máximo de lectura de entrada de un script
+ max_execution_time = 1500     ; Tiempo de ejecución máximo del script 
+ max_input_time = 1000    ; Tiempo máximo de lectura de entrada de un script
+
+Para que los usuarios con conexiones a Internet más lentas puedan subir
+ficheros sin problemas, los valores de max_execution_time y max_input_time
+deben ser lo suficientemente altos como para soportar esperas de varios
+minutos.
 
 Si se utiliza PHP 5.3.x o PHP 5.2 con algún parche que haga 'backport' de
-funcionalidades de PHP 5.3.x, habrá que configurar la zona horaria:
+funcionalidades de PHP 5.3.x, también habrá que configurar la zona horaria:
 
  date.timezone = "Europe/Madrid"
 

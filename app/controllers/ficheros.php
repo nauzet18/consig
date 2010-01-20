@@ -396,11 +396,11 @@ class Ficheros extends Controller {
 	 * Minipágina para los bocadillos en el listado de ficheros
 	 */
 	function minipagina($fid) {
-        $fichero = $this->trabajoficheros->extrae_bd(array('fid' => $fid));
+		$fichero = $this->trabajoficheros->extrae_bd(array('fid' => $fid));
 
-        if ($fichero === FALSE) {
+		if ($fichero === FALSE) {
 			echo "Fichero inexistente o caducado";
-        } else {
+		} else {
 			$permitido = $this->gestionpermisos->acceso_fichero($fichero);
 
 			if ($permitido === FALSE) {
@@ -410,8 +410,8 @@ class Ficheros extends Controller {
 				$mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
 				echo '<strong>' . $fichero->nombre . '</strong>';
 				echo '
-				<img src="' . site_url('img/tipos/32x32/' . $mimetype[1]) . '"
-				alt="' . $mimetype[0] . '"/>';
+					<img src="' . site_url('img/tipos/32x32/' . $mimetype[1]) . '"
+					alt="' . $mimetype[0] . '"/>';
 
 				if ($fichero->listar == 0) {
 					echo ' (oculto)';

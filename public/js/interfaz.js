@@ -44,7 +44,7 @@ $(document).ready(function() {
 	});
 
 	// Burbuja con información del fichero
-	$("#listado-ficheros tr.permitido").cluetip({
+	$("#listado-ficheros tr").cluetip({
 		showTitle: false,
 		width: '300px',
 		cluetipClass: 'jtip',

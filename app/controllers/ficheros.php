@@ -403,26 +403,36 @@ class Ficheros extends Controller {
 		} else {
 			$permitido = $this->gestionpermisos->acceso_fichero($fichero);
 
+
 			if ($permitido === FALSE) {
-				echo "Prohibido";
+				$img = site_url('img/interfaz/prohibido.png');
+				$titulo = "Tiene prohibido el acceso a este fichero";
+				$descripcion = "Autent&iacute;quese o acceda desde la red de la
+					Universidad de Sevilla";
 			} else {
-				echo '<div class="envoltura_minipagina">';
 				$mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
-				echo '<strong>' . $fichero->nombre . '</strong>';
-				echo '
-					<img src="' . site_url('img/tipos/32x32/' . $mimetype[1]) . '"
-					alt="' . $mimetype[0] . '"/>';
+				$titulo = $fichero->nombre;
+				$img = site_url('img/tipos/32x32/' . $mimetype[1]);
+				$descripcion = empty($fichero->descripcion) ? 'Sin descripción' :
+					$fichero->descripcion;
 
 				if ($fichero->listar == 0) {
-					echo ' (oculto)';
+					$titulo .= ' (oculto)';
 				}
 
-				echo '<div class="descripcion_fichero">';
-				echo empty($fichero->descripcion) ? 'Sin descripción' :
-					$fichero->descripcion;
-				echo '</div>';
-				echo '</div>';
 			}
+			?>
+				<div class="envoltura_minipagina">
+				 <strong><?php echo $titulo ?></strong>
+				 <img src="<?php echo $img ?>" style="float: right"
+					 alt="Icono "/>
+
+				 <div class="descripcion_fichero">
+				  <?php echo $descripcion ?>
+				 </div>
+				</div>
+			<?php
+
 		}
 	}
 

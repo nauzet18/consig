@@ -46,3 +46,16 @@ session_user_agent varchar(50) NOT NULL,
 session_data text default '' NOT NULL,
 PRIMARY KEY (session_id)
 ); 
+
+/*
+ * Antivirus
+ */
+
+CREATE TABLE IF NOT EXISTS `antivirus` (
+	`fid` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`estado` VARCHAR(100) NOT NULL,
+	`extra` VARCHAR(255),
+	`timestamp` INT NOT NULL,
+
+	FOREIGN KEY(fid) REFERENCES ficheros(fid)
+	 ON DELETE CASCADE);

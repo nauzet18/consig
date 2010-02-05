@@ -225,6 +225,20 @@ $config['url_organizacion'] = 'http://miorg.tld';
 */
 $config['texto_contacto'] = 'el administrador';
 
+/*
+|--------------------------------------------------------------------------
+| Opciones relativas al antivirus
+|--------------------------------------------------------------------------
+| Activación y opciones de cola
+|
+*/
+
+$config['activar_antivirus'] = FALSE;
+$config['beanstalkd_host'] = "127.0.0.1";
+$config['beanstalkd_port'] = 11300;
+$config['beanstalkd_tube'] = 'antivirus';
+
+
 
 
 // vim: filetype=php

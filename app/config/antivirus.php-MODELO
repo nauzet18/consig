@@ -1,6 +1,0 @@
-<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-$db['beanstalkd_host'] = "127.0.0.1";
-$db['beanstalkd_port'] = 11300;
-$db['beanstalkd_tube'] = 'antivirus';
-

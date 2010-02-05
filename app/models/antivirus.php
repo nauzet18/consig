@@ -22,7 +22,6 @@
 class Antivirus extends Model {
 	function Antivirus() {
 		parent::Model();
-		$this->config->load('antivirus');
 	}
 
 	/*
@@ -48,10 +47,8 @@ class Antivirus extends Model {
 	// TODO: considerar TTR mayor si los ficheros van a tener mucho tamaño
 	function enqueue($fid, $prioridad = 10) {
 
-		$pheanstalkClassRoot = getcwd() . '/' . APPPATH . 'libraries/pheanstalk/classes';
-		require_once($pheanstalkClassRoot . '/Pheanstalk/ClassLoader.php');
-
-		Pheanstalk_ClassLoader::register($pheanstalkClassRoot);
+		// Carga biblioteca
+		$this->_inicializa_pheanstalk();
 
 		// Guardar en BBDD
 		$result = $this->store($fid, self::PENDING, '');
@@ -79,7 +76,7 @@ class Antivirus extends Model {
 			return FALSE;
 		}
 
-		// if error, store(ERROR) e informar
+		log_message('info', 'Fichero ' . $fid . ' encolado para ser escaneado');
 	}
 
 	/**
@@ -143,6 +140,17 @@ class Antivirus extends Model {
 		} else {
 			return TRUE;
 		}
+	}
+
+
+	/**
+	 * Carga bibliotecas de pheanstalk
+	 */
+	function _inicializa_pheanstalk() {
+		$pheanstalkClassRoot = getcwd() . '/' . APPPATH . 'libraries/pheanstalk/classes';
+		require_once($pheanstalkClassRoot . '/Pheanstalk/ClassLoader.php');
+
+		Pheanstalk_ClassLoader::register($pheanstalkClassRoot);
 	}
 
 }

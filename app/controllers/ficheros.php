@@ -29,6 +29,7 @@ define('PROCESADO_ERR_ESCRITURA', 3);
 class Ficheros extends Controller {
 
 	var $autenticado;
+	var $antivirus;
 
 	function Ficheros()
 	{
@@ -36,6 +37,12 @@ class Ficheros extends Controller {
 		$this->autenticado = $this->session->userdata('autenticado');
 		$this->gestionpermisos->checkLogin();
 		$this->load->config('subredes');
+		
+		// Usando antivirus
+		$antivirus = $this->config->item('activar_antivirus');
+		if ($antivirus === TRUE) {
+			$this->load->model('antivirus');
+		}
 	}
 	
 	function index($atr_orden = 'fechaenvio', $orden = 'desc')
@@ -218,6 +225,18 @@ class Ficheros extends Controller {
 			} // pide_descarga
 			if ($this->gestionpermisos->permiso_modificacion($fichero)) {
 				$data_fichero['permiso_modificacion'] = 1;
+			}
+
+			// ¿Infectado?
+			if ($this->antivirus) {
+				$info_av = $this->antivirus->get($fichero->fid);
+
+				if ($info_av == FALSE) {
+					log_message('error', 'No hay información de antivirus'
+							.' del fichero ' . $fichero->fid);
+				}
+
+				$data_fichero['info_av'] = $info_av;
 			}
 				
 			$data_cabecera['subtitulo'] = 'ojeando un fichero';

@@ -462,3 +462,37 @@ img.centrar_ayuda {
 #cond_uso a {
   font-style: italic;
 }
+
+/* Antivirus */
+#info_av {
+  font-family: Tahoma;
+  border-width: 1px;
+  border-style: solid;
+  width: 250px;
+  margin: 1em auto 1em auto;
+  padding: 0.5em 0.5em 0.5em 40px;
+  background-position: 5px;
+  background-repeat: no-repeat;
+}
+
+#info_av.limpio {
+  border-color: #CFE2A3;
+  background-color: #C9E589;
+  color: #1F8700;
+  background-image: url(../img/interfaz/vale.png);
+}
+
+
+#info_av.infectado {
+  border-color: #D19385;
+  background-color: #D6331D;
+  color: #ffffff;
+  background-image: url(../img/interfaz/virus.png);
+}
+
+#info_av.averror {
+  border-color: #EDE663;
+  background-color: #EFEC99;
+  color: #000000;
+  background-image: url(../img/interfaz/error.png);
+}

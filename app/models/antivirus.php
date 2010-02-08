@@ -119,6 +119,18 @@ class Antivirus extends Model {
 	 */
 
 	function get($fid) {
+		if (!is_numeric($fid)) {
+			log_message('error', 'Llamada a antivirus->get() con '
+					.'fid inválido: ['. var_export($fid, TRUE) .']');
+			return FALSE;
+		}
+
+		$query = $this->db->get_where('antivirus', array('fid' => $fid));
+
+        $res = $query->result();
+
+		return count($res) > 0 ? $res[0] : FALSE;
+
 	}
 
 	/**

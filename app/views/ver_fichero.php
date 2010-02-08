@@ -38,6 +38,14 @@ if (empty($fichero->password)) {
 	echo '</a>';
 }
 
+	/*
+	 * Antivirus
+	 */
+	if (isset($info_av) && $info_av !== FALSE) {
+		$this->load->view('antivirus/' . $info_av->estado,
+				$info_av);
+	}
+
 
 	 // Contraseña del fichero
 

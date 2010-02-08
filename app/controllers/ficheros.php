@@ -29,7 +29,7 @@ define('PROCESADO_ERR_ESCRITURA', 3);
 class Ficheros extends Controller {
 
 	var $autenticado;
-	var $antivirus;
+	var $activar_antivirus;
 
 	function Ficheros()
 	{
@@ -39,8 +39,8 @@ class Ficheros extends Controller {
 		$this->load->config('subredes');
 		
 		// Usando antivirus
-		$antivirus = $this->config->item('activar_antivirus');
-		if ($antivirus === TRUE) {
+		$this->activar_antivirus = $this->config->item('activar_antivirus');
+		if ($this->activar_antivirus === TRUE) {
 			$this->load->model('antivirus');
 		}
 	}
@@ -228,7 +228,7 @@ class Ficheros extends Controller {
 			}
 
 			// ¿Infectado?
-			if ($this->antivirus) {
+			if ($this->activar_antivirus) {
 				$info_av = $this->antivirus->get($fichero->fid);
 
 				if ($info_av == FALSE) {
@@ -701,6 +701,20 @@ class Ficheros extends Controller {
 						. $this->config->item('texto_contacto')
 						.'.</p>';
 					return PROCESADO_ERR_ESCRITURA;
+				}
+
+				// Encolar en el antivirus con máxima prioridad
+				if ($this->activar_antivirus) {
+					$res = $this->antivirus->enqueue($fid, 0);
+					if ($res === FALSE) {
+						// Caso raro, pero lo contemplamos
+						$this->trabajoficheros->logdetalles('error', 
+								'No se pudo encolar '
+								.'el fichero en el antivirus. Error al '
+								.'escribir en la BD', $fid);
+						// Si ha fallado la BD, guardar el error no servirá
+						// de nada... y no vamos a parar la subida aquí
+					}
 				}
 
 				return PROCESADO_OK;

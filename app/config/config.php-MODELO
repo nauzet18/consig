@@ -238,7 +238,9 @@ $config['beanstalkd_host'] = "127.0.0.1";
 $config['beanstalkd_port'] = 11300;
 $config['beanstalkd_tube'] = 'antivirus';
 
-
+// Contraseña para que el antivirus pueda actualizar la información
+// de virus de los ficheros
+$config['antivirus_ws_pass'] = 'mipwd';
 
 
 // vim: filetype=php

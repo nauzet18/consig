@@ -455,6 +455,45 @@ class Ficheros extends Controller {
 		}
 	}
 
+	/**
+	 * Actualización de datos sobre el estado de virus de un fichero.
+	 * Requiere el paso de una contraseña, que se establece en config.php
+	 */
+
+	function avws($passwd = 'x') {
+		if ($passwd != $this->config->item('antivirus_ws_pass')) {
+			log_message('error', 
+					'Intento de acceso a /avws con '
+					.'contraseña inválida');
+			show_error('Acceso denegado', 403);
+			exit;
+		}
+
+		// Validación de los datos pasados por POST
+		$fid = $this->input->post('fid');
+		$estado = $this->input->post('estado');
+		$extra = $this->input->post('extra');
+
+		if ($fid === FALSE || $estado === FALSE) {
+			log_message('error', 'Llamada a /avws con fid'.
+					' o estado ausentes');
+		} else {
+			$res = $this->antivirus->store($fid,
+					$estado, $extra);
+			if ($res === FALSE) {
+				log_message('error', 'No se pudo guardar en BD el estado'
+						.' desde /avws');
+				show_error('Error guardando en BD', 500);
+			} else {
+				$this->trabajoficheros->logdetalles('info', 'Estado virus: '
+						. $estado . ', ['.$extra.']', $fid);
+				echo $fid . ': ' . $estado . ' ['.$extra.']';
+			}
+
+		}
+
+	}
+
 
 	/*
 	 * Funciones privadas

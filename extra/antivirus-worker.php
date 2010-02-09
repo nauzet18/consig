@@ -64,16 +64,82 @@ try {
 			->reserve();
 
 		if ($job === FALSE) {
-			echo "TTR alcanzado\n";
+			echo "Reintentando en unos segundos...\n";
+			sleep(5);
 		} else {
+			$exito = FALSE;
 			echo $job->getData() . "\n";
-			sleep(2);
-			$pheanstalk->delete($job);
+			$trozos = split(' ', $job->getData());
+
+			if ($trozos[0] == 'SCAN') {
+				$fid = $trozos[1];
+				// Procesado con el antivirus
+				// TODO: modular, etc etc
+				$orden = '/usr/bin/clamscan -i --no-summary ' 
+					. $config['directorio_ficheros'] .'/'
+					. $fid;
+				
+				$salida = system($orden, $ret);
+				if ($ret != 0 && $ret != 1) {
+					// Error pasando clamav
+					$exito = ws($fid, 'ERROR', '');
+					$pheanstalk->bury($job);
+				} elseif (!empty($salida)) {
+					// Infectado
+					$ts = split(' ', $salida);
+					$virus = $ts[1];
+					$exito = ws($fid, 'INFECTADO', $virus);
+				} else {
+					// Limpio
+					$exito = ws($fid, 'LIMPIO', '');
+				}
+			}
+
+			// Liberamos... o esperamos
+			if ($exito === TRUE) {
+				$pheanstalk->delete($job);
+			} else {
+				$pheanstalk->release($job);
+				echo "No funcionó bien " . $job->getData() . ". Esperando.\n";
+				sleep(10);
+			}
 		}
 	}
 } catch (Exception $e) {
 	echo "Error!: " . var_export($e, TRUE) . "\n";
 	exit(1);
+}
+
+
+
+/**
+ * Llamada al servicio web para establecer el estado de un fichero
+ */
+
+function ws($fid, $estado, $extra) {
+	global $config;
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $config['base_url'] 
+			. 'ficheros/avws/' . $config['antivirus_ws_pass']);
+	curl_setopt($ch, CURLOPT_POST, true);
+	$post_data = array(
+			'fid' => $fid,
+			'estado' => $estado,
+			'extra' => $extra,
+			);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	$result = curl_exec($ch);
+
+	if ($result === FALSE) {
+		echo "Error guardando estado para " . $fid . " en WS";
+	}
+
+	curl_close($ch);
+
+	return $result === FALSE ? FALSE : TRUE;
 }
 
 

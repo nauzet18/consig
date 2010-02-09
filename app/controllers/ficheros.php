@@ -477,6 +477,10 @@ class Ficheros extends Controller {
 		if ($fid === FALSE || $estado === FALSE) {
 			log_message('error', 'Llamada a /avws con fid'.
 					' o estado ausentes');
+		} elseif (FALSE === $this->trabajoficheros->extrae_bd(array('fid' => $fid))) {
+			log_message('error', 'Llamada a /avws con fid'
+					.' de fichero inexistente (' . $fid . ')');
+			show_error('Fichero inexistente', 401);
 		} else {
 			$res = $this->antivirus->store($fid,
 					$estado, $extra);

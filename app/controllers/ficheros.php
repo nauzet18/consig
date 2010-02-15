@@ -240,7 +240,13 @@ class Ficheros extends Controller {
 			}
 				
 			$data_cabecera['subtitulo'] = 'ojeando un fichero';
-			$data_cabecera['body_onload'] = 'pagina_descarga()';
+			$data_cabecera['body_onload'] = 'pagina_descarga('
+					.$fichero->fid.')';
+
+			if ($this->activar_antivirus === TRUE) {
+				$data_cabecera['js_adicionales'] =
+					array('jquery.timers.js');
+			}
 
 			$this->load->view('cabecera', $data_cabecera);
 			$this->load->view('ver_fichero', $data_fichero);
@@ -480,7 +486,7 @@ class Ficheros extends Controller {
 		} elseif (FALSE === $this->trabajoficheros->extrae_bd(array('fid' => $fid))) {
 			log_message('error', 'Llamada a /avws con fid'
 					.' de fichero inexistente (' . $fid . ')');
-			show_error('Fichero inexistente', 401);
+			show_error('Fichero inexistente', 404);
 		} else {
 			$res = $this->antivirus->store($fid,
 					$estado, $extra);
@@ -496,6 +502,39 @@ class Ficheros extends Controller {
 
 		}
 
+	}
+
+
+	/**
+	 * AJAX: muestra el estado de un fichero
+	 */
+	function estadoav($fid = 0) {
+		if ($this->activar_antivirus === FALSE) {
+			echo '<div class="cuadro error">Antivirus desactivado</div>';
+		} elseif ($fid == 0) {
+			echo '<div class="cuadro error">Llamada incorrecta a /estadoav</div>';
+		} elseif (FALSE === $this->trabajoficheros->extrae_bd(array('fid' => $fid))) {
+			log_message('error', 'Llamada a /estadoav con fid'
+					.' de fichero inexistente (' . $fid . ')');
+			echo '<div class="cuadro error">Fichero inexistente</div>';
+		} else {
+			// Cargamos estado
+			$info_av = $this->antivirus->get($fid);
+			if (FALSE === $info_av) {
+				log_message('error', 'Petición a /estadoav con fichero '
+					. 'sin estado en BD');
+				echo '<div class="cuadro error">Incongruencia en la'
+				.' base de datos. Consúltelo con '
+				. $this->config->item('texto_contacto')
+				.'</div>';
+			} elseif ($info_av->estado == Antivirus::PENDING) {
+				// No hacemos nada, salida vacía
+			} else {
+				$this->load->view('antivirus/' . $info_av->estado,
+					$info_av);
+			}
+
+		}
 	}
 
 

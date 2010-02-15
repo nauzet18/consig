@@ -56,12 +56,12 @@ $(document).ready(function() {
 		}
 	});
 
-
 	// Huevo de pascua
 	$("#version_consigna span").click(function() {
 		$("#version_consigna span.p").html('<img src="' + 
 			url_base + 'img/logos/pistacho.gif" alt="pistachito" />');
 	});
+
 
 });
 
@@ -207,7 +207,7 @@ function fin_envio(tipo) {
 	$.unblockUI();
 }
 
-function pagina_descarga() {
+function pagina_descarga(fid) {
 	$("#passwd_fichero").focus();
 	$("#cuadro_password_fichero").each(function() {
 			$(".descarga_fichero").click(function() {
@@ -220,6 +220,25 @@ function pagina_descarga() {
 				$("#passwd_fichero").focus();
 			});
 	});
+
+	// Estado de análisis del AV (cada 5s)
+	$("#info_av.pendiente").everyTime(5000, 'contador', function() {
+		$.ajax({
+			url: url_base + "ficheros/estadoav/" + fid,
+			cache: false,
+			dataType: "text",
+			success: function(d) {
+				// No sigue pendiente
+				if (d != "") {
+					$("#info_av").stopTime('contador');
+					$("#info_av").replaceWith(d);
+				}
+			},
+			error: function(obj, quepaso, otro) {
+				$("#info_av").html("Error desconocido al consultar vía AJAX");
+			}
+		});
+	}, 0, true);
 }
 
 

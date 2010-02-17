@@ -139,6 +139,19 @@ class Antivirus extends Model {
 	 */
 
 	function get_where($estado, $timestamp = 0) {
+		$cond = array(
+				'estado' => $estado,
+				);
+
+		if ($timestamp != 0) {
+			$cond['timestamp <='] = $timestamp;
+		}
+
+		$query = $this->db->get_where('antivirus', $cond);
+
+        $res = $query->result();
+
+		return $res;
 	}
 
 	/**

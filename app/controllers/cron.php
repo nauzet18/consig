@@ -67,6 +67,36 @@ class Cron extends Controller {
 
 		// 2. Entradas en caché de LDAP
 		$this->auth->cache_expiration();
+
+		// 3. Antivirus
+		if ($this->config->item('activar_antivirus') === TRUE) {
+			$this->load->model('antivirus');
+			/*
+			 * Analizamos los ficheros que se encuentren en los supuestos
+			 * siguientes:
+			 *
+			 *  1. Ficheros con estado ERROR
+			 *  2. Ficheros con estado LIMPIO y con más de max_clean_rescan
+			 *  3. Ficheros con estado PENDIENTE y con más de max_pending
+			 */
+			
+			$fich_err = $this->antivirus->get_where(Antivirus::ERROR);
+
+			$tmax1 = time(NULL) 
+				- $this->config->item('antivirus_max_clean_rescan');
+			$fich_limpios = $this->antivirus->get_where(Antivirus::CLEAN,
+					$tmax1);
+			$tmax2 = time(NULL) 
+				- $this->config->item('antivirus_max_pending');
+			$fich_pendientes =
+				$this->antivirus->get_where(Antivirus::PENDING, $tmax2);
+
+			// Encolamos todos
+			$tot = array_merge($fich_err, $fich_limpios, $fich_pendientes);
+			foreach ($tot as $f) {
+				$this->antivirus->enqueue($f->fid);
+			}
+		}
 	}
 }
 

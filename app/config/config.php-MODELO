@@ -242,5 +242,14 @@ $config['beanstalkd_tube'] = 'antivirus';
 // de virus de los ficheros
 $config['antivirus_ws_pass'] = 'mipwd';
 
+// Tiempo máximo (en segundos) que un fichero marcado como limpio está sin
+// volver a ser analizado
+$config['antivirus_max_clean_rescan'] = 86400; // 24*60*60
+
+// Tiempo máximo (en segundos) que un fichero en estado pendiente puede
+// estar en la base de datos sin ser analizado de nuevo
+$config['antivirus_max_pending'] = 86400; // 24*60*60
+
+
 
 // vim: filetype=php

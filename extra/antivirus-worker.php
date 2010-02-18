@@ -1,3 +1,4 @@
+#!/usr/bin/php
 <?php
 /*
  * Copyright 2010 Jorge López Pérez <jorgelp@us.es>
@@ -24,15 +25,36 @@
  * Este script está ideado para ser llamado desde la línea de órdenes de
  * la siguiente forma:
  *
- * php /..../antivirus-worker.php /ruta/a/raíz/de/consigna
+ * php /..../antivirus-worker.php -c /ruta/a/raíz/de/consigna/ [-d]
  */
 
-if (count($argv) != 2) {
-	echo "Sintaxis: " . $argv[0] . " /ruta/raíz/consigna\n";
+$short_opt =
+		'd' . // debug
+		'c:' . // directorio de consigna
+		'h'  // ayuda
+		;
+$options = getopt($short_opt);
+
+
+// Ayuda
+if (isset($options['h']) && $options['h'] === FALSE) {
+	show_help();
+	exit(0);
+} 
+
+if (!isset($options['c'])) {
+	show_help(); // TODO: seguir
 	exit(1);
 }
 
-$ruta = $argv[1];
+if (isset($options['d']) && $options['d'] === FALSE) {
+	define("DEBUG_WORKER", TRUE);
+}
+
+
+
+$ruta = $options['c'];
+$ruta = preg_replace('/([^\/])$/', '${1}/', $ruta); // Barra final
 
 // Cargamos configuración
 $check = @opendir($ruta);
@@ -64,11 +86,11 @@ try {
 			->reserve();
 
 		if ($job === FALSE) {
-			echo "Reintentando en unos segundos...\n";
+			debug("Reintentando en unos segundos...\n");
 			sleep(5);
 		} else {
 			$exito = FALSE;
-			echo $job->getData() . "\n";
+			debug($job->getData() . "\n");
 			$trozos = split(' ', $job->getData());
 
 			if ($trozos[0] == 'SCAN') {
@@ -100,7 +122,8 @@ try {
 				$pheanstalk->delete($job);
 			} else {
 				$pheanstalk->release($job);
-				echo "No funcionó bien " . $job->getData() . ". Esperando.\n";
+				debug("No funcionó bien " . $job->getData() 
+						. ".  Esperando.\n");
 				sleep(10);
 			}
 		}
@@ -142,5 +165,31 @@ function ws($fid, $estado, $extra) {
 	return $result === FALSE ? FALSE : TRUE;
 }
 
+
+
+/************************/
+
+function show_help() {
+	global $argv;
+?>
+Uso: <?php echo $argv[0] ?> -c /raíz/consigna/ [-d]
+
+Inicia un proceso de análisis mediante antivirus que lee de la cola de
+trabajos de beanstalkd especificada en el fichero de configuración de
+consigna.
+
+El directorio raíz de consigna es el que contiene los directorios app/ y
+config/, entre otros.
+
+  -d            activa los mensajes de depuración
+<?php
+}
+
+
+function debug($mensaje) {
+	if (defined("DEBUG_WORKER")) {
+		echo date('[Y/m/d h:i]: ') . $mensaje;
+	}
+}
 
 ?>

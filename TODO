@@ -1,20 +1,10 @@
-Versión 1.0
-
-- Logs, logs, logs
-- Documentación de instalación y configuración
-
-Versión 1.1
-
-- Correos "enviar a"
-- Paginación y ordenación por campo
-
-Versión 2.0
-
 - Correos "enviar a"
 - Email.php: añadir un "format=flowed" al Content-Type
-- Administración?
 - Reflexionar acerca de cambios de fecha de expiración
-- Antivirus
 - Dar una solución al problema de las páginas 404, en el código está
   predeterminado que la aplicación está en el raíz, y no se permite usar
   funciones como site_url().
+- Migración a 1.3:
+
+   * Convertir a InnoDB las tablas
+   * [desde svn]: alter table antivirus add constraint fk_ant foreign key(fid) references ficheros(fid) on delete cascade;

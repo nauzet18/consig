@@ -12,13 +12,13 @@ CREATE TABLE IF NOT EXISTS `ficheros` (
 	`password` VARCHAR(50),
 	`descripcion` TEXT,
 
-	PRIMARY KEY(fid));
+	PRIMARY KEY(fid)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `config` (
 	`var` VARCHAR(40) NOT NULL,
 	`valor` VARCHAR(255) NOT NULL,
 
-	PRIMARY KEY(var));
+	PRIMARY KEY(var)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `mimetypes` (
 	`mid` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `usercache` (
 	`mail` VARCHAR(255) NOT NULL,
 	`timestamp` INT UNSIGNED NOT NULL,
 
-	PRIMARY KEY(id));
+	PRIMARY KEY(id)) ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
 session_id varchar(40) DEFAULT '0' NOT NULL,
@@ -58,4 +58,4 @@ CREATE TABLE IF NOT EXISTS `antivirus` (
 	`timestamp` INT NOT NULL,
 
 	FOREIGN KEY(fid) REFERENCES ficheros(fid)
-	 ON DELETE CASCADE);
+	 ON DELETE CASCADE) ENGINE=InnoDB;

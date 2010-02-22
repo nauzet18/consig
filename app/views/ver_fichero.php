@@ -32,7 +32,7 @@ if (empty($fichero->password)) {
  ($this->trabajoficheros->es_propietario($fichero) ? ' fichero_propio' : '')
  ?>"><?php echo $fichero->nombre?></span><br />
  <span class="tam_fichero"><?php echo
-	 $this->trabajoficheros->tam_fichero($fichero->tam)?></span>
+	 $this->manejoauxiliar->tam_fichero($fichero->tam)?></span>
 <?php
 if (empty($fichero->password)) {
 	echo '</a>';
@@ -102,7 +102,7 @@ endif;
 	 $texto_expiracion = 'a punto de caducar';
  } else {
 	 $texto_expiracion = 'caduca en ' 
-		 . $this->trabajoficheros->intervalo_tiempo($texp, 3);
+		 . $this->manejoauxiliar->intervalo_tiempo($texp, 3);
  }
  ?>
 
@@ -115,7 +115,7 @@ endif;
 
   <li><img src="<?php echo site_url('img/interfaz/fecha-envio.png')?>"
   alt="fecha de envío" /><?php echo
-  $this->trabajoficheros->fecha_legible($fichero->fechaenvio);?> 
+  $this->manejoauxiliar->fecha_legible($fichero->fechaenvio);?> 
 	  (<?php echo $texto_expiracion; ?>)</li>
 
   <li><?php echo $this->manejoauxiliar->remitente_de($fichero) ?></li>

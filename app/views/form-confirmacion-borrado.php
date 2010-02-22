@@ -12,7 +12,7 @@ echo form_fieldset('Confirmación de borrado');
 site_url('img/tipos/32x32/' . $mimetype[1])?>" alt="<?php echo
 $mimetype[0]?>" /> <span class="nombre_fichero"><?php echo
 $fichero->nombre?></span> (<span class="tam_fichero"><?php echo
-	 $this->trabajoficheros->tam_fichero($fichero->tam)?>)</span>?
+	 $this->manejoauxiliar->tam_fichero($fichero->tam)?>)</span>?
 </p>
 
 <p>Si lo borra dejará de estar disponible en consigna.</p>

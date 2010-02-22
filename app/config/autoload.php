@@ -40,7 +40,7 @@
 */
 
 $autoload['libraries'] = array('session', 'auth', 'log', 'database',
-		'gestionpermisos');
+		'manejoauxiliar', 'gestionpermisos');
 
 
 /*

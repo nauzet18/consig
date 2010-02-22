@@ -4,14 +4,13 @@ $titulo = isset($titulo) ? $titulo : "Listado de ficheros";
 <h1><?php echo $titulo; ?></h1>
 
 <?php
-$this->load->library('manejoauxiliar');
 if (isset($caja_busqueda) && $caja_busqueda == 1) {
 	$this->load->view('busqueda');
 }
 
 if (isset($total_ocupado)) {
 	echo '<div class="tamtotal">Tamaño total: '.
-		$this->trabajoficheros->tam_fichero($total_ocupado) 
+		$this->manejoauxiliar->tam_fichero($total_ocupado) 
 		.  "</div>\n";
 }
 
@@ -83,10 +82,10 @@ foreach ($ficheros as $f) {
     }
 
 	// Tamaño
-	echo '   <td>' . $this->trabajoficheros->tam_fichero($f->tam) . "</td>\n";
+	echo '   <td>' . $this->manejoauxiliar->tam_fichero($f->tam) . "</td>\n";
 
 	// Fecha de envío, y expiración si es el propietario del fichero
-	$texto_fecha = $this->trabajoficheros->fecha_legible($f->fechaenvio);
+	$texto_fecha = $this->manejoauxiliar->fecha_legible($f->fechaenvio);
 
 	if ($es_propietario) {
 		 $texp =  $f->fechaexp - time();
@@ -94,7 +93,7 @@ foreach ($ficheros as $f) {
 			 $texto_expiracion = 'a punto de caducar';
 		 } else {
 			 $texto_expiracion =
-				 $this->trabajoficheros->intervalo_tiempo($texp, 2);
+				 $this->manejoauxiliar->intervalo_tiempo($texp, 2);
 		 }
 		 $texto_fecha .= ' <div class="expiracion_mini">' .
 			 $texto_expiracion . '</div>';

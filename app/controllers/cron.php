@@ -60,7 +60,7 @@ class Cron extends Controller {
 
 				// Borrado en sí
 				$this->trabajoficheros->elimina_fichero($f->fid, 'Expira el '
-						.  $this->trabajoficheros->fecha_legible($f->fechaexp));
+						.  $this->manejoauxiliar->fecha_legible($f->fechaexp));
 
 			}
 		}

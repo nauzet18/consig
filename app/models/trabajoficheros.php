@@ -25,103 +25,6 @@ class TrabajoFicheros extends Model {
 		$this->load->helper('date');
 	}
 
-	/*
-	 * Devuelve la cadena descriptiva de un intervalo de tiempo dado en
-	 * segundos
-	 */
-
-	function intervalo_tiempo($segundos, $granularidad = 3) {
-		$unidades = array(
-				'sem' => 604800,
-				'd' => 86400,
-				'h' => 3600,
-				'm' => 60,
-				's' => 1,
-				);
-
-		$cadena = '';
-		foreach ($unidades as $n => $v) {
-			if ($segundos >= $v) {
-				$cadena .= ($cadena ? ' ' : '') . floor($segundos / $v) . $n;
-				$segundos %= $v;
-				$granularidad--;
-			}
-
-            if ($granularidad == 0)
-                break;
-		}
-
-		return ($cadena ? $cadena : '0s');
-	}
-
-    /*
-     * Devuelve la velocidad de un envío
-     */
-
-	function velocidad_envio($bps) {
-		$unidades = array(
-				'MB' => 1048576,
-				'kB' => 1024,
-				'B' => 1,
-				);
-
-		$cadena = '';
-		foreach ($unidades as $n => $v) {
-			if ($bps >= $v) {
-				$cadena .= ($cadena ? ' ' : '') . round($bps / $v, 1) . 
-                       $n .  '/s';
-                break;
-			}
-		}
-
-		return ($cadena ? $cadena : '¿? B/s');
-	}
-
-	/*
-	 * Devuelve el tamaño de un fichero en formato "humano",
-	 * con una precisión moderada, a partir de su tamaño en bytes
-	 */
-
-	function tam_fichero($bytes) {
-		$unidades = array(
-				'GB' => 1073741824,
-				'MB' => 1048576,
-				'kB' => 1024,
-				'B' => 1
-		);
-
-		$res = '0 B';
-
-		foreach ($unidades as $u => $v) {
-			if ($bytes >= $v) {
-				$res = round($bytes/$v, 2) . ' ' . $u;
-				break;
-			}
-		}
-
-		return $res;
-	}
-
-	/*
-	 * Devuelve el nombre de un fichero libre de caracteres erróneos y/o
-	 * fragmentos malintencionados
-	 */
-
-	function limpia_nombre($nombre) {
-		$nuevo_nombre = basename($nombre);
-		$nuevo_nombre = strip_tags($nuevo_nombre);
-
-		return $nuevo_nombre;
-	}
-
-	/*
-	 * Devuelve la descripción de un fichero limpia de etiquetas y
-	 * fragmentos maliciosos
-	 */
-
-	function limpia_descripcion($desc) {
-		return ($desc === FALSE ? "" : strip_tags($desc));
-	}
 
 	/*
 	 * Almacena un fichero en base de datos, actualizándolo en caso de
@@ -267,26 +170,6 @@ class TrabajoFicheros extends Model {
 		}
 
 		return array($mimetype, $icono);
-	}
-
-	/*
-	 * Devuelve una fecha en formato legible, según la zona
-	 * horaria configurada, a partir de un timestamp GMT
-	 */
-
-	function fecha_legible($timestamp) {
-		/*
-		 * TODO Valorar en el futuro la posibilidad de usar fechas GMT
-		 *      conviriténdolas a locales
-		 *
-		 * $timezone = $this->config->item('zona_horaria');
-		 * $daylight_saving = TRUE;
-		 *
-		 * $nuevo_t = gmt_to_local($timestamp, $timezone, $daylight_saving);
-		 */
-
-		$nuevo_t = $timestamp;
-		return strftime("%d de %B de %Y, %H:%Mh", $nuevo_t);
 	}
 
 

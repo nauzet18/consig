@@ -48,7 +48,6 @@ class Ficheros extends Controller {
 	function index($atr_orden = 'fechaenvio', $orden = 'desc')
 	{
 		$this->load->library('pagination');
-		$this->load->library('manejoauxiliar');
 
 		$opciones = array(
 				'atr_orden' => $atr_orden,
@@ -167,9 +166,9 @@ class Ficheros extends Controller {
 
                 $porcentaje = round($enviados/$total, 2)*100;
                 $velocidad =
-                    $this->trabajoficheros->velocidad_envio($info['speed_last']);
+                    $this->manejoauxiliar->velocidad_envio($info['speed_last']);
                 $estimado =
-                    $this->trabajoficheros->intervalo_tiempo($info['est_sec']);
+                    $this->manejoauxiliar->intervalo_tiempo($info['est_sec']);
 
                 print $porcentaje . ";" . $velocidad . ";" . $estimado;
             }
@@ -191,7 +190,6 @@ class Ficheros extends Controller {
 					.'existiera y haya caducado.', 404);
             return;
         }
-		$this->load->library('manejoauxiliar');
 		
 		// Para decidir las acciones
 		$data_cabecera = array(
@@ -267,7 +265,6 @@ class Ficheros extends Controller {
 	 */
 	function propios($atr_orden = 'fechaenvio', $orden = 'desc') {
 		$this->load->library('pagination');
-		$this->load->library('manejoauxiliar');
 
 		if (!$this->autenticado) {
             show_error('Debe autenticarse para poder ver sus ficheros.', 403);
@@ -394,7 +391,6 @@ class Ficheros extends Controller {
 					.' no alfanumérico.');
 		} else {
 			$this->load->library('pagination');
-			$this->load->library('manejoauxiliar');
 
 			$opciones = array(
 					'atr_orden' => $atr_orden,
@@ -680,7 +676,7 @@ class Ficheros extends Controller {
 				}
 
 				// Limpieza del nombre
-				$data['nombre'] = $this->trabajoficheros->limpia_nombre($fichero['name']);
+				$data['nombre'] = $this->manejoauxiliar->limpia_nombre($fichero['name']);
 				$data['tam'] = $fichero['size'];
 
 				// Remitente, IP y fechas
@@ -716,7 +712,7 @@ class Ficheros extends Controller {
 
 			// Limpieza de la descripción, si la hay
 			$data['descripcion'] =
-				$this->trabajoficheros->limpia_descripcion($this->input->post('descripcion', TRUE));
+				$this->manejoauxiliar->limpia_descripcion($this->input->post('descripcion', TRUE));
 
 			// Contraseña
 			if ($tipo == 'nuevo') {

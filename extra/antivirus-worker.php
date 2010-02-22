@@ -75,9 +75,15 @@ if (!$config['activar_antivirus']) {
 // Biblioteca pheanstalk
 require_once($ruta . 'app/libraries/pheanstalk/pheanstalk_init.php');
 
+// Analizador
+require_once($ruta . 'app/libraries/avmodules/' . $config['avmodule']
+		. '.php');
+$av = new $config['avmodule'];
+
 try {
 	$pheanstalk = new Pheanstalk($config['beanstalkd_host'],
 			$config['beanstalkd_port']);
+
 
 	while (1) {
 		$job = $pheanstalk
@@ -96,21 +102,17 @@ try {
 			if ($trozos[0] == 'SCAN') {
 				$fid = $trozos[1];
 				// Procesado con el antivirus
-				// TODO: modular, etc etc
-				$orden = '/usr/bin/clamscan -i --no-summary ' 
-					. $config['directorio_ficheros'] .'/'
+				$path = $config['directorio_ficheros'] .'/'
 					. $fid;
-				
-				$salida = system($orden, $ret);
-				if ($ret != 0 && $ret != 1) {
+				$resav = $av->scan($path);
+
+				if ($resav[0] == 2) {
 					// Error pasando clamav
-					$exito = ws($fid, 'ERROR', '');
+					$exito = ws($fid, 'ERROR', $resav[1]);
 					$pheanstalk->bury($job);
-				} elseif (!empty($salida)) {
+				} elseif ($resav[0] == 1) {
 					// Infectado
-					$ts = split(' ', $salida);
-					$virus = $ts[1];
-					$exito = ws($fid, 'INFECTADO', $virus);
+					$exito = ws($fid, 'INFECTADO', $resav[1]);
 				} else {
 					// Limpio
 					$exito = ws($fid, 'LIMPIO', '');

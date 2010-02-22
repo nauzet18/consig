@@ -251,5 +251,7 @@ $config['antivirus_max_clean_rescan'] = 86400; // 24*60*60
 $config['antivirus_max_pending'] = 86400; // 24*60*60
 
 
+// Módulo usado para analizar ficheros
+$config['avmodule'] = 'clamscan'; 
 
 // vim: filetype=php

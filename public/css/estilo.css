@@ -496,3 +496,8 @@ img.centrar_ayuda {
   color: #000000;
   background-image: url(../img/interfaz/error.png);
 }
+
+#info_av .avextra {
+  color: grey;
+  font-size: 80%;
+}

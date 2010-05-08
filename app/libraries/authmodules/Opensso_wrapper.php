@@ -27,7 +27,7 @@ class Opensso_wrapper {
 
 	function Opensso_wrapper() {
 		$this->CI =& get_instance();
-		$this->o = new OpenSSO();
+		$this->o = new Opensso_CI_wrapper();
 	}
 
 	/**

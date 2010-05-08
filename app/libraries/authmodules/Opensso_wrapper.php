@@ -19,7 +19,7 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-require_once 'libopensso-php/OpenSSO.php';
+require_once 'libopensso-php/Opensso_CI_wrapper.php';
 
 class Opensso_wrapper {
 	var $CI;

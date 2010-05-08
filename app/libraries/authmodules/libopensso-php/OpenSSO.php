@@ -3,6 +3,8 @@
  * OpenSSO integration library for PHP
  *
  * Jorge López Pérez <jorgelp@us.es>
+ *
+ *  v0.2 , 8/may/2010
  */
 
 require_once('config.php');
@@ -32,7 +34,15 @@ class OpenSSO {
 			$this->cookiename = OPENSSO_COOKIE_NAME;
 		}
 
-		if (isset($_COOKIE[$this->cookiename])) {
+
+		// Retrieve token from GET or cookie (IE bug)
+		if (isset($_GET[$this->cookiename]) &&
+				(!isset($_COOKIE[$this->cookiename]) ||
+				 $_COOKIE[$this->cookiename] != $_GET[$this->cookiename])) {
+			$this->token = $_GET[$this->cookiename];
+			// Internet Explorer workaround
+			setcookie($this->cookiename, $this->token, 0, '/');
+		} elseif (isset($_COOKIE[$this->cookiename])) {
 			// Incorrect encoding of + to " "
 			$this->token = preg_replace('/ /', '+',
 					$_COOKIE[$this->cookiename]);
@@ -68,8 +78,11 @@ class OpenSSO {
 				$gotourl = $this->current_url();
 			}
 
-			header("Location: " . OPENSSO_LOGIN_URL . '?goto='
-					. urlencode($gotourl));
+			if (!$this->check_error()) {
+				header("Location: " . OPENSSO_LOGIN_URL . '?goto='
+						. urlencode($gotourl));
+			} 
+
 			return FALSE;
 		} else {
 			return TRUE;
@@ -91,7 +104,17 @@ class OpenSSO {
 		$res = $this->identity_query(OPENSSO_IS_TOKEN_VALID, 'GET',
 				'tokenid=' . urlencode($this->token));
 		if (isset($res->error) || $res->code != '200') {
-			if (!isset($res->error)) {
+			if (isset($res->code) && $res->code == '403') {
+				// IP with no permission to access OpenSSO web services
+				?>
+					<div style="background-color: red; padding: 1em; color: #ffffff; font-weight: bold">
+					IP sin acceso a OpenSSO
+					</div>
+				<?php
+				exit;
+			} elseif ($res->code == '401') {
+				// Caso token inválido
+			} elseif (!isset($res->error)) {
 				$this->error = 'HTTP result = ' . $res->code;
 			} else {
 				$this->error = $res->error;
@@ -240,14 +263,21 @@ class OpenSSO {
 	 * Returns an attribute value/values
 	 */
 
-	function attribute($atr) {
+	function attribute($atr, $force_array = FALSE) {
 		if (empty($atr)) {
 			$this->error = 'attribute(): empty attribute name';
 			return FALSE;
 		} else {
 			$atr = strtolower($atr);
-			return isset($this->attributes[$atr]) ?
-				$this->attributes[$atr] : '';
+			if (isset($this->attributes[$atr])) {
+				if ($force_array && !is_array($this->attributes[$atr])) {
+					return array($this->attributes[$atr]);
+				} else {
+					return $this->attributes[$atr];
+				}
+			} else {
+				return $force_array ? array() : '';
+			}
 		}
 	}
 
@@ -274,12 +304,19 @@ class OpenSSO {
 
 
 	/**
-	 * Logouts user from OpenSSO
+	 * Logs out user from OpenSSO
 	 * 
 	 * @param boolean	Use OpenSSO logout page
 	 * @param string	Back logout URL
 	 */
 	function logout($use_logout_page = FALSE, $gotourl = '') {
+		// IE bug. If testExplorerBug cookie is not set, it means
+		// it didn't store any cookies for *.xx.tld, so
+		// unset cookie for current hostname
+		if (!isset($_COOKIE['testExplorerBug'])) {
+			setcookie($this->cookiename, "", time() - 3600, "/");
+		}
+
 		if ($use_logout_page) {
 			$gotourl = empty($gotourl) ? $this->current_url() : $gotourl;
 			header("Location: " . OPENSSO_LOGOUT_URL . "?goto=" 

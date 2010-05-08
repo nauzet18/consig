@@ -19,10 +19,10 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class OpenSSO {
+class Agent_opensso {
 	var $CI;
 
-	function OpenSSO() {
+	function Agent_opensso() {
 		$this->CI =& get_instance();
 	}
 

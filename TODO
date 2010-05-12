@@ -8,3 +8,4 @@
 
    * Convertir a InnoDB las tablas
    * [desde svn]: alter table antivirus add constraint fk_ant foreign key(fid) references ficheros(fid) on delete cascade;
+   * Cambiar Opensso_wrapper por OpenSSO_ws

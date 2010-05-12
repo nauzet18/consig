@@ -229,7 +229,7 @@ class OpenSSO {
 		// Create HTTP request.
 		$defaults = array(
 				'Host' => "Host: $host",
-				'User-Agent' => 'User-Agent: libopensso 0.1',
+				'User-Agent' => 'User-Agent: libopensso 0.2',
 		);
 
 		$request = $method .' '. $path ." HTTP/1.0\r\n";

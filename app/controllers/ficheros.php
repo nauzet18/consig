@@ -156,6 +156,11 @@ class Ficheros extends Controller {
         if (!function_exists('uploadprogress_get_info')) {
             echo "noimplementado";
         } else {
+
+			if (!isset($id)) {
+				echo "nulo";
+			}
+
             $info = uploadprogress_get_info($id);
 
             if ($info == NULL) {

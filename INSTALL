@@ -65,7 +65,7 @@ sobre la descarga.
 
 4. Creación de las tablas de consigna
 
- # mysql -uconsigna -p consigna < mysql-database/bloque.sql
+ # mysql -uconsigna -p consigna < mysql-database/database.sql
  # mysql -uconsigna -p consigna < mysql-database/mimetypes.sql
 
 5. Configuración la aplicación

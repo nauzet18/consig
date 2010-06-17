@@ -31,6 +31,7 @@
  * - Directorio de logs existente y con permiso de escritura
  * - Directorio de ficheros existente y con permiso de escritura
  * - PHP + LDAP si se usa el módulo correspondiente (+ conectividad)
+ * - Reescritura de URLs
  */
 
 $tests = array();
@@ -204,6 +205,9 @@ if (isset($config['authmodule']) && $config['authmodule'] == 'LDAP') {
 }
 
 
+// Reescritura de URLs
+
+
 
 // ---- Fin tests -----
 } // $continuar
@@ -218,6 +222,18 @@ if (isset($config['authmodule']) && $config['authmodule'] == 'LDAP') {
 <title>Consigna | test de configuración</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/estilo.css" type="text/css" media="screen">
+<script language="JavaScript" type="text/javascript">
+//<![CDATA[
+
+// Variables útiles para procesado Javascript
+var url_base = '<?php echo $config['base_url']?>';
+//]]>
+</script>
+<script language="JavaScript" type="text/javascript"
+src="<?php echo $config['base_url']?>js/jquery-1.3.2.min.js"></script>
+<script language="JavaScript" type="text/javascript"
+src="<?php echo $config['base_url']?>js/configtest.js"></script>
+
 </head>
 <body>
 

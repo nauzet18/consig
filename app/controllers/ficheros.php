@@ -230,6 +230,11 @@ class Ficheros extends Controller {
 				$data_fichero['permiso_modificacion'] = 1;
 			}
 
+			// ¿Usuario con privilegios?
+			if ($this->gestionpermisos->es_privilegiado()) {
+				$data_fichero['es_privilegiado'] = 1;
+			}
+
 			// ¿Infectado?
 			if ($this->activar_antivirus) {
 				$info_av = $this->antivirus->get($fichero->fid);
@@ -541,6 +546,33 @@ class Ficheros extends Controller {
 					$info_av);
 			}
 
+		}
+	}
+
+	/**
+	 * Fuerza el análisis de un fichero dado
+	 */
+	function analizar($fid = 0) {
+		if (!$this->gestionpermisos->es_privilegiado()) {
+			show_error('Permiso denegado', 403);
+		} elseif ($this->activar_antivirus === FALSE) {
+			show_error('El antivirus está desactivado', 400);
+		} elseif ($fid == 0) {
+			show_error('Llamada incorrecta', 400);
+		} elseif (FALSE === $this->trabajoficheros->extrae_bd(array('fid' => $fid))) {
+			show_error('El fichero ' . $fid . ' no existe', 404);
+		} else {
+			$res = $this->antivirus->enqueue($fid, 0);
+			if ($res === FALSE) {
+				$this->trabajoficheros->logdetalles('error', 
+						'Falló la petición de análisis para el fichero');
+				show_error('Error encolando fichero. Consulte los logs',
+						500);
+			} else {
+				$this->session->set_flashdata('mensaje_fichero_cabecera',
+						'El fichero fue encolado para su análisis');
+				redirect('/' . $fid);
+			}
 		}
 	}
 

@@ -114,11 +114,11 @@ try {
 					$pheanstalk->bury($job);
 				} elseif ($resav[0] == 1) {
 					// Infectado
-					debug("Fichero " . $fid . "infectado: " . $resav[1]);
+					debug("Fichero " . $fid . " infectado: " . $resav[1]);
 					$exito = ws($fid, 'INFECTADO', $resav[1]);
 				} else {
 					// Limpio
-					debug("Fichero " . $fid . "limpio ");
+					debug("Fichero " . $fid . " limpio ");
 					$exito = ws($fid, 'LIMPIO', '');
 				}
 			}

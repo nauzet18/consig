@@ -89,6 +89,17 @@ endif;
   <img src="<?php echo site_url('img/interfaz/borrar.png')?>"
   alt="borrar" /><a href="<?php echo site_url('borrar/' 
   	. $fichero->fid)?>">Borrar</a></li>
+  <?php
+  	// Opción de forzar el paso del antivirus
+  	if (isset($info_av) && isset($es_privilegiado)):
+  ?>
+  <li class="analizar">
+  <img src="<?php echo site_url('img/interfaz/analizar.png')?>"
+  alt="analizar" /><a href="<?php echo site_url('ficheros/analizar/' 
+  	. $fichero->fid)?>">Forzar análisis</a></li>
+  <?php
+	endif;
+  ?>
 
   </ul>
 

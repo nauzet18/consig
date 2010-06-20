@@ -62,21 +62,30 @@ class Antivirus extends Model {
 		$port = $this->config->item('beanstalkd_port');
 		$tube = $this->config->item('beanstalkd_tube');
 
+		$exito = FALSE;
+
 		try {
 
 			$pheanstalk = new Pheanstalk($host, $port);
 			$pheanstalk
 				->useTube($tube)
 				->put("SCAN " . $fid, $prioridad);
+			$exito = TRUE;
 		} catch (Exception $e) {
 			// TODO : más detalle
 			log_message('error', 'Error encolando trabajo en beanstalkd');
 			$this->store($fid, self::ERROR, 
 					'El fichero no se pudo encolar para su revisión');
-			return FALSE;
+
+			/* En este caso, no es mala idea que el fichero quede
+			 * en la base de datos marcado con ERROR, pero que la ejecución
+			 * siga
+			 */
 		}
 
-		log_message('info', 'Fichero ' . $fid . ' encolado para ser escaneado');
+		if ($exito === TRUE) {
+			log_message('info', 'Fichero ' . $fid . ' encolado para ser escaneado');
+		}
 	}
 
 	/**

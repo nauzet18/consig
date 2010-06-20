@@ -92,6 +92,8 @@ class Ficheros extends Controller {
 
 		// Formulario que excede post_max_size usado desde JS
 		if ($desatendido && !$this->input->post('enviar')) {
+			$this->trabajoficheros->logdetalles('info',
+					'Envío de tamaño excesivo. Cancelado');
 			$data_form['error'] = '<p>El fichero excede el tamaño '
 				.'permitido</p>';
 		}
@@ -707,6 +709,8 @@ class Ficheros extends Controller {
 				// Errores en el envío
 				if ($fichero['error'] != UPLOAD_ERR_OK) {
 					if ($fichero['error'] == UPLOAD_ERR_INI_SIZE) {
+						$this->trabajoficheros->logdetalles('info',
+							'Envío de tamaño excesivo. Cancelado');
 						$data_form['error'] = '<p>El fichero excede el tamaño permitido</p>';
 					} else {
 						$data_form['error'] = '<p>Hay problemas para enviar

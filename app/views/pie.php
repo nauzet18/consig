@@ -16,6 +16,19 @@
  </p>
 </div>
 
+
+<!-- XXX -->
+<script language="JavaScript" type="text/javascript"
+src="https://idp.us.es/avisoclave/js/jquery.tools.min.js"></script>
+<script language="JavaScript" type="text/javascript"
+src="https://idp.us.es/avisoclave/js/aviso-base.js"></script>
+
+ <script language="JavaScript">
+  if (typeof(user_id) != 'undefined') {
+	  ponAvisoClave(user_id);
+  }
+ </script>
+
 </body>
 
 </html>

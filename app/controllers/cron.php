@@ -21,9 +21,17 @@
 
 class Cron extends Controller {
 
+	var $activar_antivirus;
+
 	function Cron()
 	{
 		parent::Controller();	
+
+		// Antivirus
+		$this->activar_antivirus = $this->config->item('activar_antivirus');
+		if ($this->activar_antivirus === TRUE) {
+			$this->load->model('antivirus');
+		}
 	}
 
 	function index() {
@@ -62,6 +70,11 @@ class Cron extends Controller {
 				$this->trabajoficheros->elimina_fichero($f->fid, 'Expira el '
 						.  $this->manejoauxiliar->fecha_legible($f->fechaexp));
 
+				// Borrado de la BD del antivirus
+				if ($this->activar_antivirus === TRUE) {
+					$this->antivirus->delete($f->fid);
+				}
+
 			}
 		}
 
@@ -69,8 +82,7 @@ class Cron extends Controller {
 		$this->auth->cache_expiration();
 
 		// 3. Antivirus
-		if ($this->config->item('activar_antivirus') === TRUE) {
-			$this->load->model('antivirus');
+		if ($this->activar_antivirus === TRUE) {
 			/*
 			 * Analizamos los ficheros que se encuentren en los supuestos
 			 * siguientes:

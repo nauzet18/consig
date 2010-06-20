@@ -155,6 +155,13 @@ class Antivirus extends Model {
 	}
 
 	/**
+	 * Elimina de la base de datos del antivirus un fichero dado
+	 */
+	function delete($fid) {
+		$this->db->delete('antivirus', array('fid' => $fid));
+	}
+
+	/**
 	 * Comprueba si un estado dado es válido
 	 */
 

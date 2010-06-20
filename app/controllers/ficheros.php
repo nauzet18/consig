@@ -360,6 +360,12 @@ class Ficheros extends Controller {
                         'Eliminación manual');
 				$this->session->set_flashdata('mensaje_fichero_cabecera',
 						'El fichero fue eliminado');
+
+				// Borrado de la BD de antivirus
+				if ($this->activar_antivirus === TRUE) {
+					$this->antivirus->delete($fichero->fid);
+				}
+
                 redirect('');
 			} else {
 				$data_cabecera = array(

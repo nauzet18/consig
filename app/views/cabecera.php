@@ -45,9 +45,9 @@ endif;
 //]]>
 </script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery-1.3.2.min.js')?>"></script>
+site_url('js/jquery-1.4.2.min.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.overlay-1.0.1.pack.js')?>"></script>
+site_url('js/jquery.overlay-1.2.3.pack.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/interfaz.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo

@@ -2,8 +2,9 @@
   display: none;
   padding: 40px;
   font-size: 80%;
-  background-image: url(../img/fondos/white.png);
-  width: 310px;
+  background-image: url(../img/fondos/white-login.png);
+  width: 320px;
+  height: 240px;
 }
 
 #loginOverlay p {

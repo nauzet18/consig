@@ -562,7 +562,8 @@ class Ficheros extends Controller {
 			$res = $this->antivirus->enqueue($fid, 0);
 			if ($res === FALSE) {
 				$this->trabajoficheros->logdetalles('error', 
-						'Falló la petición de análisis para el fichero');
+						'Falló la petición de análisis para el fichero',
+						$fid);
 				show_error('Error encolando fichero. Consulte los logs',
 						500);
 			} else {

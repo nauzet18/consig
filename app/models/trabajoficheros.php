@@ -249,6 +249,9 @@ class TrabajoFicheros extends Model {
 			die();
 		}
 
+		// Registramos la descarga
+		$this->historico_add($fid);
+
 		/*
 		 * Cabeceras y demás
 		 */
@@ -350,6 +353,46 @@ class TrabajoFicheros extends Model {
 
 		// Guardamos log
 		log_message($nivel, $msj);
+	}
+
+	/**
+	 * Añade al histórico la descarga de un fichero
+	 *
+	 * @param	int		Fichero descargado
+	 *
+	 */
+
+	function historico_add($fid) {
+		$autenticado = $this->session->userdata('autenticado');
+		$usuario = ($autenticado ? $this->session->userdata('id') : '-');
+
+		$ip = $this->input->ip_address();
+
+		$datos = array(
+				'fid' => $fid,
+				'identidad' => $usuario,
+				'ip' => $ip,
+				'timestamp' => time()
+			);
+		$this->db->insert('historicodescargas', $datos);
+
+		$this->logdetalles('download', '', $fid);
+	}
+
+	/**
+	 * Cuenta el número de descargas de un fichero
+	 *
+	 * @param	int		Identificador del fichero
+	 *
+	 * @return	int		Número de veces que se ha descargado el fichero
+	 */
+	function historico_num($fid = 0) {
+		$this->db->where(array('fid' => $fid));
+		$this->db->from('historicodescargas');
+
+		$res = $this->db->count_all_results();
+
+		return $res;
 	}
 }
 ?>

@@ -230,6 +230,10 @@ class Ficheros extends Controller {
 			} // pide_descarga
 			if ($this->gestionpermisos->permiso_modificacion($fichero)) {
 				$data_fichero['permiso_modificacion'] = 1;
+
+				// Recuento de descargas
+				$data_fichero['historico_num'] =
+					$this->trabajoficheros->historico_num($fichero->fid);
 			}
 
 			// ¿Usuario con privilegios?
@@ -452,6 +456,13 @@ class Ficheros extends Controller {
 
 				if ($fichero->listar == 0) {
 					$titulo .= ' (oculto)';
+				}
+
+				// Visión de descargas sólo para dueño y administradores
+				if ($this->gestionpermisos->permiso_modificacion($fichero)) {
+					$titulo .= ' [' .
+						$this->trabajoficheros->historico_num($fichero->fid)
+						. ' descarga(s)]';
 				}
 
 			}

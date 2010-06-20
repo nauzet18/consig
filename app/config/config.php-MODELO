@@ -72,7 +72,7 @@ $config['cookie_path']		= "/";
 |
 */
 $config['show_in_log']= 
- array('ERROR','INFO','UPLOAD','UPDATE','DELETE'); 
+ array('ERROR','INFO','UPLOAD','UPDATE','DELETE','DOWNLOAD'); 
 
 /*
 |--------------------------------------------------------------------------

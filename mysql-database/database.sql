@@ -59,3 +59,16 @@ CREATE TABLE IF NOT EXISTS `antivirus` (
 
 	FOREIGN KEY(fid) REFERENCES ficheros(fid)
 	 ON DELETE CASCADE) ENGINE=InnoDB;
+
+/*
+ * Descargas pormenorizadas
+ */
+
+CREATE TABLE IF NOT EXISTS `historicodescargas` (
+	`fid` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	`identidad` VARCHAR(100) NOT NULL,
+	`ip` VARCHAR(255),
+	`timestamp` INT NOT NULL,
+
+	FOREIGN KEY(fid) REFERENCES ficheros(fid)
+	 ON DELETE CASCADE) ENGINE=InnoDB;

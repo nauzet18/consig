@@ -11,8 +11,8 @@
   width: 300px !important;
 }
 
-#loginOverlay div.close,
-#cond_usoOverlay div.close {
+#loginOverlay a.close,
+#cond_usoOverlay a.close {
   background: url(../img/interfaz/close.png) no-repeat;
   position: absolute;
   top: 2px;

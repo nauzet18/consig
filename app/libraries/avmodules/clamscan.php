@@ -38,13 +38,14 @@ class Clamscan {
 	function scan($path) {
 		$orden = '/usr/bin/clamscan -i --no-summary ' . $path;
 
-		$salida = system($orden, $ret);
-		if ($ret != 0 && $ret != 1) {
+		$salida = $this->my_exec($orden);
+		if ($salida['return'] != 0 && $salida['return'] != 1) {
 			// Error pasando clamav
-			$result = array(2, 'No se pudo ejecutar clamdscan');
-		} elseif (!empty($salida)) {
+			$result = array(2, 'No se pudo ejecutar clamdscan: ' 
+					. $salida['stderr']);
+		} elseif (!empty($salida['stdout'])) {
 			// Infectado
-			$ts = split(' ', $salida);
+			$ts = split(' ', $salida['stdout']);
 			$virus = $ts[1];
 			$result = array(1, $virus);
 		} else {
@@ -53,5 +54,39 @@ class Clamscan {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Ejecuta una orden
+	 *
+	 * Extraída de los comentarios de http://es2.php.net/system,
+	 * de kexianin at diyism dot com
+	 */
+
+	private function my_exec($cmd, $input='') {
+		$proc=proc_open($cmd, array(
+					0=>array('pipe', 'r'), 
+					1=>array('pipe', 'w'), 
+					2=>array('pipe', 'w')), $pipes);
+
+
+		// Entrada
+		fwrite($pipes[0], $input);
+		fclose($pipes[0]);
+
+		// Salida
+		$stdout=stream_get_contents($pipes[1]);
+		fclose($pipes[1]);
+
+		// Salida de errores
+		$stderr=stream_get_contents($pipes[2]);
+		fclose($pipes[2]);
+
+		$rtn=proc_close($proc);
+		return array(
+				'stdout'=>$stdout,
+				'stderr'=>$stderr,
+				'return'=>$rtn
+				);
 	}
 }

@@ -92,11 +92,11 @@ try {
 			->reserve();
 
 		if ($job === FALSE) {
-			debug("Reintentando en unos segundos...\n");
+			debug("Reintentando en unos segundos...");
 			sleep(5);
 		} else {
 			$exito = FALSE;
-			debug($job->getData() . "\n");
+			debug($job->getData());
 			$trozos = split(' ', $job->getData());
 
 			if ($trozos[0] == 'SCAN') {
@@ -104,17 +104,21 @@ try {
 				// Procesado con el antivirus
 				$path = $config['directorio_ficheros'] .'/'
 					. $fid;
+				debug('Escaneando ' . $fid);
 				$resav = $av->scan($path);
 
 				if ($resav[0] == 2) {
 					// Error pasando clamav
+					debug("Error con " . $fid . ": " . $resav[1]);
 					$exito = ws($fid, 'ERROR', $resav[1]);
 					$pheanstalk->bury($job);
 				} elseif ($resav[0] == 1) {
 					// Infectado
+					debug("Fichero " . $fid . "infectado: " . $resav[1]);
 					$exito = ws($fid, 'INFECTADO', $resav[1]);
 				} else {
 					// Limpio
+					debug("Fichero " . $fid . "limpio ");
 					$exito = ws($fid, 'LIMPIO', '');
 				}
 			}
@@ -125,7 +129,7 @@ try {
 			} else {
 				$pheanstalk->release($job);
 				debug("No funcionó bien " . $job->getData() 
-						. ".  Esperando.\n");
+						. ".  Esperando.");
 				sleep(10);
 			}
 		}
@@ -190,7 +194,7 @@ config/, entre otros.
 
 function debug($mensaje) {
 	if (defined("DEBUG_WORKER")) {
-		echo date('[Y/m/d h:i]: ') . $mensaje;
+		echo date('[Y/m/d h:i]: ') . $mensaje . "\n";
 	}
 }
 

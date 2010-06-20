@@ -69,12 +69,6 @@ class Cron extends Controller {
 				// Borrado en sí
 				$this->trabajoficheros->elimina_fichero($f->fid, 'Expira el '
 						.  $this->manejoauxiliar->fecha_legible($f->fechaexp));
-
-				// Borrado de la BD del antivirus
-				if ($this->activar_antivirus === TRUE) {
-					$this->antivirus->delete($f->fid);
-				}
-
 			}
 		}
 

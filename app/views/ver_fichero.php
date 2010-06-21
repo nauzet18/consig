@@ -121,14 +121,15 @@ endif;
 
  <?php
   // Número de descargas
-  if (isset($permiso_modificacion)):
-  ?>
-  <li><img src="<?php echo site_url('img/interfaz/descargas.png')?>"
-  alt="descargas" />
-  <?php echo $historico_num . ' ' . ($historico_num == 1 ? 'vez' : 'veces') ?>
-		  descargado</li>
-  <?php
-  endif;
+  if (isset($historico_num)) {
+	  $data = array(
+			  'historico_num' => $historico_num,
+			  );
+	  if (isset($historico_detallado)) {
+		  $data['historico_detallado'] = $historico_detallado;
+	  }
+	  $this->load->view('historico_descargas', $data);
+  }
   ?>
 
   <li><img src="<?php echo site_url('img/interfaz/www.png')?>"

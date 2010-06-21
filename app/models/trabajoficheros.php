@@ -394,5 +394,27 @@ class TrabajoFicheros extends Model {
 
 		return $res;
 	}
+
+	/**
+	 * Devuelve las descargas para un fichero dado
+	 *
+	 * @param	int		Identificador del fichero
+	 *
+	 * @return	array		Array de objetos con los
+	 *                      siguientes atributos:
+	 *                        - fid
+	 *                        - identidad
+	 *                        - ip
+	 *                        - timestamp
+	 */
+	function historico_detallado($fid = 0) {
+		$this->db->where(array('fid' => $fid));
+		$this->db->from('historicodescargas');
+		$this->db->order_by('timestamp', 'desc');
+
+		$res = $this->db->get();
+
+		return $res->result();
+	}
 }
 ?>

@@ -239,6 +239,8 @@ class Ficheros extends Controller {
 			// ¿Usuario con privilegios?
 			if ($this->gestionpermisos->es_privilegiado()) {
 				$data_fichero['es_privilegiado'] = 1;
+				$data_fichero['historico_detallado'] =
+					$this->trabajoficheros->historico_detallado($fichero->fid);
 			}
 
 			// ¿Infectado?

@@ -91,3 +91,11 @@
   width: 400px !important;
 }
 
+#ver_historico_detallado:hover {
+  cursor: pointer;
+}
+
+#historico_detallado {
+  margin: 1em 0 1em 2em;
+}
+

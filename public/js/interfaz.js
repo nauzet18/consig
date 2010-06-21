@@ -239,6 +239,12 @@ function pagina_descarga(fid) {
 			}
 		});
 	}, 0, true);
+
+	// Histórico de descargas
+	$("#historico_detallado").hide();
+	$("#ver_historico_detallado").click(function() {
+		$("#historico_detallado").toggle('normal');
+	});
 }
 
 

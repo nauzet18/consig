@@ -112,7 +112,7 @@ class Ficheros extends Controller {
 					'no_mostrar_aviso' => TRUE,
 					'js_adicionales' => array(
 						'jquery.timers.js',
-						'jquery.blockUI_2.20.js',
+						'jquery.blockUI_2.31.js',
 						'jquery.dimensions.pack.js',
 					),
 			);

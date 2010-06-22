@@ -76,6 +76,7 @@ if (!$config['activar_antivirus']) {
 require_once($ruta . 'app/libraries/pheanstalk/pheanstalk_init.php');
 
 // Analizador
+require_once($ruta . 'app/libraries/Avengine.php');
 require_once($ruta . 'app/libraries/avmodules/' . $config['avmodule']
 		. '.php');
 $av = new $config['avmodule'];
@@ -194,7 +195,7 @@ config/, entre otros.
 
 function debug($mensaje) {
 	if (defined("DEBUG_WORKER")) {
-		echo date('[Y/m/d h:i]: ') . $mensaje . "\n";
+		echo date('[Y/m/d H:i]: ') . $mensaje . "\n";
 	}
 }
 

@@ -19,7 +19,7 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Clamscan {
+class Clamscan extends Avengine {
 	function Clamscan() {
 	}
 

@@ -41,6 +41,12 @@ var user_id = '<?php echo $this->session->userdata('id')?>';
 var user_name = '<?php echo $this->session->userdata('name')?>';
 <?php
 endif;
+
+// Antivirus
+echo "var activar_antivirus = ";
+echo ($this->config->item('activar_antivirus') === TRUE) ?
+	'true' : 'false';
+echo ";\n";
 ?>
 //]]>
 </script>

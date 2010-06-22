@@ -221,24 +221,26 @@ function pagina_descarga(fid) {
 			});
 	});
 
-	// Estado de análisis del AV (cada 5s)
-	$("#info_av.pendiente").everyTime(5000, 'contador', function() {
-		$.ajax({
-			url: url_base + "ficheros/estadoav/" + fid,
-			cache: false,
-			dataType: "text",
-			success: function(d) {
-				// No sigue pendiente
-				if (d != "") {
-					$("#info_av").stopTime('contador');
-					$("#info_av").replaceWith(d);
+	if (activar_antivirus) {
+		// Estado de análisis del AV (cada 5s)
+		$("#info_av.pendiente").everyTime(5000, 'contador', function() {
+			$.ajax({
+				url: url_base + "ficheros/estadoav/" + fid,
+				cache: false,
+				dataType: "text",
+				success: function(d) {
+					// No sigue pendiente
+					if (d != "") {
+						$("#info_av").stopTime('contador');
+						$("#info_av").replaceWith(d);
+					}
+				},
+				error: function(obj, quepaso, otro) {
+					$("#info_av").html("Error desconocido al consultar vía AJAX");
 				}
-			},
-			error: function(obj, quepaso, otro) {
-				$("#info_av").html("Error desconocido al consultar vía AJAX");
-			}
-		});
-	}, 0, true);
+			});
+		}, 0, true);
+	} // Fin activar_antivirus
 
 	// Histórico de descargas
 	$("#historico_detallado").hide();

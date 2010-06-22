@@ -467,6 +467,15 @@ class Ficheros extends Controller {
 						. ' descarga(s)]';
 				}
 
+				// Antivirus
+				if ($this->activar_antivirus) {
+					$info_av = $this->antivirus->get($fid);
+					if ($info_av !== FALSE) {
+						$descripcion .= $this->load->view('antivirus/mini/' .
+								$info_av->estado, $info_av, true);
+					}
+				}
+
 			}
 			?>
 				<div class="envoltura_minipagina">

@@ -1,0 +1,3 @@
+#!/bin/bash
+exec /usr/local/bin/multilog \
+	t s104857600 n365 ./main

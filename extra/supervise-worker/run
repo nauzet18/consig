@@ -1,0 +1,12 @@
+#!/bin/bash
+
+USUARIO=apache
+RUTACONSIGNA=/home/jorge/consigna/
+
+exec /usr/local/bin/setuidgid $USUARIO \
+	/usr/local/bin/softlimit -m 268435456 \
+	/usr/bin/php \
+	${RUTACONSIGNA}/extra/antivirus-worker.php \
+	-c $RUTACONSIGNA \
+	-d
+

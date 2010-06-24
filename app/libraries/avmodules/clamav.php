@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2009 Jorge López Pérez <jorgelp@us.es>
+ * Copyright 2010 Jorge López Pérez <jorgelp@us.es>
  *
  *    This file is part of Consigna.
  *
@@ -19,8 +19,20 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Clamscan extends Avengine {
-	function Clamscan() {
+class Clamav extends Avengine {
+	// Ruta hacia el ejecutable usado junto a parámetros
+	private $rutayparam;
+
+	/**
+	 * Este módulo necesita las siguientes opciones:
+	 *
+	 *  'rutayparam': ruta completa al ejecutable de clamscan/clamdscan,
+	 *                junto a los argumentos pasados. Se recomienda
+	 *                usar los parámetros: -i --no-summary
+	 */
+
+	function __construct($config) {
+		$this->rutayparam = $config['rutayparam'];
 	}
 
 	/**
@@ -36,7 +48,7 @@ class Clamscan extends Avengine {
 	 *
 	 */
 	function scan($path) {
-		$orden = '/usr/bin/clamscan -i --no-summary ' . $path;
+		$orden = $this->rutayparam . ' ' . $path;
 
 		$salida = $this->my_exec($orden);
 		if ($salida['return'] != 0 && $salida['return'] != 1) {

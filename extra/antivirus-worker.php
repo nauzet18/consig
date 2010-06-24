@@ -79,7 +79,10 @@ require_once($ruta . 'app/libraries/pheanstalk/pheanstalk_init.php');
 require_once($ruta . 'app/libraries/Avengine.php');
 require_once($ruta . 'app/libraries/avmodules/' . $config['avmodule']
 		. '.php');
-$av = new $config['avmodule'];
+
+$avconfig= $config['avconfig'];
+
+$av = new $config['avmodule']($avconfig);
 
 try {
 	$pheanstalk = new Pheanstalk($config['beanstalkd_host'],
@@ -88,7 +91,7 @@ try {
 
 	while (1) {
 		$job = $pheanstalk
-			->watch('antivirus')
+			->watch($config['beanstalkd_tube'])
 			->ignore('default')
 			->reserve();
 

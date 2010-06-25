@@ -31,6 +31,7 @@
  * - Directorio de logs existente y con permiso de escritura
  * - Directorio de ficheros existente y con permiso de escritura
  * - PHP + LDAP si se usa el módulo correspondiente (+ conectividad)
+ * - cURL si se usa la funcionalidad del antivirus
  * - Reescritura de URLs
  */
 
@@ -183,18 +184,16 @@ if (isset($config['authmodule']) && $config['authmodule'] == 'LDAP') {
 			$ds = @ldap_connect($opciones["host"], $opciones["puerto"]);
 			if (!$ds) {
 				$tests[] = array('Conexión a LDAP', 'No se puede conectar' .
-						'Compruebe los parámetros de '
-						.'conexión a LDAP (fichero <tt>ldap.php</tt>');
+						'Problemas de creación en PHP '
+						.'para acceso a LDAP');
 			} else {
 				// Prueba de bind
 				if (@ldap_bind($ds, $opciones['dnadmin'],
 						$opciones['passwdadmin']) !== TRUE) {
 					// Problema con bind
-					$tests[] = array('LDAP', 'Se puede conectar pero no'
-						.' hacer bind', 'Compruebe el fichero '
-						.'<tt>ldap.php</tt>. A veces el problema es'
-						.' de conexión y no de binding, debido a ciertas'
-						.' limitaciones de PHP. Compruebe la conexión.');
+					$tests[] = array('LDAP', 'Problemas de conexión'
+						.' o bind en LDAP', 'Compruebe el fichero '
+						.'<tt>ldap.php</tt>. Error: ' . ldap_error($ds));
 				} else {
 					// Todo OK
 					$tests[] = array('LDAP', 'Sin problemas', 'OK');
@@ -204,8 +203,16 @@ if (isset($config['authmodule']) && $config['authmodule'] == 'LDAP') {
 	}
 }
 
-
-// Reescritura de URLs
+// cURL si se usa la funcionalidad del antivirus
+if (isset($config['activar_antivirus'])) {
+	if (!function_exists('curl_init')) {
+		$tests[] = array('cURL', 'No están disponibles las '
+			.'bibliotecas de cURL', 'Instale las extensiones'
+			.' cURL para PHP');
+	} else {
+		$tests[] = array('cURL', 'Extensiones instaladas', 'OK');
+	}
+}
 
 
 

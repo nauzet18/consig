@@ -5,8 +5,9 @@ Los requisitos software de consigna son los siguientes:
  * PHP PEAR/PECL 
  * MySQL
  * Integración de PHP y MySQL
- * Otros módulos para PHP (php-ldap si se va a usar módulo de LDAP, por
-   ejemplo)
+ * Otro software necesario: 
+   * php-ldap para el módulo de autenticación mediante LDAP
+   * curl y soporte en PHP para el mismo para el módulo de antivirus
 
 Pasos de instalación:
 --------------------
@@ -82,6 +83,9 @@ editarlos uno a uno:
 El fichero avanzadas.php dentro de config/ contiene una serie de opciones
 avanzadas que pueden usarse por defecto, aunque es posible modificarlas si
 se desea.
+
+Para configurar el antivirus en consigna se puede seguir la guía
+ https://labs.us.es/projects/consigna/wiki/AntivirusEnConsigna
 
 6. Hacer que la consigna sea accesible desde Apache
 

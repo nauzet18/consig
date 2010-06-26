@@ -248,7 +248,7 @@ $config['antivirus_max_clean_rescan'] = 86400; // 24*60*60
 
 // Tiempo máximo (en segundos) que un fichero en estado pendiente puede
 // estar en la base de datos sin ser analizado de nuevo
-$config['antivirus_max_pending'] = 86400; // 24*60*60
+$config['antivirus_max_pending'] = 14400; // 4*60*60
 
 
 // Módulo usado para analizar ficheros

@@ -120,7 +120,7 @@ function pagina_envio() {
 			$("#iframe_upload").remove();
 			$("body")
 				.append('<iframe name="iframe_upload" id="iframe_upload" '
-				+'onload="javascript:fin_envio(1);"></iframe>');
+				+'onload="javascript:fin_envio();"></iframe>');
 			$("#progreso").html("0%");
 			$("#progreso").width("0%");
 			$("#progreso_velocidad").html("- kB/s");
@@ -155,54 +155,29 @@ function pagina_envio() {
 					}
 				});
 			}, 0, true);
-			
-			// Pulsación de ESC para cancelar
-			/*
-			$(document).keypress(function (e) {
-				if (e.which == 0) {
-					fin_envio(2);
-				}
-			});
-			*/
-
 	});
 
 	// Evitamos que se siga enviando
 	$(window).unload(fin_envio);
-	/*
-  $("#progreso_cancelar").click(function() {
-    fin_envio(2);
-  });
-	*/
 }
 
-/*
- * Argumento tipo:
- *  1: fin del envío, correcto
- *  2: fin del envío por cancelación
- */
-function fin_envio(tipo) {
+function fin_envio() {
 	$("#progreso").stopTime('contador');
 	$("#iframe_upload").stop();
-	if (tipo == 1) {
-		$("#progreso").html("100%");
-		$("#progreso").width("100%");
-		// Redirigimos al usuario
-		var mensaje = $("#iframe_upload").contents().text();
-		if (mensaje.match(/^\d+$/)) {
-			if (user_auth == '') {
-				top.location.href = url_base;
-			} else {
-				top.location.href = url_base + '/ficheros/propios';
-			}
-			return; // Evitamos unblockUI
+	$("#progreso").html("100%");
+	$("#progreso").width("100%");
+	// Redirigimos al usuario
+	var mensaje = $("#iframe_upload").contents().text();
+	if (mensaje.match(/^\d+$/)) {
+		if (user_auth == '') {
+			top.location.href = url_base;
 		} else {
-			$("#form_subida").before('<div class="cuadro error">' 
-				+ mensaje + '</div>');
+			top.location.href = url_base + '/ficheros/propios';
 		}
-  } else if (tipo == 2) {
-		// Cancelado. Paramos
-		// window.stop();
+		return; // Evitamos unblockUI
+	} else {
+		$("#form_subida").before('<div class="cuadro error">' 
+			+ mensaje + '</div>');
 	}
 	$.unblockUI();
 }

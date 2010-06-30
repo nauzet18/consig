@@ -101,7 +101,7 @@ try {
 		} else {
 			$exito = FALSE;
 			debug($job->getData());
-			$trozos = split(' ', $job->getData());
+			$trozos = preg_split('/ /', $job->getData());
 
 			if ($trozos[0] == 'SCAN') {
 				$fid = $trozos[1];

@@ -32,6 +32,7 @@
  * - Directorio de ficheros existente y con permiso de escritura
  * - PHP + LDAP si se usa el módulo correspondiente (+ conectividad)
  * - cURL si se usa la funcionalidad del antivirus
+ * - php-mbstring si se usa la funcionalidad del antivirus
  * - Reescritura de URLs
  */
 
@@ -211,6 +212,15 @@ if (isset($config['activar_antivirus'])) {
 			.' cURL para PHP');
 	} else {
 		$tests[] = array('cURL', 'Extensiones instaladas', 'OK');
+	}
+
+	// Ídem para php-mbstring
+	if (!function_exists('mb_strlen')) {
+		$tests[] = array('php-mbstring', 'No están disponibles las '
+			.'bibliotecas mbstring', 'Instale las extensiones'
+			.' mbstring para PHP');
+	} else {
+		$tests[] = array('php-mbstring', 'Extensiones instaladas', 'OK');
 	}
 }
 

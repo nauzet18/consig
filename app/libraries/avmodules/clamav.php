@@ -57,7 +57,7 @@ class Clamav extends Avengine {
 					. $salida['stderr']);
 		} elseif (!empty($salida['stdout'])) {
 			// Infectado
-			$ts = split(' ', $salida['stdout']);
+			$ts = preg_split('/ /', $salida['stdout']);
 			$virus = $ts[1];
 			$result = array(1, $virus);
 		} else {

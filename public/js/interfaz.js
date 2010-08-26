@@ -167,8 +167,6 @@ function pagina_envio() {
 
 	});
 
-	// Evitamos que se siga enviando
-	$(window).unload(fin_envio);
 	/*
   $("#progreso_cancelar").click(function() {
     fin_envio(2);
@@ -199,6 +197,8 @@ function fin_envio(tipo) {
 		} else {
 			$("#form_subida").before('<div class="cuadro error">' 
 				+ mensaje + '</div>');
+			var destino_scroll = $(".error").offset().top;
+			$('html,body').animate({scrollTop: destino_scroll}, "fast", "swing");
 		}
   } else if (tipo == 2) {
 		// Cancelado. Paramos

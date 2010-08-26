@@ -157,8 +157,6 @@ function pagina_envio() {
 			}, 0, true);
 	});
 
-	// Evitamos que se siga enviando
-	$(window).unload(fin_envio);
 }
 
 function fin_envio() {
@@ -178,6 +176,8 @@ function fin_envio() {
 	} else {
 		$("#form_subida").before('<div class="cuadro error">' 
 			+ mensaje + '</div>');
+		var destino_scroll = $(".error").offset().top;
+		$('html,body').animate({scrollTop: destino_scroll}, "fast", "swing");
 	}
 	$.unblockUI();
 }

@@ -28,6 +28,9 @@ CREATE TABLE IF NOT EXISTS `mimetypes` (
 
 	PRIMARY KEY(mid));
 
+CREATE INDEX idx_mimetype_extension
+ON mimetypes(extension);
+
 
 CREATE TABLE IF NOT EXISTS `usercache` (
 	`id` VARCHAR(200) NOT NULL,
@@ -46,6 +49,10 @@ session_user_agent varchar(50) NOT NULL,
 session_data text default '' NOT NULL,
 PRIMARY KEY (session_id)
 ); 
+
+CREATE INDEX idx_session_last_activity
+ON ci_sessions(session_last_activity);
+
 
 /*
  * Antivirus

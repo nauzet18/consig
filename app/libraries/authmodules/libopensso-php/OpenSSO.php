@@ -4,7 +4,7 @@
  *
  * Jorge López Pérez <jorgelp@us.es>
  *
- *  v0.2 , 8/may/2010
+ *  v0.3.3 , 2/dic/2010
  */
 
 require_once('config.php');
@@ -15,7 +15,41 @@ class OpenSSO {
 	private $err;
 	private $attributes;
 
+	// To be used on certificate validation
+	private $context;
+
 	function OpenSSO($fetch_cookie_name = FALSE) {
+		// Initialization
+		$package = CONFIG_PACK;
+		if (!is_dir(PACK_DIR . CONFIG_PACK)) {
+			$this->error = 'Package ' . CONFIG_PACK . ' inexistent';
+			return;
+		}
+
+		include(PACK_DIR . CONFIG_PACK . '/config.php');
+
+		$this->context = stream_context_create();
+
+		if (defined('VALIDATE_CERT') && VALIDATE_CERT == TRUE) {
+			$options = array('ssl' =>
+					array(
+						'verify_peer' => TRUE,
+						'cafile' => PACK_DIR . CONFIG_PACK . '/ca.crt',
+						'capture_peer_cert' => TRUE,
+						));
+
+			if (defined('SELF_SIGNED') && SELF_SIGNED === TRUE) {
+				unset($options['ssl']['cafile']);
+				$options['ssl']['allow_self_signed'] = TRUE;
+			}
+
+			$result = stream_context_set_option($this->context, $options);
+			if (FALSE === $result) {
+				$this->error = 'Error setting options for ssl context';
+				return;
+			}
+		}
+
 		if ($fetch_cookie_name === TRUE) {
 			// Fetch cookie name
 			$res = $this->identity_query(OPENSSO_COOKIE_NAME_FETCH, 'POST');
@@ -39,9 +73,14 @@ class OpenSSO {
 		if (isset($_GET[$this->cookiename]) &&
 				(!isset($_COOKIE[$this->cookiename]) ||
 				 $_COOKIE[$this->cookiename] != $_GET[$this->cookiename])) {
-			$this->token = $_GET[$this->cookiename];
+
 			// Internet Explorer workaround
-			setcookie($this->cookiename, $this->token, 0, '/');
+			if (isset($_SERVER['HTTPS'])) {
+				$this->token = $_GET[$this->cookiename];
+			}
+
+			setcookie($this->cookiename, $this->token, 0, '/',
+					$_SERVER['HTTP_HOST'], TRUE);
 		} elseif (isset($_COOKIE[$this->cookiename])) {
 			// Incorrect encoding of + to " "
 			$this->token = preg_replace('/ /', '+',
@@ -112,7 +151,7 @@ class OpenSSO {
 					</div>
 				<?php
 				exit;
-			} elseif ($res->code == '401') {
+			} elseif (isset($res->code) && $res->code == '401') {
 				// Caso token inválido
 			} elseif (!isset($res->error)) {
 				$this->error = 'HTTP result = ' . $res->code;
@@ -200,16 +239,21 @@ class OpenSSO {
 		$result = new stdClass();
 		$uri = parse_url($url);
 
+		$socket_dest = $uri['scheme'] == 'http' ? 'tcp' : 'ssl';
+		$socket_dest .= '://';
+
 		switch ($uri['scheme']) {
 			case 'http':
 				$port = isset($uri['port']) ? $uri['port'] : 80;
-				$host = $uri['host'] . ($port != 80 ? ':'. $port : '');
-				$fp = @fsockopen($uri['host'], $port, $errno, $errstr, 15);
+				$socket_dest .= $uri['host'] . ':' . $port . '/';
+				$fp = @stream_socket_client($socket_dest, $errno, $errstr,
+						15, STREAM_CLIENT_CONNECT);
 				break;
 			case 'https':
 				$port = isset($uri['port']) ? $uri['port'] : 443;
-				$host = $uri['host'] . ($port != 443 ? ':'. $port : '');
-				$fp = @fsockopen('ssl://'. $uri['host'], $port, $errno, $errstr, 20);
+				$socket_dest .= $uri['host'] . ':' . $port . '/';
+				$fp = @stream_socket_client($socket_dest, $errno, $errstr,
+						20, STREAM_CLIENT_CONNECT, $this->context);
 				break;
 			default:
 				$result->error = 'Invalid protocol: '. $uri['scheme'];
@@ -217,10 +261,31 @@ class OpenSSO {
 		}
 
 		if (!$fp) {
-			$result->error = trim($errno .' '. $errstr);
+			if (FALSE === $fp && $errno == 0) {
+				$result->error = 'SSL verification failed or connection failed';
+				$result->error .= $errstr;
+			} else {
+				$result->error = trim($errno .' '. $errstr);
+			}
 			return $result;
 		}
-		
+
+
+		// Certificate validation
+		if (defined('VALIDATE_CERT') && VALIDATE_CERT === TRUE) {
+			$options = stream_context_get_options($this->context);
+			$site_cert =
+				openssl_x509_parse($options['ssl']['peer_certificate']);
+
+			if (defined('CRT_SERIALNUMBER')) {
+				if ($site_cert['serialNumber'] != CRT_SERIALNUMBER) {
+					$result->error = 'Invalid certificate serial number ('
+							.$site_cert['serialNumber'].')';
+					return $result;
+				}
+			}
+		}
+
 		$path = isset($uri['path']) ? $uri['path'] : '/';
 		if (!empty($query)) {
 			$path .= '?' . $query;
@@ -228,8 +293,8 @@ class OpenSSO {
 
 		// Create HTTP request.
 		$defaults = array(
-				'Host' => "Host: $host",
-				'User-Agent' => 'User-Agent: libopensso 0.2',
+				'Host' => "Host: " . $uri['host'],
+				'User-Agent' => 'User-Agent: libopensso-php 0.3.3',
 		);
 
 		$request = $method .' '. $path ." HTTP/1.0\r\n";

@@ -121,13 +121,13 @@ class TrabajoFicheros extends Model {
 		foreach ($condiciones as $a => $v) {
 			$sub =& $q->where();
 			$sub->where($a, $v);
+		}
 
-			if (count($patrones) > 0) {
-				$sub2 =& $sub->where();
+		if (count($patrones) > 0) {
+				$sub2 =& $q->where();
 				foreach ($patrones as $a2 => $p) {
 					$sub2->or_like($a2, $p, 'both');
 				}
-			}
 		}
 
 		// Orden

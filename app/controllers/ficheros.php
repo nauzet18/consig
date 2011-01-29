@@ -52,14 +52,15 @@ class Ficheros extends Controller {
 		$opciones = array(
 				'atr_orden' => $atr_orden,
 				'orden' => $orden,
-				'filtros' => array(
-					'listar' => 1
-				),
+				'filtros' => array(),
 				'busquedas' => array(),
 				'seccion' => 'index',
 				'caja_busqueda' => 1,
 		);
 
+		if ($this->gestionpermisos->es_privilegiado() === FALSE) {
+			$opciones['filtros']['listar'] = 1;
+		}
 
 		$this->_presentar_listado($opciones);
 	}
@@ -416,9 +417,7 @@ class Ficheros extends Controller {
 			$opciones = array(
 					'atr_orden' => $atr_orden,
 					'orden' => $orden,
-					'filtros' => array(
-						'listar' => 1
-					),
+					'filtros' => array(),
 					'busquedas' => array(
 						'nombre' => $cadena,
 						'descripcion' => $cadena),
@@ -428,6 +427,9 @@ class Ficheros extends Controller {
 						$cadena .')',
 			);
 
+			if ($this->gestionpermisos->es_privilegiado() === FALSE) {
+				$opciones['filtros']['listar'] = 1;
+			}
 
 			$this->_presentar_listado($opciones);
 		}

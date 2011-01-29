@@ -247,7 +247,7 @@ var url_base = '<?php echo $config['base_url']?>';
 //]]>
 </script>
 <script language="JavaScript" type="text/javascript"
-src="<?php echo $config['base_url']?>js/jquery-1.4.2.min.js"></script>
+src="<?php echo $config['base_url']?>js/jquery-1.4.4.min.js"></script>
 <script language="JavaScript" type="text/javascript"
 src="<?php echo $config['base_url']?>js/configtest.js"></script>
 

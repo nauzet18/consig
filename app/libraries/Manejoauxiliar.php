@@ -155,28 +155,33 @@ class Manejoauxiliar {
 
 	/**
 	 * Devuelve un usuario formateado convenientemente en HTML.
-	 * Los administradores verán más información (IP, etc)
 	 *
-	 * @param object	Fichero cargado de la base de datos
+	 * @param string	Identidad del usuario según está almacenada
+	 * @param boolean	Mostrar el usuario real siempre
+	 * @param string	IP a mostrar (opcional)
 	 */
-	function remitente_de($fichero) {
 
+	function presenta_usuario($identidad, $no_ocultar = FALSE, $ip = '') {
 		$cadena = '';
-		$usuario = $fichero->remitente;
-		$ip = $fichero->ip;
 		$privilegiado = $this->CI->gestionpermisos->es_privilegiado();
+
+		// Hay una inconsistencia en el historial de descargas con los
+		// usuarios anónimos
+		if ($identidad == '-') {
+			$identidad = '';
+		}
 
 		// Carga de datos
 		$datos = FALSE;
-		if (!empty($usuario) && ($privilegiado === TRUE ||
-					$fichero->mostrar_autor)) {
-			$datos = $this->CI->auth->get_user_data($usuario);
+		if (!empty($identidad) && ($privilegiado === TRUE ||
+					$no_ocultar)) {
+			$datos = $this->CI->auth->get_user_data($identidad);
 		}
 
-		if (empty($usuario)) {
+		if (empty($identidad)) {
 			$cadena = 'Anónimo';
 		} else {
-			if (!$fichero->mostrar_autor) {
+			if ($no_ocultar === FALSE) {
 				$cadena = 'Anónimo *';
 			} else {
 				$cadena = ($datos === FALSE) 
@@ -185,10 +190,10 @@ class Manejoauxiliar {
 		}
 
 		// Caso privilegiado
-		if ($privilegiado) {
-			$cadena .= ' (IP: ' . $fichero->ip;
+		if ($privilegiado && !empty($ip)) {
+			$cadena .= ' (IP: ' . $ip;
 			if ($datos !== FALSE) {
-				if (!$fichero->mostrar_autor) {
+				if ($no_ocultar === FALSE) {
 					$cadena .= ', ' . $datos['name'];
 				}
 
@@ -199,6 +204,19 @@ class Manejoauxiliar {
 		}
 
 		return '<span class="usuario">' . $cadena .  '</span>';
+	}
+
+	/**
+	 * Devuelve la información formateada en HTML del usuario que envió un
+	 * fichero dado.
+	 *
+	 * @param object	Fichero cargado de la base de datos
+	 */
+	function remitente_de($fichero) {
+
+		return $this->presenta_usuario($fichero->remitente,
+				($fichero->mostrar_autor === '1' ? TRUE : FALSE),
+				$fichero->ip);
 	}
 
 	/*

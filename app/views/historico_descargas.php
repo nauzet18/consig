@@ -21,7 +21,6 @@ if (isset($historico_detallado)):
   <tr>
    <th>Fecha y hora</th>
    <th>Identidad del usuario</th>
-   <th>IP</th>
   </tr>
  </thead>
  <tbody>
@@ -30,8 +29,10 @@ if (isset($historico_detallado)):
 		echo '<tr>';
 		echo '<td>' .
 			$this->manejoauxiliar->fecha_legible($descarga->timestamp) . '</td>';
-		echo '<td>' . $descarga->identidad . '</td>';
-		echo '<td>' . $descarga->ip . '</td>';
+		echo '<td>' . 
+			$this->manejoauxiliar->presenta_usuario($descarga->identidad,
+					TRUE,
+					$descarga->ip). '</td>';
 		echo '</tr>';
 	}
 ?>

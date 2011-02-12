@@ -10,6 +10,14 @@
 |
 */
 
+$hook['pre_system'] = array(
+		'class' => 'Defs',
+		'function' => 'definiciones',
+		'filename' => 'Defs.php',
+		'filepath' => 'hooks',
+		);
+
+
 
 
 /* End of file hooks.php */

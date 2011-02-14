@@ -31,6 +31,8 @@ if (count($ficheros) == 0) {
 		.'No hay ficheros para mostrar</td></tr>';
 }
 
+$es_privilegiado = $this->gestionpermisos->es_privilegiado();
+
 foreach ($ficheros as $f) {
 	// Estimación de mimetype
 	$mimetype = $this->trabajoficheros->consigue_mimetype($f->nombre);
@@ -87,7 +89,7 @@ foreach ($ficheros as $f) {
 	// Fecha de envío, y expiración si es el propietario del fichero
 	$texto_fecha = $this->manejoauxiliar->fecha_legible($f->fechaenvio);
 
-	if ($es_propietario) {
+	if ($es_privilegiado || $es_propietario) {
 		 $texp =  $f->fechaexp - time();
 		 if ($texp <= 0) {
 			 $texto_expiracion = 'a punto de caducar';

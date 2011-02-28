@@ -454,9 +454,8 @@ class Ficheros extends Controller {
 				$descripcion = "Autent&iacute;quese o acceda desde la red de la
 					Universidad de Sevilla";
 			} else {
-				$mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
 				$titulo = $fichero->nombre;
-				$img = site_url('img/tipos/32x32/' . $mimetype[1]);
+				$img = site_url('img/tipos/32x32/' . $fichero->icono);
 				$descripcion = empty($fichero->descripcion) ? 'Sin descripción' :
 					$fichero->descripcion;
 
@@ -753,6 +752,18 @@ class Ficheros extends Controller {
 					$this->session->userdata('id') :
 					'';
 				$data['ip'] = $this->input->ip_address();
+
+				// Almacenamos referencia al icono
+				// Valor por defecto
+				$data['mid'] = 0;
+				if (strpos($data['nombre'], ".") !== FALSE) {
+					$partes = preg_split("/\./", $data['nombre']);
+					$extension = $partes[count($partes) - 1];
+					// TODO: en un futuro, pensar en obtener
+					// el mimetype real
+					$q = $this->trabajoficheros->consulta_mimetype($extension);
+					$data['mid'] = $q->mid;
+				}
 
 			} else {
 				// Cargamos de la base de datos lo referente al fichero que

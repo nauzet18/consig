@@ -133,43 +133,58 @@ class TrabajoFicheros extends Model {
 		// Orden
 		$q->order_by($ordenar_por, $orden);
 
+		// Mimetype
+		$mimetype_defecto =
+			$this->db->escape($this->config->item('mimetype_defecto'));
+		$icono_defecto =
+			$this->db->escape($this->config->item('mimetype_icono_defecto'));
+
+		$q->join('mimetypes', 'ficheros.mid = mimetypes.mid', 'left');
+		$q->select("ficheros.*, IF(ISNULL(mimetype), "
+				. $mimetype_defecto .", mimetype) as mimetype, "
+				." IF(ISNULL(icono), ".$icono_defecto.", icono) as icono",
+				false);
         $query = $q->get('ficheros');
 
         $res = $query->result();
 
         if (isset($condiciones['fid']) && (!$res || count($res) == 0)) {
             return FALSE;
-        } else if (isset($condiciones['fid'])) {
-			return $res[0];
-		} else {
-            return $res;
         }
+
+		return isset($condiciones['fid']) ? $res[0] : $res;
 
     }
 
+
 	/*
 	 * "Aproxima" el mimetype de un fichero a partir de su extensión,
-	 * devolviendo un array con dos elementos: el mimetype y su icono, si lo
-	 * hubiera
+	 * devolviendo la fila concreta en la base de datos
 	 */
 
-	function consigue_mimetype($nombre) {
+	function consulta_mimetype($extension) {
+		// Valores por defecto
+		$mid = 0;
 		$mimetype = $this->config->item('mimetype_defecto');
 		$icono = $this->config->item('mimetype_icono_defecto');
-		if (strpos($nombre, ".") !== FALSE) {
-			$partes = preg_split("/\./", $nombre);
-			$extension = $partes[count($partes) - 1];
-			$q = $this->db->get_where('mimetypes', 
-					array('extension' => $extension),
-					1);
-			$res = $q->row();
-			if ($res) {
-				$mimetype = $res->mimetype;
-				$icono = empty($res->icono) ? "mime.png" : $res->icono;
-			}
+
+		// De momento nos quedamos con la primera ocurrencia según
+		// la extensión. Más adelante se debería comprobar el verdadero
+		// mimetype
+		$q = $this->db->get_where('mimetypes', 
+				array('extension' => $extension),
+				1);
+		$res = $q->row();
+		if ($res) {
+			$mid = $res->mid;
+			$mimetype = $res->mimetype;
+			$icono = empty($res->icono) ? "mime.png" : $res->icono;
 		}
 
-		return array($mimetype, $icono);
+		return (object) array(
+				'mid' => $mid, 
+				'mimetype' => $mimetype,
+				'icono' => $icono);
 	}
 
 

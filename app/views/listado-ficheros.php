@@ -34,8 +34,6 @@ if (count($ficheros) == 0) {
 $es_privilegiado = $this->gestionpermisos->es_privilegiado();
 
 foreach ($ficheros as $f) {
-	// Estimación de mimetype
-	$mimetype = $this->trabajoficheros->consigue_mimetype($f->nombre);
 	$es_propietario = FALSE;
 
 	// ¿Tiene permitido el acceso?
@@ -55,8 +53,8 @@ foreach ($ficheros as $f) {
 	  alt="acceso denegado"/>';
     } else {
 		echo '<img src="' 
-			. site_url('img/tipos/32x32/' . $mimetype[1]) 
-			. '" alt="' . $mimetype[0] . '"/>';
+			. site_url('img/tipos/32x32/' . $f->icono) 
+			. '" alt="' . $f->mimetype. '"/>';
 		if ($f->listar == 0) {
 			echo '<img class="icono_oculto" src="'
 				. site_url('img/interfaz/oculto.png')

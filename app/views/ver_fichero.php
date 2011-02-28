@@ -11,9 +11,6 @@ if (isset($error)) {
 	echo '<div class="cuadro error">' . $error . '</div>';
 }
 
-
-// Estimación de mimetype
-$mimetype = $this->trabajoficheros->consigue_mimetype($fichero->nombre);
 ?>
 
 
@@ -25,8 +22,8 @@ if (empty($fichero->password)) {
 		.'">';
 }
 ?>
- <img src="<?php echo site_url('img/tipos/128x128/' . $mimetype[1])?>"
-  alt="<?php echo $mimetype[0]?>" /><br />
+ <img src="<?php echo site_url('img/tipos/128x128/' . $fichero->icono)?>"
+  alt="<?php echo $fichero->mimetype?>" /><br />
 
  <span class="nombre_fichero<?php echo
  ($this->trabajoficheros->es_propietario($fichero) ? ' fichero_propio' : '')

@@ -61,7 +61,7 @@ sobre la descarga.
  Enter password: (el de root)
  mysql> GRANT ALL PRIVILEGES ON consigna.* TO consigna@localhost
         IDENTIFIED BY 'password-de-consigna';
- mysql> CREATE DATABASE consigna;
+ mysql> CREATE DATABASE consigna CHARACTER SET utf8 COLLATE utf8_general_ci;
  mysql> FLUSH PRIVILEGES;
 
 4. Creación de las tablas de consigna

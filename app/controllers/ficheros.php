@@ -111,11 +111,6 @@ class Ficheros extends Controller {
 					'subtitulo' => 'enviar nuevo fichero',
 					'body_onload' => 'pagina_envio()',
 					'no_mostrar_aviso' => TRUE,
-					'js_adicionales' => array(
-						'jquery.timers.js',
-						'jquery.blockUI_2.31.js',
-						'jquery.dimensions.pack.js',
-					),
 			);
 			$this->load->view('cabecera', $data);
 
@@ -137,7 +132,14 @@ class Ficheros extends Controller {
 			}
 
 
-			$this->load->view('pie');
+			$data = array(
+					'js_adicionales' => array(
+						'jquery.timers.js',
+						'jquery.blockUI_2.31.js',
+						'jquery.dimensions.pack.js',
+					),
+					);
+			$this->load->view('pie', $data);
 		} else {
 			// Si es desatendido, sólo imprimir el identificador que 
 			// ha asignado la bd
@@ -204,6 +206,8 @@ class Ficheros extends Controller {
 				'no_mostrar_aviso' => 1
 		);
 
+		$data_pie = array();
+
 		$permiso = $this->gestionpermisos->acceso_fichero($fichero);
 
 		$pide_descarga = $descargar == 'descarga';
@@ -263,13 +267,13 @@ class Ficheros extends Controller {
 					.$fichero->fid.')';
 
 			if ($this->activar_antivirus === TRUE) {
-				$data_cabecera['js_adicionales'] =
+				$data_pie['js_adicionales'] =
 					array('jquery.timers.js');
 			}
 
 			$this->load->view('cabecera', $data_cabecera);
 			$this->load->view('ver_fichero', $data_fichero);
-			$this->load->view('pie');
+			$this->load->view('pie', $data_pie);
 		} else {
 			// Acceso denegado
 			$data_cabecera['subtitulo'] = 'acceso denegado';

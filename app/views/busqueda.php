@@ -15,7 +15,7 @@ $data_casilla = array(
 );
 echo anchor('ayuda#busqueda', 
         '<img src="'.site_url('img/interfaz/ayuda_peq.png')
-        .'" alt="Ayuda sobre búsqueda" />');
+        .'" alt="Ayuda sobre búsqueda" width="16" height="16"/>');
 echo form_input($data_casilla);
 echo form_submit('Enviar', 'Buscar');
 echo form_close();

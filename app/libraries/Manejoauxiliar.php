@@ -121,7 +121,7 @@ class Manejoauxiliar {
 							.'/' . $orden_contrario), $t);
 				$resultado[$k] .= ' <img src="'
 					.site_url('img/interfaz/flecha_'.$orden_contrario.'.png')
-					.'" alt="Ordenar " />';
+					.'" alt="Ordenar" width="13" height="13" />';
 			} else {
 				$resultado[$k] = anchor(site_url($seccion . '/' . $k
 							.'/asc'), $t);

@@ -18,6 +18,7 @@ if (isset($css_adicionales)) {
 }
 ?>
 
+
 <?php
  if ($this->config->item('habilitar_favicon')):
  ?>
@@ -27,6 +28,12 @@ if (isset($css_adicionales)) {
  endif;
 ?>
 
+<style type="text/css">
+<?php 
+// Arreglo de PNGs en Explorer (carga de Javascript)
+echo '#menu img, #listado-ficheros img, .descarga_fichero img, .close { _behavior: url(' . site_url('js/iepngfix.htc') . '); }';
+?>
+</style>
 
 <script language="JavaScript" type="text/javascript">
 //<![CDATA[
@@ -50,33 +57,7 @@ echo ";\n";
 ?>
 //]]>
 </script>
-<script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery-1.4.4.min.js')?>"></script>
-<script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.overlay-1.2.3.pack.js')?>"></script>
-<script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/interfaz.js')?>"></script>
-<script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.hoverIntent.js')?>"></script>
-<script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.cluetip.js')?>"></script>
 
-<?php
-if (isset($js_adicionales)) {
-	foreach ($js_adicionales as $js) {
-		echo '<script language="JavaScript" type="text/javascript" src="'
-			.site_url('js/'.$js).'"></script>' . "\n";
-	}
-}
-?>
-
-<style type="text/css">
-<?php 
-// Arreglo de PNGs en Explorer (carga de Javascript)
-echo '#menu img, #listado-ficheros img, .descarga_fichero img, .close { _behavior: url(' . site_url('js/iepngfix.htc') . '); }';
-?>
-
-</style>
 </head>
 
 <body<?php echo isset($body_onload) ? ' onload="javascript:'.$body_onload.';"' : ''?>>
@@ -94,7 +75,7 @@ if ($autenticado !== FALSE) {
  <div id="logo">
   <a href="http://www.us.es">
      <img id="imagen" src="<?php echo site_url('img/logos/Logo.gif')?>" 
-  	alt="Universidad de Sevilla" />
+  	alt="Universidad de Sevilla" width="105" height="91" />
   </a>
   <div id="titulologo">
   <h1><a href="<?php echo site_url()?>">Consigna</a></h1>
@@ -106,7 +87,8 @@ if ($autenticado !== FALSE) {
   <ul>
    <li class="first">
    <div><a href="<?php echo site_url('ayuda')?>">
-     <img src="<?php echo site_url('img/interfaz/ayuda.png')?>" alt="Ayuda" /><br />
+     <img src="<?php echo site_url('img/interfaz/ayuda.png')?>" alt="Ayuda"
+	 width="48" height="48" /><br />
 	 Ayuda</a>
 	 <br /><span id="cond_uso">[<a rel="#cond_usoOverlay" href="<?php echo
 	 site_url('ayuda/legal')?>">condiciones de uso</a>]</span>
@@ -114,7 +96,8 @@ if ($autenticado !== FALSE) {
    </li>
 
    <li><div><a href="<?php echo site_url('ficheros/nuevo')?>">
-     <img src="<?php echo site_url('img/interfaz/nuevo.png')?>" alt="Nuevo" /><br />
+     <img src="<?php echo site_url('img/interfaz/nuevo.png')?>" alt="Nuevo" 
+	 width="48" height="48" /><br />
 	 Nuevo</a></div>
    </li>
    <?php
@@ -139,7 +122,8 @@ if ($autenticado !== FALSE) {
 	}
    ?>
    <li><div><a <?php echo ($has_form ? 'rel="#loginOverlay"' : '')?> href="<?php echo $url_login; ?>"> 
-     <img src="<?php echo site_url('img/interfaz/login.png')?>" alt="login" /><br />
+     <img src="<?php echo site_url('img/interfaz/login.png')?>" alt="login"
+	 width="48" height="48" /><br />
 	 Autenticaci&oacute;n</a></div>
    </li>
    <?php
@@ -151,7 +135,8 @@ if ($autenticado !== FALSE) {
 	 Mis ficheros</a></div>
    </li>
    <li><div><a href="<?php echo site_url('usuario/salir'); ?>">
-     <img src="<?php echo site_url('img/interfaz/salir.png')?>" alt="salir" /><br />
+     <img src="<?php echo site_url('img/interfaz/salir.png')?>" alt="salir"
+	 width="48" height="48"/><br />
 	 Salir</a></div>
    </li>
    <?php

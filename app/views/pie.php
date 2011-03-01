@@ -16,6 +16,26 @@
  </p>
 </div>
 
+<script language="JavaScript" type="text/javascript" src="<?php echo
+site_url('js/jquery-1.4.4.min.js')?>"></script>
+<script language="JavaScript" type="text/javascript" src="<?php echo
+site_url('js/jquery.overlay-1.2.3.pack.js')?>"></script>
+<script language="JavaScript" type="text/javascript" src="<?php echo
+site_url('js/interfaz.js')?>"></script>
+<script language="JavaScript" type="text/javascript" src="<?php echo
+site_url('js/jquery.hoverIntent.js')?>"></script>
+<script language="JavaScript" type="text/javascript" src="<?php echo
+site_url('js/jquery.cluetip.js')?>"></script>
+
+<?php
+if (isset($js_adicionales)) {
+	foreach ($js_adicionales as $js) {
+		echo '<script language="JavaScript" type="text/javascript" src="'
+			.site_url('js/'.$js).'"></script>' . "\n";
+	}
+}
+?>
+
 </body>
 
 </html>

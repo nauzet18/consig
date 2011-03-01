@@ -50,11 +50,11 @@ foreach ($ficheros as $f) {
 	echo '   <td>';
     if (!$permitido) {
         echo '<img src="' . site_url('img/interfaz/prohibido.png') .'"
-	  alt="acceso denegado"/>';
+	  alt="acceso denegado" width="32" height="32" />';
     } else {
 		echo '<img src="' 
 			. site_url('img/tipos/32x32/' . $f->icono) 
-			. '" alt="' . $f->mimetype. '"/>';
+			. '" width="32" height="32" alt="' . $f->mimetype. '"/>';
 		if ($f->listar == 0) {
 			echo '<img class="icono_oculto" src="'
 				. site_url('img/interfaz/oculto.png')

@@ -257,4 +257,11 @@ $config['avmodule'] = '';
 // Opciones del módulo configurado
 $config['avconfig'] = array();
 
+/*
+|--------------------------------------------------------------------------
+| Opciones adicionales
+|--------------------------------------------------------------------------
+*/
+$config['autoversionar_estaticos'] = FALSE;
+
 // vim: filetype=php

@@ -98,9 +98,9 @@ que aloja la consigna. Por ejemplo, suponiendo que consigna está en
 configuración para Apache:
 
  DocumentRoot /var/www/consigna/public
- <Location /var/www/consigna>
+ <Directory /var/www/consigna>
   AllowOverride All
- </Location>
+ </Directory>
 
 No es necesario dedicar un VirtualHost exclusivamente a consigna, se puede
 definir un Alias apuntando al directorio public/. No hay que olvidar que si

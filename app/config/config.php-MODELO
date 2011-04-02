@@ -262,6 +262,12 @@ $config['avconfig'] = array();
 | Opciones adicionales
 |--------------------------------------------------------------------------
 */
+
+// Añadir cadenas de versión a los ficheros estáticos (útil para caché)
 $config['autoversionar_estaticos'] = FALSE;
+
+// Permitir la actualización de la base de datos (IMPORTANTE: volver a
+// desactivarlo tras actualizar)
+$config['habilitar_upgrade'] = FALSE;
 
 // vim: filetype=php

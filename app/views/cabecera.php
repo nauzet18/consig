@@ -83,6 +83,9 @@ if ($autenticado !== FALSE) {
   </div>
  </div> <!-- logo -->
 
+ <?php
+ if (!isset($no_mostrar_menu)):
+ ?>
  <div id="menu">
   <ul>
    <li class="first">
@@ -144,6 +147,9 @@ if ($autenticado !== FALSE) {
    ?>
   </ul>
  </div> <!-- menu -->
+ <?php
+ endif; // $no_mostrar_menu
+ ?>
 
 </div> <!-- cabecera -->
 

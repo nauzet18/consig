@@ -19,9 +19,28 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Defs {
-	function definiciones() {
-		define('VERSIONCONSIGNA', '1.4');
-		define('VERSIONBD', '1');
+class Actualizacionesbd extends Model {
+	function Actualizacionesbd() {
+		parent::Model();
+	}
+
+	/**
+	 * Lee las actualizaciones que hay que aplicar para una determinada
+	 * versión de la base de datos.
+	 *
+	 * @param $version		Número de versión de la base de datos
+	 * @return				Array asociativo con las actualizaciones, FALSE
+	 * 						si no se encontró el fichero de actualizaciones
+	 */
+	function leer($version) {
+		// Sólo números
+		$version = preg_replace('[^0-9]', '', $version);
+		$ruta = APPPATH . 'libraries/Bd_' . $version . '.php';
+		
+		if (!file_exists($ruta)) {
+			log_message('error', 'Intento de recoger actualizaciones '
+					.'del esquema para versión inexistente ('.$version.')');
+			return FALSE;
+		}
 	}
 }

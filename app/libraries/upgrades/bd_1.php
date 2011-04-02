@@ -19,9 +19,15 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Defs {
-	function definiciones() {
-		define('VERSIONCONSIGNA', '1.4');
-		define('VERSIONBD', '1');
+if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+
+class Bd_01 {
+	public $pasos = array(
+			'sql', '...',
+			'funcion', array($this, 'actualiza_extensiones'),
+			'sql', '...',
+			);
+
+	function actualiza_extensiones() {
 	}
 }

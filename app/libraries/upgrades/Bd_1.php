@@ -21,13 +21,13 @@
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
-class Bd_01 {
-	public $pasos = array(
-			'sql', '...',
-			'funcion', array($this, 'actualiza_extensiones'),
-			'sql', '...',
+class Bd_1 {
+	public static $pasos = array(
+			array('sql', '...'),
+			array('actualiza_extensiones'),
+			array('sql', '...'),
 			);
 
-	function actualiza_extensiones() {
+	static function actualiza_extensiones() {
 	}
 }

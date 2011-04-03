@@ -33,14 +33,68 @@ class Actualizacionesbd extends Model {
 	 * 						si no se encontró el fichero de actualizaciones
 	 */
 	function leer($version) {
-		// Sólo números
-		$version = preg_replace('[^0-9]', '', $version);
-		$ruta = APPPATH . 'libraries/Bd_' . $version . '.php';
+		$clase = 'Bd_' . $version;
+		$ruta = APPPATH . 'libraries/upgrades/' . $clase . '.php';
 		
 		if (!file_exists($ruta)) {
 			log_message('error', 'Intento de recoger actualizaciones '
 					.'del esquema para versión inexistente ('.$version.')');
 			return FALSE;
 		}
+
+		require_once($ruta);
+		return $clase::$pasos;
+	}
+
+	/**
+	 * Ejecuta las actualizaciones pasadas de una versión dada del esquema.
+	 * Éstas vienen definidas como un array, que tendrá la siguiente forma:
+	 *
+	 * (operación, parámetros)
+	 *
+	 * Donde operación puede ser:
+	 * 
+	 * - sql : ejecuta una sentencia SQL
+	 * - nombre de función: ejecuta el método 'nombre de función' de la
+	 *                      clase que contiene las actualizaciones.
+	 *
+	 * @param	$version			Versión del esquema
+	 * @param	$error				Error (si lo hubo)
+	 * @return	boolean				TRUE si todo fue bien, FALSE si no
+	 */
+
+	function ejecutar($version, &$error) {
+		// Sólo números
+		$version = preg_replace('[^0-9]', '', $version);
+		$ops = $this->leer($version);
+		if (FALSE === $ops) {
+			$error = 'No existe la actualización de esquema v' . $version;
+			return FALSE;
+		}
+
+		if (!is_array($ops)) {
+			log_message('error', 'Actualizaciones de v' . $version
+					.' incorrectas, revise la sintaxis.');
+			$error = 'La actualización de v'. $version . ' está mal definida';
+			return FALSE;
+		}
+
+		$mensaje_log = 'UPGRADE v' . $version . ' Ejecutando ';
+		foreach ($ops as $op) {
+			if ($op[0] == 'sql') {
+				// Ejecutar código SQL
+				log_message('info', $mensaje_log . 'SQL: ' .  $op[1]);
+				// $res = $this->db->simple_query($op[1]);
+				if (FALSE === $res) {
+					$error = 'Falló la sentencia SQL ' . $op[1]);
+					return FALSE;
+				}
+			} else {
+				// Ejecutar función
+				log_message('info', $mensaje_log . 'método: ' .  $op[0]);
+			}
+		}
+
+		return TRUE;
 	}
 }

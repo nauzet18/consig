@@ -48,8 +48,12 @@ class Upgrade extends Controller {
 		$versionbd_usandose = $this->trabajomiscelanea->leer('versionbd',
 				0);
 		if ($versionbd_usandose < VERSIONBD) {
-			$this->load->model('actualizacionesbd');
-			$this->actualizacionesbd->leer('0');
+			$this->load->view('actualizaciones_bd_disponibles', 
+					array(
+						'versionbd_usandose' => $versionbd_usandose,
+						));
+		} else {
+			$this->load->view('sin_actualizaciones_bd_disponibles');
 		}
 
 

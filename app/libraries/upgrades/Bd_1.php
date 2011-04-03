@@ -23,11 +23,12 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Bd_1 {
 	public static $pasos = array(
-			array('sql', '...'),
+			array('sql', 'SELECT * from ficheros'),
 			array('actualiza_extensiones'),
-			array('sql', '...'),
+			array('sql', 'SELECT fid from ficheros'),
 			);
 
 	static function actualiza_extensiones() {
+		return TRUE;
 	}
 }

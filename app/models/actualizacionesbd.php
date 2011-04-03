@@ -29,8 +29,9 @@ class Actualizacionesbd extends Model {
 	 * versión de la base de datos.
 	 *
 	 * @param $version		Número de versión de la base de datos
-	 * @return				Array asociativo con las actualizaciones, FALSE
-	 * 						si no se encontró el fichero de actualizaciones
+	 * @return				Nombre de la clase que aplicará las
+	 *						actualizaciones, si todo fue correcto,
+	 *						FALSE si no se encontró
 	 */
 	function leer($version) {
 		$clase = 'Bd_' . $version;
@@ -43,7 +44,7 @@ class Actualizacionesbd extends Model {
 		}
 
 		require_once($ruta);
-		return $clase::$pasos;
+		return $clase;
 	}
 
 	/**
@@ -66,35 +67,47 @@ class Actualizacionesbd extends Model {
 	function ejecutar($version, &$error) {
 		// Sólo números
 		$version = preg_replace('[^0-9]', '', $version);
-		$ops = $this->leer($version);
-		if (FALSE === $ops) {
+		$conjuntoactualizaciones = $this->leer($version);
+		if (FALSE === $conjuntoactualizaciones) {
 			$error = 'No existe la actualización de esquema v' . $version;
 			return FALSE;
 		}
 
+		$ops = $conjuntoactualizaciones::$pasos;
+
 		if (!is_array($ops)) {
-			log_message('error', 'Actualizaciones de v' . $version
+			log_message('error', 'Actualizaciones ' 
+					.  $conjuntoactualizaciones
 					.' incorrectas, revise la sintaxis.');
-			$error = 'La actualización de v'. $version . ' está mal definida';
+			$error = 'La actualización '. $conjuntoactualizaciones . ' está mal definida';
 			return FALSE;
 		}
 
-		$mensaje_log = 'UPGRADE v' . $version . ' Ejecutando ';
+		$mensaje_log = 'Actualización a ' . $conjuntoactualizaciones . '. Ejecutando ';
 		foreach ($ops as $op) {
 			if ($op[0] == 'sql') {
 				// Ejecutar código SQL
 				log_message('info', $mensaje_log . 'SQL: ' .  $op[1]);
-				// $res = $this->db->simple_query($op[1]);
+				$res = $this->db->simple_query($op[1]);
 				if (FALSE === $res) {
-					$error = 'Falló la sentencia SQL ' . $op[1]);
+					$error = 'Falló la sentencia SQL ' . $op[1];
+					log_message('error', $error);
 					return FALSE;
 				}
 			} else {
 				// Ejecutar función
 				log_message('info', $mensaje_log . 'método: ' .  $op[0]);
+				$res = $conjuntoactualizaciones::$op[0];
+				if (FALSE === $res) {
+					$error = 'Falló la llamada a ' .$op[0];
+					log_message('error', $error);
+					return FALSE;
+				}
 			}
 		}
 
+		// Todo fue bien
+		log_message('info', 'Actualización con éxito a ' . $conjuntoactualizaciones);
 		return TRUE;
 	}
 }

@@ -48,10 +48,43 @@ class Upgrade extends Controller {
 		$versionbd_usandose = $this->trabajomiscelanea->leer('versionbd',
 				0);
 		if ($versionbd_usandose < VERSIONBD) {
-			$this->load->view('actualizaciones_bd_disponibles', 
-					array(
-						'versionbd_usandose' => $versionbd_usandose,
-						));
+			// ¿Ya se confirmó que desea actualizar?
+			if ($this->input->post('confirmacion')) {
+				// Procedemos a la actualización propiamiente dicha
+				$this->load->model('actualizacionesbd');
+				$exito = TRUE;
+				$resultado = '';
+
+				for($i=$version_bd_usandose+1;$i<VERSIONBD;$i++) {
+					// Actualizaciones de la versión $i
+					$err = '';
+					$res_parcial = $this->actualizacionesbd->ejecutar($i,
+							$err);
+					if (FALSE === $res_parcial) {
+						// Paramos aquí, hubo algún problema con esta
+						// versión
+						$exito = FALSE;
+						break;
+					}
+
+					// Todo ha ido bien para esta versión. Actualizamos la
+					// versión en BD
+					$this->trabajomiscelanea->escribir('versionbd', $i);
+				}
+
+				if (TRUE === $exito) {
+					// TODO mostrar que fue bien
+				} else {
+					// TODO mostrar en qué actualización falló
+				}
+
+
+			} else {
+				$this->load->view('actualizaciones_bd_disponibles', 
+						array(
+							'versionbd_usandose' => $versionbd_usandose,
+							));
+			}
 		} else {
 			$this->load->view('sin_actualizaciones_bd_disponibles');
 		}

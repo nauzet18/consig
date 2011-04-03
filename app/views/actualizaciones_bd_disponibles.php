@@ -18,4 +18,22 @@ la versión <tt><?php echo VERSIONBD?></tt>.
  <li>Puede comprobar el progreso de las actualizaciones siguiendo el log
  (nivel de mensaje: <tt>INFO</tt>).</li>
 
- Proceder ...
+<?php
+$this->load->helper('form');
+
+echo form_open('upgrade');
+echo form_fieldset('Actualización');
+?>
+<p>¿Está seguro de querer actualizar? ¿Ha tenido en cuenta las
+recomendaciones anteriores?</p>
+<div style="text-align: center">
+ <?php
+
+  echo form_submit('confirmacion', 'Sí, quiero actualizar');
+
+  echo form_close();
+  ?>
+</div>
+<?php
+echo form_fieldset_close();
+?>

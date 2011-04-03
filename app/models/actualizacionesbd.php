@@ -97,9 +97,22 @@ class Actualizacionesbd extends Model {
 			} else {
 				// Ejecutar función
 				log_message('info', $mensaje_log . 'método: ' .  $op[0]);
-				$res = $conjuntoactualizaciones::$op[0];
+
+				$res = call_user_func(array($conjuntoactualizaciones,
+							$op[0]));
 				if (FALSE === $res) {
 					$error = 'Falló la llamada a ' .$op[0];
+					log_message('error', $error);
+					return FALSE;
+				} elseif (!is_array($res)) {
+					$error = 'El método ' .$op[0] .' no devuelve el'
+						.' array de resultados que debería';
+					log_message('error', $error);
+					return FALSE;
+				} else if ($res[0] == FALSE) {
+					// Hubo algún problema
+					$error = 'El método ' .$op[0] .' falló: '
+						. $res[1];
 					log_message('error', $error);
 					return FALSE;
 				}

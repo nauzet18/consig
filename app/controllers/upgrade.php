@@ -53,9 +53,9 @@ class Upgrade extends Controller {
 				// Procedemos a la actualización propiamiente dicha
 				$this->load->model('actualizacionesbd');
 				$exito = TRUE;
-				$resultado = '';
+				$resultados = array();
 
-				for($i=$version_bd_usandose+1;$i<VERSIONBD;$i++) {
+				for ($i=$versionbd_usandose+1;$i<=VERSIONBD;$i++) {
 					// Actualizaciones de la versión $i
 					$err = '';
 					$res_parcial = $this->actualizacionesbd->ejecutar($i,
@@ -64,7 +64,10 @@ class Upgrade extends Controller {
 						// Paramos aquí, hubo algún problema con esta
 						// versión
 						$exito = FALSE;
+						$resultados[$i] = array('error', $err);
 						break;
+					} else {
+						$resultados[$i] = array('ok');
 					}
 
 					// Todo ha ido bien para esta versión. Actualizamos la
@@ -72,12 +75,11 @@ class Upgrade extends Controller {
 					$this->trabajomiscelanea->escribir('versionbd', $i);
 				}
 
-				if (TRUE === $exito) {
-					// TODO mostrar que fue bien
-				} else {
-					// TODO mostrar en qué actualización falló
-				}
-
+				$this->load->view('resultados_actualizacion',
+						array(
+							'resultados' => $resultados,
+							'exito' => $exito,
+							));
 
 			} else {
 				$this->load->view('actualizaciones_bd_disponibles', 

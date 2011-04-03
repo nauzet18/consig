@@ -26,7 +26,7 @@ class Trabajomiscelanea extends Model {
 	}
 
 	/**
-	 * Recoger el valor de una variable en la tabla miscelánea
+	 * Recoger el valor de una variable en la tabla miscelánea (config)
 	 *
 	 * @param $nombre			Nombre de la variable
 	 * @param $default		Valor por defecto (si no existe la entrada)
@@ -36,9 +36,9 @@ class Trabajomiscelanea extends Model {
 
 	public function leer($nombre, $default = '') {
 
-		$q = $this->db->get_where('misc', 
+		$q = $this->db->get_where('config', 
 				array(
-					'nombre' => $nombre,
+					'var' => $nombre,
 					));
 
 		$res = $q->result();
@@ -58,14 +58,14 @@ class Trabajomiscelanea extends Model {
 
 	function escribir($nombre, $valor) {
 		$data = array(
-				'nombre' => $nombre,
+				'var' => $nombre,
 				'valor' => $valor,
 				);
 
 		$this->db->trans_start();
-		$this->db->delete('misc', $data);
+		$this->db->delete('config', $data);
 
-		$this->db->insert('misc', $data);
+		$this->db->insert('config', $data);
 
 		$this->db->trans_complete();
 	}

@@ -1,4 +1,5 @@
 DELETE FROM mimetypes;
+ALTER TABLE mimetypes AUTO_INCREMENT = 1;
 
 INSERT INTO mimetypes VALUES ('', 'application/x-authorware-bin', 'aab', '');
 INSERT INTO mimetypes VALUES ('', 'application/x-authorware-map', 'aam', '');

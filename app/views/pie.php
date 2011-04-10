@@ -21,11 +21,11 @@ site_url('js/jquery-1.4.4.min.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
 site_url('js/jquery.overlay-1.2.3.pack.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/interfaz.js')?>"></script>
+site_url('js/interfaz.min.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.hoverIntent.js')?>"></script>
+site_url('js/jquery.hoverIntent.min.js')?>"></script>
 <script language="JavaScript" type="text/javascript" src="<?php echo
-site_url('js/jquery.cluetip.js')?>"></script>
+site_url('js/jquery.cluetip.min.js')?>"></script>
 
 <?php
 if (isset($js_adicionales)) {

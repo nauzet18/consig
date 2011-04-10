@@ -134,8 +134,8 @@ class Ficheros extends Controller {
 
 			$data = array(
 					'js_adicionales' => array(
-						'jquery.timers.js',
-						'jquery.blockUI_2.31.js',
+						'jquery.timers.min.js',
+						'jquery.blockUI_2.31.min.js',
 						'jquery.dimensions.pack.js',
 					),
 					);
@@ -268,7 +268,7 @@ class Ficheros extends Controller {
 
 			if ($this->activar_antivirus === TRUE) {
 				$data_pie['js_adicionales'] =
-					array('jquery.timers.js');
+					array('jquery.timers.min.js');
 			}
 
 			$this->load->view('cabecera', $data_cabecera);

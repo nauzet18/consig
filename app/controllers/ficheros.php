@@ -149,7 +149,8 @@ class Ficheros extends Controller {
 			} else {
 				// Mensaje de éxito
 				$this->session->set_flashdata('mensaje_fichero_cabecera',
-						'El fichero fue enviado correctamente');
+						'El fichero fue enviado correctamente. Está '
+						. 'disponible en la dirección ' . anchor($fid));
 				echo $fid;
 			}
 		}

@@ -1,7 +1,7 @@
 </div> <!-- contenido -->
 
 <div id="pie">
- <a href="http://www.us.es/servicios/sic">Servicio de Inform&aacute;tica
+ <a href="http://www.us.es/campus/servicios/sic/">Servicio de Inform&aacute;tica
  y Comunicaciones</a><br />
  <a href="http://www.us.es">Universidad de Sevilla</a><br />
 
@@ -15,6 +15,20 @@
    <span class="p"></span>
  </p>
 </div>
+
+<!-- XXX -->
+<!--
+<script language="JavaScript" type="text/javascript"         
+src="https://idp.us.es/avisoclave/js/jquery.tools.min.js"></script>
+<script language="JavaScript" type="text/javascript"
+src="https://idp.us.es/avisoclave/js/aviso-base.js"></script>
+
+ <script language="JavaScript">
+  if (typeof(user_id) != 'undefined') {
+      ponAvisoClave(user_id);
+  }
+ </script>
+-->
 
 </body>
 

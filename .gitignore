@@ -1,0 +1,9 @@
+
+# /app/config/
+/app/config/config.php
+/app/config/database.php
+/app/config/ldap.php
+/app/config/subredes.php
+
+# /public/img/
+/public/img/favicon.ico

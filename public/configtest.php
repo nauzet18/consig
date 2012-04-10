@@ -188,6 +188,7 @@ if (isset($config['authmodule']) && $config['authmodule'] == 'LDAP') {
 						'Problemas de creación en PHP '
 						.'para acceso a LDAP');
 			} else {
+				@ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
 				// Prueba de bind
 				if (@ldap_bind($ds, $opciones['dnadmin'],
 						$opciones['passwdadmin']) !== TRUE) {

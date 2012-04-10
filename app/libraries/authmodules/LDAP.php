@@ -44,6 +44,9 @@ class LDAP {
 			return -1;
 		 }
 
+		 // Usamos LDAP v3
+		 @ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
+
 		 // Recogida de valores y comprobación de
 		 // validez
 		 $usuario = $this->CI->input->post('usuario');
@@ -114,6 +117,9 @@ class LDAP {
 			log_message('error', 'No se puede conectar a LDAP');
 			return FALSE;
 		}
+
+		// Usamos LDAP v3
+		@ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3);
 
 		if (@ldap_bind($ds, $opciones['dnadmin'],
 					$opciones['passwdadmin']) !== TRUE) {

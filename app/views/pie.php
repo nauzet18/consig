@@ -10,7 +10,7 @@
 
  <p id="version_consigna">
   consigna v<span><?php echo VERSIONCONSIGNA; ?></span> [<a id="sourcecode"
-  href="https://labs.us.es/projects/show/consigna">código fuente</a>]
+  href="https://gestionproyectos.us.es/projects/show/consigna">código fuente</a>]
   <br />
    <span class="p"></span>
  </p>

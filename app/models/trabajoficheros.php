@@ -19,9 +19,9 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class TrabajoFicheros extends Model {
-	function TrabajoFicheros() {
-		parent::Model();
+class TrabajoFicheros extends CI_Model {
+	function __construct() {
+		parent::__construct();
 		$this->load->helper('date');
 	}
 

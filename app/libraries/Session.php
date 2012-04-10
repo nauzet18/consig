@@ -54,7 +54,7 @@ class CI_Session {
 	 * The constructor runs the session routines automatically whenever the class is instantiated.
 	 * 
 	 */		
-	function CI_Session()
+	function __construct()
 	{
 		$this->CI =& get_instance();
         define('OBSESSION_VERSION', '2.0.2');

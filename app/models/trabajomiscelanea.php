@@ -19,10 +19,10 @@
  */
 
 
-class Trabajomiscelanea extends Model {
+class Trabajomiscelanea extends CI_Model {
 
-	function Trabajomiscelanea() {
-		parent::Model();
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**

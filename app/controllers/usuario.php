@@ -19,13 +19,13 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Usuario extends Controller {
+class Usuario extends CI_Controller {
 
 	var $autenticado;
 
-	function Usuario()
+	function __construct()
 	{
-		parent::Controller();
+		parent::__construct();
 		$this->autenticado = $this->session->userdata('autenticado');
 
 		// Si no hay módulo de autenticación, devolver un error

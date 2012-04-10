@@ -19,9 +19,9 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Actualizacionesbd extends Model {
-	function Actualizacionesbd() {
-		parent::Model();
+class Actualizacionesbd extends CI_Model {
+	function __construct() {
+		parent::__construct();
 	}
 
 	/**

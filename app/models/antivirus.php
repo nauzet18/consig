@@ -19,9 +19,9 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Antivirus extends Model {
-	function Antivirus() {
-		parent::Model();
+class Antivirus extends CI_Model {
+	function __construct() {
+		parent::__construct();
 	}
 
 	/*

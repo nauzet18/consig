@@ -26,14 +26,14 @@ define('PROCESADO_ERR_FORMULARIO', 2);
 define('PROCESADO_ERR_ESCRITURA', 3);
 
 
-class Ficheros extends Controller {
+class Ficheros extends CI_Controller {
 
 	var $autenticado;
 	var $activar_antivirus;
 
-	function Ficheros()
+	function __construct()
 	{
-		parent::Controller();	
+		parent::__construct();	
 		$this->autenticado = $this->session->userdata('autenticado');
 		$this->gestionpermisos->checkLogin();
 		$this->load->config('subredes');

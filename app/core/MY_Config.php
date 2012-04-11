@@ -21,8 +21,8 @@
 
 class MY_Config extends CI_Config {
 
-	function MY_Config() {
-        parent::CI_Config();
+	function __construct() {
+        parent::__construct();
 	}
 
 	/**

@@ -63,7 +63,7 @@ class Trabajomiscelanea extends CI_Model {
 				);
 
 		$this->db->trans_start();
-		$this->db->delete('config', $data);
+		$this->db->delete('config', array('var' => $nombre));
 
 		$this->db->insert('config', $data);
 

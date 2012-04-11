@@ -1,6 +1,6 @@
 <?php
 /*
- * Copyright 2011 Jorge López Pérez <jorgelp@us.es>
+ * Copyright 2012 Jorge López Pérez <jorgelp@us.es>
  *
  *    This file is part of Consigna.
  *
@@ -19,9 +19,21 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Defs {
-	function definiciones() {
-		define('VERSIONCONSIGNA', '1.4');
-		define('VERSIONBD', '2');
-	}
+if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+
+class Bd_2 {
+	public static $pasos = array(
+		array('sql', "DROP TABLE ci_sessions"),
+		array('sql',"
+CREATE TABLE `sessions` (
+  `session_id` varchar(40) NOT NULL DEFAULT '0',
+  `ip_address` varchar(16) NOT NULL DEFAULT '0',
+  `user_agent` varchar(120) DEFAULT NULL,
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_data` mediumtext NOT NULL,
+  PRIMARY KEY (`session_id`),
+  KEY `last_activity_idx` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+			"),
+		);
 }

@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `config` (
 
 	PRIMARY KEY(var)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO config VALUES ('versionbd', '1');
+INSERT INTO config VALUES ('versionbd', '2');
 
 CREATE TABLE IF NOT EXISTS `mimetypes` (
 	`mid` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -43,18 +43,15 @@ CREATE TABLE IF NOT EXISTS `usercache` (
 
 	PRIMARY KEY(id)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `ci_sessions` (
-session_id varchar(40) DEFAULT '0' NOT NULL,
-session_start int(10) unsigned DEFAULT 0 NOT NULL,
-session_last_activity int(10) unsigned DEFAULT 0 NOT NULL,
-session_ip_address varchar(16) DEFAULT '0' NOT NULL,
-session_user_agent varchar(50) NOT NULL,
-session_data text default '' NOT NULL,
-PRIMARY KEY (session_id)
-) DEFAULT CHARSET=utf8; 
-
-CREATE INDEX idx_session_last_activity
-ON ci_sessions(session_last_activity);
+CREATE TABLE `sessions` (
+  `session_id` varchar(40) NOT NULL DEFAULT '0',
+  `ip_address` varchar(16) NOT NULL DEFAULT '0',
+  `user_agent` varchar(120) DEFAULT NULL,
+  `last_activity` int(10) unsigned NOT NULL DEFAULT '0',
+  `user_data` mediumtext NOT NULL,
+  PRIMARY KEY (`session_id`),
+  KEY `last_activity_idx` (`last_activity`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 /*

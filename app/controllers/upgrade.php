@@ -20,10 +20,10 @@
  */
 
 
-class Upgrade extends Controller {
+class Upgrade extends CI_Controller {
 
-	function Upgrade() {
-		parent::Controller();
+	function __construct() {
+		parent::__construct();
 		$this->load->model('trabajomiscelanea');
 	}
 

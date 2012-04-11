@@ -19,13 +19,13 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Cron extends Controller {
+class Cron extends CI_Controller {
 
 	var $activar_antivirus;
 
-	function Cron()
+	function __construct()
 	{
-		parent::Controller();	
+		parent::__construct();	
 
 		// Antivirus
 		$this->activar_antivirus = $this->config->item('activar_antivirus');

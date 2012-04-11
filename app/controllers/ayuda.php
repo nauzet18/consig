@@ -19,9 +19,9 @@
  *    <http://www.gnu.org/licenses/>.
  */
 
-class Ayuda extends Controller {
-	function Ayuda() {
-		parent::Controller();
+class Ayuda extends CI_Controller {
+	function __construct() {
+		parent::__construct();
 	}
 
 	function index() {

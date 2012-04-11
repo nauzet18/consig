@@ -39,9 +39,9 @@ class MY_Log extends CI_Log {
      * @param     string     the error threshold
      * @param    string    the date formatting codes
      */
-    function MY_Log()
+    function __construct()
     {
-        parent::CI_Log();
+        parent::__construct();
         $config =& get_config();
         if (isset ($config['show_in_log']))
         {

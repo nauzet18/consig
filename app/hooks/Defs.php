@@ -22,6 +22,6 @@
 class Defs {
 	function definiciones() {
 		define('VERSIONCONSIGNA', '1.4');
-		define('VERSIONBD', '1');
+		define('VERSIONBD', '2');
 	}
 }

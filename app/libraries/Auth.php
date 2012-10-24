@@ -68,8 +68,6 @@ class Auth {
 					$this->CI->session->userdata('id')
 					.', IP: ' . $this->CI->input->ip_address());
 
-			$this->CI->authmod->logout();
-
 			// Posible bug en CI 1.7.0 con sess_destroy()
 			// Eliminamos los valores
 			$data = array(
@@ -80,6 +78,9 @@ class Auth {
 					);
 			$this->CI->session->unset_userdata($data);
 			$this->CI->session->sess_destroy();
+
+			$this->CI->authmod->logout();
+
 		}
 
 	}

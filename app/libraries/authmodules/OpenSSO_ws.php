@@ -95,7 +95,7 @@ class OpenSSO_ws {
 	 * Logout
 	 */
 	function logout() {
-		$this->o->logout(FALSE);
+		$this->o->logout(true);
 	}
 
 	/**

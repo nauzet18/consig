@@ -694,7 +694,7 @@ class Ficheros extends Controller {
 	 * procesado
 	 */
 
-	function _procesado_envio_fichero($tipo, &$data_form, &$fid) {
+	function _procesado_envio_fichero($tipo, &$data_form, $fid = FALSE) {
 
 		// Reglas para el formulario.
 		// La comprobación de fichero se hará con $_FILES, ya que con 
@@ -755,7 +755,6 @@ class Ficheros extends Controller {
 			} else {
 				// Cargamos de la base de datos lo referente al fichero que
 				// estemos editando
-				$fid = $this->input->post('fid', TRUE);
 				if ($fid === FALSE) {
 					$data_form['error'] = '<p>Hay algún problema con el
 						formulario de edición. Por favor, póngase en '

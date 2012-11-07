@@ -700,7 +700,7 @@ class Ficheros extends Controller {
 	 * procesado
 	 */
 
-	function _procesado_envio_fichero($tipo, &$data_form, $fid = FALSE) {
+	function _procesado_envio_fichero($tipo, &$data_form, &$fid) {
 
 		// Reglas para el formulario.
 		// La comprobación de fichero se hará con $_FILES, ya que con 
@@ -773,7 +773,7 @@ class Ficheros extends Controller {
 			} else {
 				// Cargamos de la base de datos lo referente al fichero que
 				// estemos editando
-				if ($fid === FALSE) {
+				if ($fid === FALSE || $fid === null) {
 					$data_form['error'] = '<p>Hay algún problema con el
 						formulario de edición. Por favor, póngase en '
 						.'contacto con ' 
